@@ -1,0 +1,554 @@
+{
+  "transactions": [
+    {
+      "title": "silencio",
+      "quantity": 100000,
+      "description": "Dobio Silencio AirDrop\n",
+      "date": "2025-04-30",
+      "type": "buy",
+      "priceAtTransaction": 0.00011012438834998214,
+      "totalValue": 11.012438834998214,
+      "id": 1
+    },
+    {
+      "title": "bitcoin",
+      "quantity": 1,
+      "description": "Kupio Bitcoin",
+      "date": "2025-04-02",
+      "type": "buy",
+      "priceAtTransaction": 85237.5876052852,
+      "totalValue": 85237.5876052852,
+      "id": 2
+    },
+    {
+      "title": "cardano",
+      "quantity": 14000,
+      "description": "",
+      "date": "2025-04-30",
+      "type": "buy",
+      "priceAtTransaction": 0.6957354792970168,
+      "totalValue": 9740.296710158236,
+      "id": 3
+    },
+    {
+      "title": "ethereum",
+      "quantity": 2.5,
+      "description": "Kupio ETH",
+      "date": "2025-03-28",
+      "type": "buy",
+      "priceAtTransaction": 3178.23,
+      "totalValue": 7945.575,
+      "id": 4
+    },
+    {
+      "title": "solana",
+      "quantity": 120,
+      "description": "SOL stake reward",
+      "date": "2025-04-15",
+      "type": "buy",
+      "priceAtTransaction": 154.12,
+      "totalValue": 18494.4,
+      "id": 5
+    },
+    {
+      "title": "dogecoin",
+      "quantity": 5000,
+      "description": "DOGE kupovina",
+      "date": "2025-03-12",
+      "type": "buy",
+      "priceAtTransaction": 0.13,
+      "totalValue": 650,
+      "id": 6
+    },
+    {
+      "title": "ripple",
+      "quantity": 3000,
+      "description": "XRP kupovina",
+      "date": "2025-03-20",
+      "type": "buy",
+      "priceAtTransaction": 0.82,
+      "totalValue": 2460,
+      "id": 7
+    },
+    {
+      "title": "polkadot",
+      "quantity": 750,
+      "description": "Kupovina DOT",
+      "date": "2025-02-01",
+      "type": "buy",
+      "priceAtTransaction": 6.42,
+      "totalValue": 4815,
+      "id": 8
+    },
+    {
+      "title": "shiba",
+      "quantity": 15000000,
+      "description": "SHIB kupovina",
+      "date": "2025-04-01",
+      "type": "buy",
+      "priceAtTransaction": 0.000009,
+      "totalValue": 135,
+      "id": 10
+    },
+    {
+      "title": "litecoin",
+      "quantity": 30,
+      "description": "Kupovina LTC",
+      "date": "2025-04-20",
+      "type": "buy",
+      "priceAtTransaction": 98.2,
+      "totalValue": 2946,
+      "id": 11
+    },
+    {
+      "title": "silencio",
+      "quantity": 50000,
+      "description": "Silencio bonus",
+      "date": "2025-04-25",
+      "type": "buy",
+      "priceAtTransaction": 0.00012,
+      "totalValue": 6,
+      "id": 12
+    },
+    {
+      "title": "bitcoin",
+      "quantity": 0.5,
+      "description": "Kupio BTC pola",
+      "date": "2025-02-28",
+      "type": "buy",
+      "priceAtTransaction": 76500,
+      "totalValue": 38250,
+      "id": 13
+    },
+    {
+      "title": "ethereum",
+      "quantity": 1.2,
+      "description": "ETH stake",
+      "date": "2025-03-10",
+      "type": "buy",
+      "priceAtTransaction": 3050,
+      "totalValue": 3660,
+      "id": 14
+    },
+    {
+      "title": "solana",
+      "quantity": 80,
+      "description": "",
+      "date": "2025-04-11",
+      "type": "buy",
+      "priceAtTransaction": 158,
+      "totalValue": 12640,
+      "id": 15
+    },
+    {
+      "title": "cardano",
+      "quantity": 10000,
+      "description": "",
+      "date": "2025-04-28",
+      "type": "buy",
+      "priceAtTransaction": 0.7,
+      "totalValue": 7000,
+      "id": 16
+    },
+    {
+      "title": "dogecoin",
+      "quantity": 2000,
+      "description": "Kupovina za zabavu",
+      "date": "2025-03-25",
+      "type": "buy",
+      "priceAtTransaction": 0.15,
+      "totalValue": 300,
+      "id": 17
+    },
+    {
+      "title": "ripple",
+      "quantity": 4000,
+      "description": "",
+      "date": "2025-04-04",
+      "type": "buy",
+      "priceAtTransaction": 0.85,
+      "totalValue": 3400,
+      "id": 18
+    },
+    {
+      "title": "polkadot",
+      "quantity": 500,
+      "description": "DOT stake",
+      "date": "2025-01-29",
+      "type": "buy",
+      "priceAtTransaction": 7.1,
+      "totalValue": 3550,
+      "id": 19
+    },
+    {
+      "title": "shiba",
+      "quantity": 8000000,
+      "description": "SHIBA kupovina",
+      "date": "2025-02-10",
+      "type": "buy",
+      "priceAtTransaction": 0.000008,
+      "totalValue": 64,
+      "id": 21
+    },
+    {
+      "title": "litecoin",
+      "quantity": 20,
+      "description": "",
+      "date": "2025-04-12",
+      "type": "buy",
+      "priceAtTransaction": 102,
+      "totalValue": 2040,
+      "id": 22
+    },
+    {
+      "title": "silencio",
+      "quantity": 100000,
+      "description": "Airdrop",
+      "date": "2025-04-30",
+      "type": "buy",
+      "priceAtTransaction": 0.00011,
+      "totalValue": 11,
+      "id": 23
+    },
+    {
+      "title": "ethereum",
+      "quantity": 3,
+      "description": "",
+      "date": "2025-02-14",
+      "type": "buy",
+      "priceAtTransaction": 2950,
+      "totalValue": 8850,
+      "id": 24
+    },
+    {
+      "title": "bitcoin",
+      "quantity": 0.1,
+      "description": "",
+      "date": "2025-01-15",
+      "type": "buy",
+      "priceAtTransaction": 70200,
+      "totalValue": 7020,
+      "id": 25
+    },
+    {
+      "title": "solana",
+      "quantity": 40,
+      "description": "",
+      "date": "2025-04-07",
+      "type": "buy",
+      "priceAtTransaction": 162,
+      "totalValue": 6480,
+      "id": 26
+    },
+    {
+      "title": "cardano",
+      "quantity": 5000,
+      "description": "",
+      "date": "2025-03-30",
+      "type": "buy",
+      "priceAtTransaction": 0.75,
+      "totalValue": 3750,
+      "id": 27
+    },
+    {
+      "title": "dogecoin",
+      "quantity": 1000,
+      "description": "",
+      "date": "2025-02-28",
+      "type": "buy",
+      "priceAtTransaction": 0.12,
+      "totalValue": 120,
+      "id": 28
+    },
+    {
+      "title": "ripple",
+      "quantity": 2000,
+      "description": "",
+      "date": "2025-01-10",
+      "type": "buy",
+      "priceAtTransaction": 0.9,
+      "totalValue": 1800,
+      "id": 29
+    },
+    {
+      "title": "polkadot",
+      "quantity": 300,
+      "description": "",
+      "date": "2025-04-17",
+      "type": "buy",
+      "priceAtTransaction": 7.5,
+      "totalValue": 2250,
+      "id": 30
+    },
+    {
+      "title": "shiba",
+      "quantity": 5000000,
+      "description": "",
+      "date": "2025-03-10",
+      "type": "buy",
+      "priceAtTransaction": 0.00001,
+      "totalValue": 50,
+      "id": 32
+    },
+    {
+      "title": "litecoin",
+      "quantity": 10,
+      "description": "",
+      "date": "2025-03-01",
+      "type": "buy",
+      "priceAtTransaction": 95,
+      "totalValue": 950,
+      "id": 33
+    },
+    {
+      "title": "bitcoin",
+      "quantity": 0.05,
+      "description": "",
+      "date": "2025-03-19",
+      "type": "buy",
+      "priceAtTransaction": 82000,
+      "totalValue": 4100,
+      "id": 34
+    },
+    {
+      "title": "ethereum",
+      "quantity": 0.75,
+      "description": "",
+      "date": "2025-04-18",
+      "type": "buy",
+      "priceAtTransaction": 3200,
+      "totalValue": 2400,
+      "id": 35
+    },
+    {
+      "title": "solana",
+      "quantity": 20,
+      "description": "",
+      "date": "2025-04-26",
+      "type": "buy",
+      "priceAtTransaction": 170,
+      "totalValue": 3400,
+      "id": 36
+    },
+    {
+      "title": "cardano",
+      "quantity": 3000,
+      "description": "",
+      "date": "2025-03-05",
+      "type": "buy",
+      "priceAtTransaction": 0.69,
+      "totalValue": 2070,
+      "id": 37
+    },
+    {
+      "title": "dogecoin",
+      "quantity": 1500,
+      "description": "",
+      "date": "2025-04-29",
+      "type": "buy",
+      "priceAtTransaction": 0.14,
+      "totalValue": 210,
+      "id": 38
+    },
+    {
+      "title": "silencio",
+      "quantity": 25000,
+      "description": "Još jedan AirDrop",
+      "date": "2025-04-30",
+      "type": "buy",
+      "priceAtTransaction": 0.00011,
+      "totalValue": 2.75,
+      "id": 39
+    },
+    {
+      "title": "ripple",
+      "quantity": 1000,
+      "description": "",
+      "date": "2025-02-05",
+      "type": "buy",
+      "priceAtTransaction": 0.95,
+      "totalValue": 950,
+      "id": 40
+    },
+    {
+      "title": "shiba",
+      "quantity": 2000000,
+      "description": "",
+      "date": "2025-04-05",
+      "type": "buy",
+      "priceAtTransaction": 0.000012,
+      "totalValue": 24,
+      "id": 41
+    },
+    {
+      "title": "litecoin",
+      "quantity": 5,
+      "description": "",
+      "date": "2025-04-03",
+      "type": "buy",
+      "priceAtTransaction": 100,
+      "totalValue": 500,
+      "id": 42
+    },
+    {
+      "title": "solana",
+      "quantity": 60,
+      "description": "",
+      "date": "2025-04-30",
+      "type": "buy",
+      "priceAtTransaction": 168,
+      "totalValue": 10080,
+      "id": 43
+    },
+    {
+      "title": "bitcoin",
+      "quantity": 0.02,
+      "description": "",
+      "date": "2025-04-30",
+      "type": "buy",
+      "priceAtTransaction": 86000,
+      "totalValue": 1720,
+      "id": 44
+    },
+    {
+      "title": "polkadot",
+      "quantity": 250,
+      "description": "",
+      "date": "2025-03-01",
+      "type": "buy",
+      "priceAtTransaction": 6.8,
+      "totalValue": 1700,
+      "id": 45
+    },
+    {
+      "title": "shiba",
+      "quantity": 1000000,
+      "description": "",
+      "date": "2025-04-10",
+      "type": "buy",
+      "priceAtTransaction": 0.000013,
+      "totalValue": 13,
+      "id": 47
+    },
+    {
+      "title": "litecoin",
+      "quantity": 8,
+      "description": "",
+      "date": "2025-03-22",
+      "type": "buy",
+      "priceAtTransaction": 97,
+      "totalValue": 776,
+      "id": 48
+    },
+    {
+      "title": "ripple",
+      "quantity": 1500,
+      "description": "",
+      "date": "2025-04-08",
+      "type": "buy",
+      "priceAtTransaction": 0.88,
+      "totalValue": 1320,
+      "id": 49
+    },
+    {
+      "title": "silencio",
+      "quantity": 30000,
+      "description": "",
+      "date": "2025-04-30",
+      "type": "buy",
+      "priceAtTransaction": 0.000105,
+      "totalValue": 3.15,
+      "id": 50
+    },
+    {
+      "id": 51,
+      "title": "cardano",
+      "quantity": 400,
+      "description": "Kupio Cardano",
+      "date": "2024-08-10",
+      "type": "buy",
+      "priceAtTransaction": 0.35,
+      "totalValue": 140
+    },
+    {
+      "id": 52,
+      "title": "polkadot",
+      "quantity": 50,
+      "description": "Kupio Polkadot",
+      "date": "2024-08-11",
+      "type": "buy",
+      "priceAtTransaction": 5.6,
+      "totalValue": 280
+    },
+    {
+      "id": 54,
+      "title": "solana",
+      "quantity": 10,
+      "description": "Kupio Solana",
+      "date": "2024-08-13",
+      "type": "buy",
+      "priceAtTransaction": 23,
+      "totalValue": 230
+    },
+    {
+      "id": 55,
+      "title": "tron",
+      "quantity": 1000,
+      "description": "Kupio Tron",
+      "date": "2024-08-14",
+      "type": "buy",
+      "priceAtTransaction": 0.067,
+      "totalValue": 67
+    },
+    {
+      "id": 56,
+      "title": "fantom",
+      "quantity": 500,
+      "description": "Kupio Fantom",
+      "date": "2024-08-15",
+      "type": "buy",
+      "priceAtTransaction": 0.29,
+      "totalValue": 145
+    },
+    {
+      "id": 58,
+      "title": "vechain",
+      "quantity": 1500,
+      "description": "Kupio Vechain",
+      "date": "2024-08-17",
+      "type": "buy",
+      "priceAtTransaction": 0.019,
+      "totalValue": 28.5
+    },
+    {
+      "id": 59,
+      "title": "stellar",
+      "quantity": 300,
+      "description": "Kupio Stellar",
+      "date": "2024-08-18",
+      "type": "buy",
+      "priceAtTransaction": 0.12,
+      "totalValue": 36
+    },
+    {
+      "title": "bitcoin",
+      "quantity": 1,
+      "description": "Prodao bitcoin\n",
+      "date": "2025-05-05",
+      "type": "sell",
+      "priceAtTransaction": 94326.62048529249,
+      "totalValue": 94326.62048529249,
+      "id": 60
+    },
+    {
+      "title": "silencio",
+      "quantity": 10000000,
+      "description": "Prodao Silencio",
+      "date": "2025-04-16",
+      "type": "sell",
+      "priceAtTransaction": 0.0001462268496315708,
+      "totalValue": 1462.268496315708,
+      "id": 61
+    }
+  ]
+}

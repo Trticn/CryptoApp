@@ -1,0 +1,78 @@
+import { useFetchTransactionsQuery } from "../store";
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
+import Skeleton from "./Skeleton";
+import TransactionListItem from "./TransactionListItem.js";
+
+
+function TransactionList({ transactionType }) {
+  const { data, error, isFetching } = useFetchTransactionsQuery();
+
+  
+
+  let filteredTransactions = data ?? [];
+
+  if (transactionType !== 'all') {
+    filteredTransactions = filteredTransactions.filter(t => t.type === transactionType);
+  }
+  
+  filteredTransactions = [...filteredTransactions].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  
+  
+
+
+  let content;
+
+  if (isFetching) {
+    content = (
+      <div className="space-y-3 p-4">
+        <Skeleton className="h-16 w-full rounded-2xl bg-gray-100 dark:bg-gray-800" times={10} />
+      </div>
+    );
+  } else if (error) {
+    content = (
+      <div className="p-4 m-4 rounded-2xl border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20 shadow-sm">
+        <div className="flex items-center gap-3">
+          <InformationCircleIcon className="h-6 w-6 text-red-600 dark:text-red-400" />
+          <p className="text-sm text-red-800 dark:text-red-300">
+            Došlo je do greške prilikom učitavanja transakcija. Pokušaj ponovo kasnije.
+          </p>
+        </div>
+      </div>
+    );
+    
+   
+  } else if (filteredTransactions.length > 0) {
+    content = (
+      <div className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
+        {filteredTransactions.map((transaction) => (
+          <TransactionListItem  
+            key={transaction.id} 
+            transaction={transaction}
+          />
+        ))}
+      </div>
+    );
+  } else {
+ 
+      content = (
+        <div className="p-4 sm:p-6 m-4 rounded-2xl border border-blue-300 dark:border-blue-800  shadow-sm">
+          <div className="flex items-start sm:items-center gap-3">
+            <InformationCircleIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mt-1 sm:mt-0" />
+            <p className="text-sm text-blue-800 dark:text-blue-300">
+              {transactionType === 'all'
+                ? 'Nema pronađenih transakcija.'
+                : `Nema pronađenih ${transactionType === 'sell' ? 'izlaznih' : 'ulaznih'} transakcija.`}
+            </p>
+          </div>
+        </div>
+      );
+    
+  }
+  
+
+  return content;
+}
+
+export default TransactionList;
