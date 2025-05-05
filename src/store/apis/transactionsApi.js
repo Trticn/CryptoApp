@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const transactionsApi = createApi({
     reducerPath:'transactions',
     baseQuery:fetchBaseQuery({
-        baseUrl:'http://localhost:3005'
+        baseUrl:'https://cryptoappbackend.onrender.com'
     }),
     
 
