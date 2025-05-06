@@ -2,7 +2,8 @@ import { useFetchTransactionsQuery } from "../store";
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import Skeleton from "./Skeleton";
 import TransactionListItem from "./TransactionListItem.js";
-
+import Pagination from "./Pagination.js";
+import usePagination from "../hooks/usePagination.js";
 
 function TransactionList({ transactionType }) {
   const { data, error, isFetching } = useFetchTransactionsQuery();
@@ -19,7 +20,12 @@ function TransactionList({ transactionType }) {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
   
-  
+  const {
+    currentPage,
+    setCurrentPage,
+    paginationData,
+    totalPages,
+  } = usePagination(filteredTransactions);
 
 
   let content;
@@ -43,36 +49,46 @@ function TransactionList({ transactionType }) {
     );
     
    
-  } else if (filteredTransactions.length > 0) {
+  } else if (filteredTransactions.length < 0) {
     content = (
-      <div className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
-        {filteredTransactions.map((transaction) => (
-          <TransactionListItem  
-            key={transaction.id} 
-            transaction={transaction}
-          />
-        ))}
+      <div className="p-4 sm:p-6 m-4 rounded-2xl border border-blue-300 dark:border-blue-800  shadow-sm">
+        <div className="flex items-start sm:items-center gap-3">
+          <InformationCircleIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mt-1 sm:mt-0" />
+          <p className="text-sm text-blue-800 dark:text-blue-300">
+            {transactionType === 'all'
+              ? 'Nema pronađenih transakcija.'
+              : `Nema pronađenih ${transactionType === 'sell' ? 'izlaznih' : 'ulaznih'} transakcija.`}
+          </p>
+        </div>
       </div>
     );
   } else {
- 
+
       content = (
-        <div className="p-4 sm:p-6 m-4 rounded-2xl border border-blue-300 dark:border-blue-800  shadow-sm">
-          <div className="flex items-start sm:items-center gap-3">
-            <InformationCircleIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mt-1 sm:mt-0" />
-            <p className="text-sm text-blue-800 dark:text-blue-300">
-              {transactionType === 'all'
-                ? 'Nema pronađenih transakcija.'
-                : `Nema pronađenih ${transactionType === 'sell' ? 'izlaznih' : 'ulaznih'} transakcija.`}
-            </p>
-          </div>
+        <div className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
+          {paginationData.map((transaction) => (
+            <TransactionListItem  
+              key={transaction.id} 
+              transaction={transaction}
+            />
+          ))}
         </div>
       );
     
   }
   
 
-  return content;
+  return <>
+  {content}
+
+   {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        )}
+  </>;
 }
 
 export default TransactionList;

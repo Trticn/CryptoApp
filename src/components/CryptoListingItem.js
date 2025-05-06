@@ -16,7 +16,7 @@ function CryptoListingItem ({crypto}) {
     } = crypto;
   
     return (
-      <tr className="border-b hover:bg-gray-100 dark:hover:bg-gray-900 transition-all">
+      <tr key={id} className="border-b hover:bg-gray-100 dark:hover:bg-gray-900 transition-all">
         {/* Name */}
         <td className="p-4 flex items-center gap-3">
           <img src={image} alt={name} className="w-6 h-6" />
@@ -55,12 +55,12 @@ function CryptoListingItem ({crypto}) {
         </td>
 
         <td className={`p-4 font-medium ${ath_change_percentage >= 0 ? "text-green-500" : "text-red-500"}`}>
-          ATH: ${ath.toFixed(2)} ({ath_change_percentage.toFixed(2)}%)
+         ${ath.toFixed(2)} ({ath_change_percentage.toFixed(2)}%)
         </td>
   
         {/* ATL (All-Time Low) */}
         <td className={`p-4 font-medium ${atl_change_percentage >= 0 ? "text-green-500" : "text-red-500"}`}>
-          ATL: ${atl.toFixed(2)} ({atl_change_percentage.toFixed(2)}%)
+           ${atl.toFixed(2)} ({atl_change_percentage.toFixed(2)}%)
         </td>
   
        

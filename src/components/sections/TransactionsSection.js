@@ -1,7 +1,9 @@
 
 import { FiArrowUp, FiArrowDown } from "react-icons/fi";
-import Skeleton from "../Skeleton";
 import { Link } from 'react-router-dom';
+import Skeleton from "../Skeleton";
+import { formatDate } from "../../helpers";
+
 
 
 export default function TransactionsSection({ transactions, isFetching }) {
@@ -38,7 +40,7 @@ export default function TransactionsSection({ transactions, isFetching }) {
                   <h3 className="font-medium text-gray-800 dark:text-white">
                     {tx.quantity} {tx.title}
                   </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{new Date(tx.date).toLocaleDateString()}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{formatDate(tx)}</p>
                 </div>
                 <div className={`font-medium ${tx.type === 'buy'
                 ? 'text-green-500 dark:text-green-400'

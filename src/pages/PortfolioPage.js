@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { formatValue } from '../helpers';
 import { ArrowsPointingOutIcon, ArrowsPointingInIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 import { usePortfolioData } from '../hooks/usePortfolioData';
 import CryptoModal from '../components/CryptoModal';
 import PortfolioList from '../components/PortfolioList';
-import { useTheme } from '../context/ThemeContext';
 
 function PortfolioPage() {
   const {
@@ -39,11 +38,14 @@ function PortfolioPage() {
 
   const openCryptoModal = (crypto) => {
     setSelectedCrypto(crypto);
+    document.body.style.overflow = 'hidden';
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    document.body.style.overflow = '';
+
     setSelectedCrypto(null);
   };
 

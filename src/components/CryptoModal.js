@@ -1,10 +1,10 @@
-import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { formatValue, InfoRow } from '../helpers';
 
-function CryptoModal ({ crypto, onClose }){
-  if (!crypto) return null;
 
+
+function CryptoModal ({ crypto, onClose }){
+  if(!crypto) return;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
     <div className="bg-white dark:bg-gray-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -109,12 +109,13 @@ function CryptoModal ({ crypto, onClose }){
       </div>
   
       <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
-        <button
-          onClick={onClose}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-        >
-          Zatvori
-        </button>
+      <button
+  onClick={onClose}
+  className="px-5 py-2 rounded-2xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-medium shadow-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+>
+  Zatvori
+</button>
+
       </div>
     </div>
   </div>

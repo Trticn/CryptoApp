@@ -85,3 +85,11 @@ export const enrichGroupedTransactions = (grouped) => {
     }
     return value.toFixed(decimals);
   };
+
+
+  export const formatDate = (transaction) => {
+    const [year, month, day] = transaction.date.split('-');
+    return `${day}/${month}/${year}`;
+  };
+  
+  

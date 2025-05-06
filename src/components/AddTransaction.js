@@ -26,39 +26,39 @@ import {
 function AddTransaction() {
   const [addTransaction, results] = useAddTransactionMutation();
 
-  const [triggerGetPrice, { data,isError, isFetching }] = useLazyFetchHistoricalPriceQuery()
+  const [triggerGetPrice,{isLoading}] = useLazyFetchHistoricalPriceQuery()
 
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.transactionForm);
   
   const [notification, setNotification] = useState(null);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate all required fields first
-    if (!formData.title || !formData.quantity || !formData.date || !formData.type) {
-      showNotification('Please fill in all required fields!', false);
-      return;
-    }
-  
+    // Provera da li su sva obavezna polja popunjena
+    if (!formData.title || !formData.quantity || !formData.date || !formData.type) throw new Error ('Molimo popunite sva obavezna polja!');
+    
     try {
-        
-        const rawDate = formData.date.split('T')[0]; // "2025-04-29T00:00:00" → "2025-04-29"
-        const coinGeckoDate = rawDate.split('-').reverse().join('-'); // "29-04-2025"
+      const rawDate = formData.date.split('T')[0]; // "2025-04-29T00:00:00" → "2025-04-29"
+      const coinGeckoDate = rawDate.split('-').reverse().join('-'); // "29-04-2025"
+  
       const priceResult = await triggerGetPrice({
-        coinId:formData.title.toLowerCase(),
+        coinId: formData.title.toLowerCase(),
         date: coinGeckoDate
       });
+      
 
-     
-      if (priceResult.error) {
-        showNotification('Failed to fetch cryptocurrency price!', false);
-        return;
-      }
+    
+  
+      if (priceResult.isError) throw new Error('Greška pri preuzimanju cene kriptovalute!');
+
+      
+
+  
       const priceAtTransaction = priceResult.data?.market_data.current_price['usd'];
       const totalValue = formData.quantity * priceAtTransaction;
-      // Add transaction to database
+  
+      // Dodaj transakciju u bazu
       await addTransaction({
         title: formData.title.toLowerCase(),
         quantity: formData.quantity,
@@ -67,14 +67,13 @@ function AddTransaction() {
         type: formData.type,
         priceAtTransaction,
         totalValue
-    
       });
   
-      showNotification('Transaction added successfully!', true);
+      showNotification('Transakcija je uspešno dodata!', true);
       dispatch(resetForm());
     } catch (error) {
-      showNotification('Failed to add transaction!', false);
-      console.error('Transaction error:', error);
+      console.log(error)
+      showNotification(error.message, false);
     }
   };
   
@@ -84,7 +83,7 @@ function AddTransaction() {
 
   const showNotification = (message, isSuccess) => {
     setNotification({ message, isSuccess });
-    setTimeout(() => setNotification(null), 1500);
+    setTimeout(() => setNotification(null), 2000);
   };
 
   const handleUseCurrentDate = () => {
@@ -217,10 +216,10 @@ function AddTransaction() {
         <div>
           <button
             type="submit"
-            disabled={results.isLoading}
+            disabled={isLoading || results.isLoading}
             className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center justify-center transition"
           >
-            {results.isLoading ? (
+            {isLoading || results.isLoading ? (
               <>
                 <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

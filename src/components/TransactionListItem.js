@@ -1,6 +1,6 @@
 import { useRemoveTransactionMutation } from "../store";
 import { ArrowUpIcon, ArrowDownIcon, TrashIcon } from '@heroicons/react/24/outline';
-
+import { formatDate } from "../helpers";
 function TransactionListItem({ transaction }) {
   const [removeTransaction, results] = useRemoveTransactionMutation();
 
@@ -15,7 +15,7 @@ function TransactionListItem({ transaction }) {
 
 
   return (
-    <div className="transition-all hover:bg-gray-100 dark:hover:bg-gray-900 p-4 rounded-lg">
+    <div key={transaction.id} className="transition-all hover:bg-gray-100 dark:hover:bg-gray-900 p-4 rounded-lg">
       <div className="flex justify-between items-start">
         <div className="flex items-start">
           <div className={`p-3 rounded-lg mr-4 ${
@@ -46,7 +46,7 @@ function TransactionListItem({ transaction }) {
               <br />
               <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
                 <span className="font-medium mr-1">Datum:</span>
-                {new Date(transaction.date).toLocaleDateString()}
+                {formatDate(transaction)}
               </div>
             </div>
             {transaction.description && (
