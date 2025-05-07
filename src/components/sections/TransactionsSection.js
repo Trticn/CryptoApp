@@ -25,7 +25,7 @@ export default function TransactionsSection({ transactions, isFetching }) {
           </div>
         ) : (
           <>
-            {transactions.slice(-3).map((tx, index) => (
+            {transactions.slice(0,3).map((tx, index) => (
               <div key={index} className="flex items-center hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors duration-200">
                 <div
                   className={`w-10 h-10 rounded-lg flex items-center justify-center mr-3 ${

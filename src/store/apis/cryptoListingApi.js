@@ -12,7 +12,7 @@ const cryptoListingApi = createApi({
         return{
             fetchPopularCrypto:builder.query({
                 query:()=> "/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1",
-       
+                keepUnusedDataFor:60,
                 providesTags:["PopularTransactions"]
             }),
 
@@ -23,6 +23,8 @@ const cryptoListingApi = createApi({
 
             fetchCryptoCollection:builder.query({
                 query: (ids) => `/coins/markets?vs_currency=usd&ids=${ids}`,
+                keepUnusedDataFor: 30,
+                
             }),
 
             fetchHistoricalPrice: builder.query({

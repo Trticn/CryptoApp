@@ -12,7 +12,10 @@ const transactionsApi = createApi({
         return{
           fetchTransactions:builder.query({
             query:()=> '/transactions',
-            providesTags:["Transactions"]
+            keepUnusedDataFor:180,
+            providesTags:["Transactions"],
+            transformResponse: (response) =>
+              [...response].sort((a, b) => new Date(b.date) - new Date(a.date)),
         }),
             addTransaction:builder.mutation({
                 query:(transaction)=>({

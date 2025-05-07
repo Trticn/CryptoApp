@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import CryptoListingItem from "./CryptoListingItem";
 import Skeleton from './Skeleton';
 import Pagination from './Pagination';
@@ -8,7 +8,10 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 
 function CryptoListing({ showThead }) {
-  const { data, error, isFetching } = useFetchPopularCryptoQuery();
+  const { data, error, isFetching } = useFetchPopularCryptoQuery(undefined, {
+    pollingInterval: 60000, 
+  });
+  
 
   const {
     currentPage,

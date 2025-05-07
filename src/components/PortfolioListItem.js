@@ -1,4 +1,5 @@
-import { formatValue,InfoRow } from "../helpers";
+
+import { formatNumber,InfoRow } from "../helpers";
 import { ArrowUpIcon,ArrowDownIcon,ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 
 function PortfolioListItem({ asset, onClick }) {
@@ -40,17 +41,17 @@ function PortfolioListItem({ asset, onClick }) {
             }`}
           >
             {profitPositive ? <ArrowUpIcon className="w-4 h-4" /> : <ArrowDownIcon className="w-4 h-4" />}
-            {formatValue(asset.profitPercent, 2)}%
+            {formatNumber(asset.profitPercent)}%
           </div>
         </div>
   
         <div className="space-y-2 text-sm">
-          <InfoRow   label="Količina" value={formatValue(asset.totalQuantity)} />
-          <InfoRow label="Prosečna cena" value={`$${formatValue(asset.averageBuyPrice, 4)}`} />
-          <InfoRow label="Trenutna cena" value={`$${formatValue(asset.currentPrice, 4)}`} />
-          <InfoRow  label="Uloženo" value={`$${formatValue(asset.totalInvested)}`} />
-          <InfoRow  label="Vrednost" value={`$${formatValue(asset.currentValue)}`} />
-          <InfoRow label="Profit" value={`$${formatValue(asset.profit)}`}
+          <InfoRow   label="Količina" value={formatNumber(asset.totalQuantity)} />
+          <InfoRow label="Prosečna cena" value={`$${formatNumber(asset.averageBuyPrice, 4)}`} />
+          <InfoRow label="Trenutna cena" value={`$${formatNumber(asset.currentPrice, 4)}`} />
+          <InfoRow  label="Uloženo" value={`$${formatNumber(asset.totalInvested)}`} />
+          <InfoRow  label="Vrednost" value={`$${formatNumber(asset.currentValue)}`} />
+          <InfoRow label="Profit" value={`$${formatNumber(asset.profit)}`}
             className={profitPositive ? 'text-green-700 dark:text-green-300 font-medium' : 'text-red-700 dark:text-red-300 font-medium'}
           />
         </div>

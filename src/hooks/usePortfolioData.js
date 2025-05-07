@@ -3,12 +3,17 @@ import { useMemo } from "react";
 import { useFetchTransactionsQuery, useFetchCryptoCollectionQuery } from '../store'
 import { groupTransactionsByCrypto, enrichGroupedTransactions } from "../helpers"
 
+
 export const usePortfolioData = () => {
   const { data: allTransactions, error, isFetching } = useFetchTransactionsQuery();
   const { data: cryptoCollection } = useFetchCryptoCollectionQuery(
     allTransactions?.map((tr) => tr.title),
-    { skip: !allTransactions }
+    {
+      skip: !allTransactions,
+      pollingInterval: 20000, // ⏱ osvežava svakih 30 sekundi
+    }
   );
+  
 
   const combined = useMemo(() => {
     if (!allTransactions || !cryptoCollection) return null;

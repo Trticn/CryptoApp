@@ -91,5 +91,39 @@ export const enrichGroupedTransactions = (grouped) => {
     const [year, month, day] = transaction.date.split('-');
     return `${day}/${month}/${year}`;
   };
+
+
+  export function formatNumber(num) {
+    if (num == null || isNaN(num)) return 'N/A';
+  
+    if (num >= 1_000_000_000 || num <= -1_000_000_000) {
+      return (num / 1_000_000_000).toFixed(2) + 'B';
+    }
+  
+    if (num >= 1_000_000 || num <= -1_000_000) {
+      return (num / 1_000_000).toFixed(2) + 'M';
+    }
+  
+    if (num >= 1_000 || num <= -1_000) {
+      return (num / 1_000).toFixed(2) + 'K';
+    }
+  
+    if (num >= 1 || num <= -1) {
+      return num.toFixed(2);
+    }
+  
+    if (num >= 0.01 || num <= -0.01) {
+      return num.toFixed(4);
+    }
+  
+    if (num >= 0.000001 || num <= -0.000001) {
+      return num.toFixed(6);
+    }
+  
+    return num.toExponential(2);
+  }
+  
+  
+  
   
   

@@ -1,5 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { formatValue, InfoRow } from '../helpers';
+import { formatNumber, InfoRow,formatDate } from '../helpers';
 
 
 
@@ -20,11 +20,16 @@ function CryptoModal ({ crypto, onClose }){
           </h2>
         </div>
         <button 
-          onClick={onClose}
-          className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-        >
-          <XMarkIcon className="w-6 h-6 text-gray-500 dark:text-gray-300" />
-        </button>
+  onClick={onClose}
+  className="absolute top-4 right-4 p-[10px] bg-white/70 dark:bg-gray-800/30 backdrop-blur-md rounded-full border border-gray-300 dark:border-gray-700 shadow-md hover:shadow-xl hover:bg-white/90 dark:hover:bg-gray-700/50 transition-all duration-300 group"
+  aria-label="Zatvori modal"
+>
+  <XMarkIcon className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-red-500 group-hover:scale-110 transition-all duration-300" />
+</button>
+
+
+
+
       </div>
   
       <div className="p-6 bg-gradient-to-b mb-8 from-gray-50 to-white dark:from-gray-800 dark:to-gray-700">
@@ -33,13 +38,13 @@ function CryptoModal ({ crypto, onClose }){
           <div>
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Tvoje investicije</h3>
             <div className="space-y-3 ">
-              <InfoRow  label="Ukupna količina" value={formatValue(crypto.totalQuantity)} />
-              <InfoRow label="Prosečna kupovna cena" value={`$${formatValue(crypto.averageBuyPrice, 4)}`} />
-              <InfoRow label="Ukupno uloženo" value={`$${formatValue(crypto.totalInvested)}`} />
-              <InfoRow label="Trenutna vrednost" value={`$${formatValue(crypto.currentValue)}`} />
+              <InfoRow  label="Ukupna količina" value={formatNumber(crypto.totalQuantity)} />
+              <InfoRow label="Prosečna kupovna cena" value={`$${formatNumber(crypto.averageBuyPrice, 4)}`} />
+              <InfoRow label="Ukupno uloženo" value={`$${formatNumber(crypto.totalInvested)}`} />
+              <InfoRow label="Trenutna vrednost" value={`$${formatNumber(crypto.currentValue)}`} />
               <InfoRow 
                 label="Profit" 
-                value={`$${formatValue(crypto.profit)} (${formatValue(crypto.profitPercent, 2)}%)`}
+                value={`$${formatNumber(crypto.profit)} (${formatNumber(crypto.profitPercent, 2)}%)`}
                 className={crypto.profit >= 0 ? 'text-green-500 font-medium' : 'text-red-500 font-medium'}
               />
             </div>
@@ -49,15 +54,15 @@ function CryptoModal ({ crypto, onClose }){
           <div>
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Tržišni podaci</h3>
             <div className="space-y-3">
-              <InfoRow label="Trenutna cena" value={`$${formatValue(crypto.currentPrice, 4)}`} />
+              <InfoRow label="Trenutna cena" value={`$${formatNumber(crypto.currentPrice, 4)}`} />
               <InfoRow 
                 label="Promena 24h" 
-                value={`${crypto.priceChange24h >= 0 ? '+' : ''}${formatValue(crypto.priceChange24h, 2)} (${formatValue(crypto.priceChangePercentage24h, 2)}%)`}
+                value={`${crypto.priceChange24h >= 0 ? '+' : ''}${formatNumber(crypto.priceChange24h, 2)} (${formatNumber(crypto.priceChangePercentage24h, 2)}%)`}
                 className={crypto.priceChange24h >= 0 ? 'text-green-500' : 'text-red-500'}
               />
-              <InfoRow label="Tržišna kapitalizacija" value={`$${formatValue(crypto.marketCap)}`} />
-              <InfoRow label="ATH" value={`$${formatValue(crypto.ath, 4)}`} />
-              <InfoRow label="ATL" value={`$${formatValue(crypto.atl, 4)}`} />
+              <InfoRow label="Tržišna kapitalizacija" value={`$${formatNumber(crypto.marketCap)}`} />
+              <InfoRow label="ATH" value={`$${formatNumber(crypto.ath, 4)}`} />
+              <InfoRow label="ATL" value={`$${formatNumber(crypto.atl, 4)}`} />
             </div>
           </div>
         </div>
@@ -80,7 +85,7 @@ function CryptoModal ({ crypto, onClose }){
                 {crypto.allTransactions.map((tx, index) => (
                   <tr key={index}>
                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      {new Date(tx.date).toLocaleDateString()}
+                      {formatDate(tx)}
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap text-sm font-medium">
                       <span className={`px-2 py-1 rounded-full text-xs ${
@@ -92,13 +97,13 @@ function CryptoModal ({ crypto, onClose }){
                       </span>
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      {formatValue(tx.quantity)}
+                      {formatNumber(tx.quantity)}
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      ${formatValue(tx.priceAtTransaction, 4)}
+                      ${formatNumber(tx.priceAtTransaction, 4)}
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      ${formatValue(tx.quantity * tx.priceAtTransaction)}
+                      ${formatNumber(tx.quantity * tx.priceAtTransaction)}
                     </td>
                   </tr>
                 ))}
@@ -106,16 +111,6 @@ function CryptoModal ({ crypto, onClose }){
             </table>
           </div>
         </div>
-      </div>
-  
-      <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
-      <button
-  onClick={onClose}
-  className="px-5 py-2 rounded-2xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-medium shadow-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition"
->
-  Zatvori
-</button>
-
       </div>
     </div>
   </div>

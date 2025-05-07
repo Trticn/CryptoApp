@@ -100,7 +100,7 @@ function AddTransaction() {
   };
   
   return (
-<div className="py-6 px-4 sm:px-6 lg:px-8">
+<div className="py-6 px-4 sm:px-6 lg:px-8 ">
   <div className="max-w-3xl mx-auto">
     <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-md rounded-2xl p-6 space-y-6 transition-colors">
       <h2 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
@@ -119,7 +119,7 @@ function AddTransaction() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form  onSubmit={handleSubmit} className="space-y-5 ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label htmlFor="title" className="block text-sm mb-1 text-zinc-600 dark:text-zinc-400">Cryptocurrency*</label>

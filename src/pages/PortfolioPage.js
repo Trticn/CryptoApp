@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { formatValue } from '../helpers';
+import { formatNumber } from '../helpers';
 import { ArrowsPointingOutIcon, ArrowsPointingInIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 import { usePortfolioData } from '../hooks/usePortfolioData';
 import CryptoModal from '../components/CryptoModal';
@@ -15,10 +15,11 @@ function PortfolioPage() {
     totalProfit,
     change24hPercent,
   } = usePortfolioData();
-
+  console.log(portfolio)
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedCrypto, setSelectedCrypto] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -87,7 +88,7 @@ function PortfolioPage() {
             {/* Ukupna vrednost */}
             <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-6 w-full sm:w-auto sm:min-w-[220px] hover:shadow-lg transition duration-300 sm:hover:-translate-y-1">
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Ukupna vrednost</p>
-              <p className="text-3xl font-bold text-gray-800 dark:text-white mb-2">${formatValue(totalValue)}</p>
+              <p className="text-3xl font-bold text-gray-800 dark:text-white mb-2">${formatNumber(totalValue)}</p>
               <div className={`flex items-center text-sm ${change24hPercent >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                 <span>{change24hPercent >= 0 ? '▲' : '▼'}</span>
                 <span className="ml-1">
@@ -99,19 +100,19 @@ function PortfolioPage() {
             {/* Ukupno uloženo */}
             <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-6 w-full sm:w-auto sm:min-w-[220px] hover:shadow-lg transition duration-300 sm:hover:-translate-y-1">
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Ukupno uloženo</p>
-              <p className="text-3xl font-bold text-gray-800 dark:text-white">${formatValue(totalInvested)}</p>
+              <p className="text-3xl font-bold text-gray-800 dark:text-white">${formatNumber(totalInvested)}</p>
             </div>
 
             {/* Ukupan profit */}
             <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-6 w-full sm:w-auto sm:min-w-[220px] hover:shadow-lg transition duration-300 sm:hover:-translate-y-1">
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Ukupan profit</p>
               <p className={`text-3xl font-bold mb-2 ${totalProfit >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                ${formatValue(totalProfit)} 
+                ${formatNumber(totalProfit)} 
               </p>
               <div className={`flex items-center text-sm ${totalProfit >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                 <span>{totalProfit >= 0 ? '▲' : '▼'}</span>
                 <span className="ml-1">
-                  {totalInvested > 0 ? formatValue((totalProfit / totalInvested) * 100, 2) : '0.00'}% ROI
+                  {totalInvested > 0 ? formatNumber((totalProfit / totalInvested) * 100, 2) : '0.00'}% ROI
                 </span>
                 {totalProfit >= 0 ? (
                   <span className="ml-2 px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs rounded-full">Dobit</span>

@@ -16,9 +16,7 @@ function TransactionList({ transactionType }) {
     filteredTransactions = filteredTransactions.filter(t => t.type === transactionType);
   }
   
-  filteredTransactions = [...filteredTransactions].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+
   
   const {
     currentPage,

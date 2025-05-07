@@ -1,16 +1,16 @@
 // components/cards/GainerCard.jsx
 import { FiTrendingUp,FiArrowUp } from "react-icons/fi";
-import { useTheme } from "../../context/ThemeContext";
+
 
 export default function GainerCard({ topGainer }) {
-  const { theme } = useTheme();
+
 
   return (
-    <div className={`w-full md:max-w-sm p-6 rounded-2xl shadow-lg border transition-all duration-300 ${
-      theme === 'light'
-        ? 'bg-gradient-to-br from-white to-gray-50 border-gray-200 hover:border-green-500 hover:shadow-green-500/20'
-        : 'bg-gradient-to-br from-gray-800 to-gray-700 border-gray-700 hover:border-green-500 hover:shadow-green-500/20'
-    }`}>
+    <div className='w-full md:max-w-sm p-6 rounded-2xl shadow-lg border transition-all duration-300 
+ 
+         bg-gradient-to-br from-white to-gray-50 border-gray-200 hover:border-green-500 hover:shadow-green-500/20
+        dark:bg-gradient-to-br  dark:from-gray-800  dark:to-gray-700  dark:border-gray-700  dark:hover:border-green-500  dark:hover:shadow-green-500/20'
+  >
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center mb-1">
@@ -34,11 +34,11 @@ export default function GainerCard({ topGainer }) {
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white">N/A</h2>
           )}
         </div>
-        <div className={`p-3 rounded-lg shadow-inner ${
-          theme === 'light'
-            ? 'bg-gradient-to-br from-green-100 to-green-50 border border-green-200'
-            : 'bg-gradient-to-br from-green-900/50 to-green-800/30 border border-green-800/20'
-        }`}>
+        <div className='p-3 rounded-lg shadow-inner 
+       
+            bg-gradient-to-br from-green-100 to-green-50 border border-green-200
+          dark:bg-gradient-to-br  dark:from-green-900/50  dark:to-green-800/30  dark:border  dark:border-green-800/20'
+        >
           {topGainer ? (
             <img
               src={topGainer.image}

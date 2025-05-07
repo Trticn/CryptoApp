@@ -1,5 +1,5 @@
-// components/ErrorScreen.jsx
-import React from 'react';
+
+
 
 export default function ErrorScreen({ title, message }) {
   return (

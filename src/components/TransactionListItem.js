@@ -1,6 +1,6 @@
 import { useRemoveTransactionMutation } from "../store";
 import { ArrowUpIcon, ArrowDownIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { formatDate } from "../helpers";
+import { formatDate,formatNumber } from "../helpers";
 function TransactionListItem({ transaction }) {
   const [removeTransaction, results] = useRemoveTransactionMutation();
 
@@ -15,7 +15,7 @@ function TransactionListItem({ transaction }) {
 
 
   return (
-    <div key={transaction.id} className="transition-all hover:bg-gray-100 dark:hover:bg-gray-900 p-4 rounded-lg">
+    <div key={transaction.id} className="transition-all min-h-[120px] hover:bg-gray-100 dark:hover:bg-gray-900 p-4 rounded-lg">
       <div className="flex justify-between items-start">
         <div className="flex items-start">
           <div className={`p-3 rounded-lg mr-4 ${
@@ -41,7 +41,7 @@ function TransactionListItem({ transaction }) {
               <br />
               <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
                 <span className="font-medium mr-1">Cena:</span>
-                <span className="capitalize">{transaction.priceAtTransaction}$</span>
+                <span className="capitalize">{formatNumber(transaction.priceAtTransaction)}$</span>
               </div>
               <br />
               <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
@@ -63,7 +63,7 @@ function TransactionListItem({ transaction }) {
                 ? 'text-green-500 dark:text-green-400'
                 : 'text-red-500 dark:text-red-400'
             }`}>
-              {transaction.type === 'buy' ? '+' : '-'}${transaction.totalValue.toFixed(2)}
+              {transaction.type === 'buy' ? '+' : '-'}${formatNumber(transaction.totalValue)}
             </p>
             <button
               onClick={handleRemoveTransaction}

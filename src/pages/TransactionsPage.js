@@ -57,7 +57,6 @@ function TransactionsPage() {
         </div>
       </header>
         <TransactionList transactionType={transactionType} />
-
     </div>
   );
 }
