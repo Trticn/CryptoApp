@@ -4,8 +4,12 @@ import { ArrowsPointingOutIcon, ArrowsPointingInIcon, ChartBarIcon } from '@hero
 import { usePortfolioData } from '../hooks/usePortfolioData';
 import CryptoModal from '../components/CryptoModal';
 import PortfolioList from '../components/PortfolioList';
+import { useSavePortfolioSnapshot } from '../hooks/useSavePortfolioSnapshot';
 
 function PortfolioPage() {
+  
+  useSavePortfolioSnapshot()
+
   const {
     portfolio,
     isFetching,
@@ -15,7 +19,6 @@ function PortfolioPage() {
     totalProfit,
     change24hPercent,
   } = usePortfolioData();
-  console.log(portfolio)
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedCrypto, setSelectedCrypto] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

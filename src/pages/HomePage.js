@@ -3,6 +3,7 @@ import React from "react";
 import { FiArrowDownCircle } from "react-icons/fi";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 import { Link } from "react-router-dom";
+import { useSavePortfolioSnapshot } from "../hooks/useSavePortfolioSnapshot.js";
 import Skeleton from "../components/Skeleton";
 import CryptoListing from "../components/CryptoListing";
 import BalanceCard from "../components/cards/BalanceCard";
@@ -15,6 +16,9 @@ import TransactionsSection from "../components/sections/TransactionsSection";
 
 
 function HomePage() {
+
+
+
   const {
     isFetching,
     error,
@@ -23,6 +27,8 @@ function HomePage() {
     highestValueAssets,
     allTransactions,
   } = usePortfolioData();
+
+  useSavePortfolioSnapshot();
 
   if (error) return (
     <ErrorScreen 
