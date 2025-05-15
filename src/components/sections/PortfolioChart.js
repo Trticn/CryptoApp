@@ -9,7 +9,9 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { useGetPortfolioSnapshotsQuery } from '../../store'
+import Skeleton from "../Skeleton";
 
 export default function PortfolioChartSection() {
   const { data: snapshots = [], isFetching } = useGetPortfolioSnapshotsQuery();
@@ -100,53 +102,33 @@ export default function PortfolioChartSection() {
     change: "#ef4444",
   };
 
+
+  let content;
+
+
+
   if (isFetching) {
-    return (
-      <div className="text-center py-8 text-gray-700 dark:text-gray-300">
-        Učitavanje podataka...
-      </div>
-    );
+  
+      content = <div className="space-y-3 p-4 w-full">
+            <Skeleton className="h-100 w-full rounded-xl dark:bg-gray-700" times={1} />
+          </div>
+    
   }
 
-  if (!snapshots || snapshots.length === 0) {
-    return (
-      <div className="text-center py-8 text-gray-700 dark:text-gray-300">
-        Nema dostupnih podataka o portfoliju.
-      </div>
-    );
+  else if (snapshots.length > 0) {
+   content =   <div className="p-4 sm:p-6 m-4 rounded-2xl shadow-sm">
+           <div className="flex items-center gap-3">
+             <InformationCircleIcon className="h-6 w-6  text-blue-600 dark:text-blue-400 mt-1 sm:mt-0" />
+             <p className="text-sm text-blue-800 dark:text-blue-300">
+                 Nema dostupnih podataka o portfoliju.
+             </p>
+           </div>
+         </div>
+    
   }
 
-  return (
-    <div className="flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-medium font-bold text-gray-800 dark:text-white">
-          Performanse portfolija
-        </h2>
-        <div className="flex space-x-2">
-          {[
-            { label: "Nedelja", value: "week" },
-            { label: "Mesec", value: "month" },
-            { label: "Godina", value: "year" },
-            { label: "Sve", value: "all" },
-          ].map((range) => (
-            <button
-              key={range.value}
-              onClick={() => setTimeRange(range.value)}
-              className={`px-3 py-1 text-xs rounded-full transition-colors ${
-                timeRange === range.value
-                  ? "bg-blue-500 dark:bg-blue-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-              }`}
-            >
-              {range.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="h-96 w-full flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
-        <div className="w-full h-full max-w-full">
-          <ResponsiveContainer width="100%" height="100%">
+  else{
+    content =  <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={chartData}
               margin={{ top: 10, right: 30, left: 0, bottom: 10 }}
@@ -229,6 +211,41 @@ export default function PortfolioChartSection() {
               />
             </LineChart>
           </ResponsiveContainer>
+  }
+
+
+
+  return (
+    <div className="flex-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-medium font-bold text-gray-800 dark:text-white">
+          Performanse portfolija
+        </h2>
+        <div className="flex space-x-2">
+          {[
+            { label: "Nedelja", value: "week" },
+            { label: "Mesec", value: "month" },
+            { label: "Godina", value: "year" },
+            { label: "Sve", value: "all" },
+          ].map((range) => (
+            <button
+              key={range.value}
+              onClick={() => setTimeRange(range.value)}
+              className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                timeRange === range.value
+                  ? "bg-blue-500 dark:bg-blue-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+              }`}
+            >
+              {range.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="h-96 w-full flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="w-full h-full max-w-full">
+         {content}
         </div>
       </div>
     </div>

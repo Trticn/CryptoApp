@@ -51,7 +51,7 @@ function HomePage() {
       <div className="bg-gradient-to-b mb-8 from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 rounded-2xl p-4 md:p-8 shadow-lg border border-gray-200 dark:border-gray-700">
         <div className="flex flex-col md:flex-row items-stretch gap-6 mb-8 justify-center relative z-10">
           {isFetching ? (
-            <div className="space-y-3 p-4 w-full">
+            <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 p-4 w-full">
               <Skeleton className="h-40 w-full rounded-xl dark:bg-gray-700" times={3} />
             </div>
           ) : (
