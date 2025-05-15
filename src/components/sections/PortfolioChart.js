@@ -115,7 +115,7 @@ export default function PortfolioChartSection() {
     
   }
 
-  else if (snapshots.length > 0) {
+  else if (snapshots.length === 0) {
    content =   <div className="p-4 sm:p-6 m-4 rounded-2xl shadow-sm">
            <div className="flex items-center gap-3">
              <InformationCircleIcon className="h-6 w-6  text-blue-600 dark:text-blue-400 mt-1 sm:mt-0" />
