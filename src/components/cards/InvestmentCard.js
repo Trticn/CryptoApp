@@ -1,7 +1,8 @@
 // components/cards/InvestmentCard.jsx
-import { FiAward, FiBarChart2 } from "react-icons/fi";
-export default function InvestmentCard({ asset }) {
+import { FiAward, FiBarChart2,FiArrowUp,FiArrowDown  } from "react-icons/fi";
 
+import { formatNumber } from "../../helpers";
+export default function InvestmentCard({ asset }) {
 
   return (
     <div className='w-full md:max-w-sm p-6 rounded-2xl shadow-lg border transition-all duration-300 
@@ -19,10 +20,24 @@ export default function InvestmentCard({ asset }) {
             {asset?.symbol?.toUpperCase() || "N/A"}
           </h2>
           {asset && (
-            <div className="text-sm text-green-600 dark:text-green-400 mt-1 font-medium">
-              {asset.totalQuantity?.toFixed(2)}{" "}
+            <div className="text-sm  items-center text-green-600 dark:text-green-400 mt-1 font-medium">
+              {formatNumber(asset.totalQuantity)}{" "}
               {asset.symbol?.toUpperCase()} (~$
-              {asset.currentValue?.toFixed(2)})
+              {formatNumber(asset.currentValue)})
+                 <div className="flex items-center ">
+                          {asset.priceChangePercentage24h > 0 ? (
+                            <FiArrowUp className="text-green-500 dark:text-green-400 mr-1" />
+                          ) : (
+                            <FiArrowDown className="text-red-500 dark:text-red-400 mr-1" />
+                          )}
+                          <span className={`text-sm font-medium ${
+                            asset.priceChangePercentage24h > 0
+                              ? "text-green-500 dark:text-green-400"
+                              : "text-red-500 dark:text-red-400"
+                          }`}>
+                            {asset.priceChangePercentage24h?.toFixed(2)}% danas 
+                          </span>
+                        </div>
             </div>
           )}
         </div>

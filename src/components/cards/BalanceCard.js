@@ -19,7 +19,7 @@ export default function BalanceCard({ totalValue, change24hPercent }) {
             <p className="text-gray-500 dark:text-gray-400 text-sm">Ukupno stanje</p>
           </div>
           <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
-            ${formatNumber(totalValue)}
+            ${formatNumber(totalValue) || 'NA'}
           </h2>
           <div className="flex items-center mt-2">
             {change24hPercent > 0 ? (

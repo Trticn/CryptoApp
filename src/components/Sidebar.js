@@ -12,7 +12,7 @@ function Sidebar({ isOpen, onClose }) {
 
       {/* Sidebar */}
       <div className={`absolute left-0 top-0 h-full w-72 bg-white dark:bg-gray-800 shadow-2xl rounded-r-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <div className="py-4 px-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl mr-3 shadow-md">
               N

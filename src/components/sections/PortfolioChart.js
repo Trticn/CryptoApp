@@ -18,7 +18,7 @@ export default function PortfolioChartSection() {
   const [timeRange, setTimeRange] = useState("month");
 
   const chartData = useMemo(() => {
-    if (!snapshots || snapshots.length === 0) return [];
+    if (!snapshots) return null;
   
     // First filter by date range
     const filteredData = snapshots.filter((snapshot) => {
@@ -95,13 +95,13 @@ export default function PortfolioChartSection() {
     return result;
   }, [snapshots, timeRange]);
 
-  const lineColors = {
-    value: "#6366f1",
-    invested: "#f59e0b",
-    profit: "#10b981",
-    change: "#ef4444",
-  };
-
+const lineColors = {
+  value: "#6366f1",
+  invested: "#f59e0b",
+  profit: "#10b981",
+  change: "#ef4444",
+  loss: "#991b1b", 
+};
 
   let content;
 
@@ -110,7 +110,7 @@ export default function PortfolioChartSection() {
   if (isFetching) {
   
       content = <div className="space-y-3 p-4 w-full">
-            <Skeleton className="h-100 w-full rounded-xl dark:bg-gray-700" times={1} />
+            <Skeleton className="h-80 w-full rounded-xl dark:bg-gray-700" times={1} />
           </div>
     
   }
@@ -168,7 +168,7 @@ export default function PortfolioChartSection() {
                 labelStyle={{ color: "#374151", fontWeight: 500 }}
                 itemStyle={{ color: "#4b5563" }}
                 formatter={(value,name) => {
-             
+                  
                   return [
                     `${name}: $${value.toFixed(2)}`
                   ];
@@ -200,6 +200,8 @@ export default function PortfolioChartSection() {
                 activeDot={{ r: 5 }}
                 name="Uloženo"
               />
+
+              
               <Line
                 type="monotone"
                 dataKey="profit"
@@ -209,6 +211,7 @@ export default function PortfolioChartSection() {
                 activeDot={{ r: 5 }}
                 name="Profit"
               />
+              
             </LineChart>
           </ResponsiveContainer>
   }

@@ -20,7 +20,7 @@ export default function GainerCard({ topGainer }) {
           {topGainer ? (
             <>
               <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-                {topGainer.symbol.toUpperCase()}
+             {topGainer?.symbol?.toUpperCase() || "N/A"}
               </h2>
               <div className="flex items-center mt-1">
                 <FiArrowUp className="text-green-500 dark:text-green-400 mr-1" />

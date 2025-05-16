@@ -38,7 +38,7 @@ function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <div className="w-8 h8 rounded-lg flex items-center justify-center mr-3">
-              <img src={crypto}/>
+              <img alt='K' src={crypto}/>
             </div>
           </Link>
           
