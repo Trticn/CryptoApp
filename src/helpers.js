@@ -94,7 +94,7 @@ export const enrichGroupedTransactions = (grouped) => {
 
 
   export function formatNumber(num) {
-   if (num == null || isNaN(num) || !isFinite(num)) return 'N/A';
+   if (num == null || isNaN(num) || !isFinite(num) || num === 0) return 'N/A';
 
   
     if (num >= 1_000_000_000 || num <= -1_000_000_000) {
@@ -121,7 +121,7 @@ export const enrichGroupedTransactions = (grouped) => {
       return num.toFixed(6);
     }
   
-    return num.toExponential(2);
+    return Math.abs(num);
   }
   
   

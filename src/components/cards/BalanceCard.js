@@ -4,7 +4,7 @@ import { FiPieChart, FiDollarSign,FiArrowUp,FiArrowDown } from "react-icons/fi";
 import { formatNumber } from "../../helpers";
 
 export default function BalanceCard({ totalValue, change24hPercent }) {
-
+console.log(totalValue)
 
   return (
     <div className='w-full md:max-w-sm p-6 rounded-2xl shadow-lg border transition-all duration-300 

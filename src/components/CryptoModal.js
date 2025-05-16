@@ -39,12 +39,12 @@ function CryptoModal ({ crypto, onClose }){
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Tvoje investicije</h3>
             <div className="space-y-3 ">
               <InfoRow  label="Ukupna količina" value={formatNumber(crypto.totalQuantity)} />
-              <InfoRow label="Prosečna kupovna cena" value={`$${formatNumber(crypto.averageBuyPrice, 4)}`} />
+              <InfoRow label="Prosečna kupovna cena" value={`$${formatNumber(crypto.averageBuyPrice)}`} />
               <InfoRow label="Ukupno uloženo" value={`$${formatNumber(crypto.totalInvested)}`} />
               <InfoRow label="Trenutna vrednost" value={`$${formatNumber(crypto.currentValue)}`} />
               <InfoRow 
                 label="Profit" 
-                value={`$${formatNumber(crypto.profit)} (${formatNumber(crypto.profitPercent, 2)}%)`}
+                value={`$${formatNumber(crypto.profit)} (${formatNumber(crypto.profitPercent)}%)`}
                 className={crypto.profit >= 0 ? 'text-green-500 font-medium' : 'text-red-500 font-medium'}
               />
             </div>
@@ -54,15 +54,15 @@ function CryptoModal ({ crypto, onClose }){
           <div>
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Tržišni podaci</h3>
             <div className="space-y-3">
-              <InfoRow label="Trenutna cena" value={`$${formatNumber(crypto.currentPrice, 4)}`} />
+              <InfoRow label="Trenutna cena" value={`$${formatNumber(crypto.currentPrice)}`} />
               <InfoRow 
                 label="Promena 24h" 
-                value={`${crypto.priceChange24h >= 0 ? '+' : ''}${formatNumber(crypto.priceChange24h, 2)} (${formatNumber(crypto.priceChangePercentage24h, 2)}%)`}
+                value={`${crypto.priceChange24h >= 0 ? '+' : ''}${formatNumber(crypto.priceChange24h)} (${formatNumber(crypto.priceChangePercentage24h)}%)`}
                 className={crypto.priceChange24h >= 0 ? 'text-green-500' : 'text-red-500'}
               />
               <InfoRow label="Tržišna kapitalizacija" value={`$${formatNumber(crypto.marketCap)}`} />
-              <InfoRow label="ATH" value={`$${formatNumber(crypto.ath, 4)}`} />
-              <InfoRow label="ATL" value={`$${formatNumber(crypto.atl, 4)}`} />
+              <InfoRow label="ATH" value={`$${formatNumber(crypto.ath)}`} />
+              <InfoRow label="ATL" value={`$${formatNumber(crypto.atl)}`} />
             </div>
           </div>
         </div>
