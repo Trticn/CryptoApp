@@ -18,7 +18,7 @@ export default function PortfolioChartSection() {
   const [timeRange, setTimeRange] = useState("month");
 
   const chartData = useMemo(() => {
-    if (!snapshots) return null;
+    if (!snapshots) return null ;
   
     // First filter by date range
     const filteredData = snapshots.filter((snapshot) => {
@@ -128,7 +128,7 @@ const lineColors = {
   }
 
   else{
-    content =  <ResponsiveContainer width="100%" height="100%">
+    content =  <ResponsiveContainer width="100%" height='100%'>
     <LineChart
       data={chartData}
       margin={{ top: 10, right: 20, left: -10, bottom: 10 }}
@@ -214,38 +214,36 @@ const lineColors = {
   }
 
 
-return (
-  <div className="h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 flex flex-col">
-    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-      <h2 className="text-medium font-bold text-gray-800 dark:text-white">
-        Performanse portfolija
-      </h2>
-      <div className="flex flex-wrap gap-2">
-        {[{ label: "Nedelja", value: "week" }, { label: "Mesec", value: "month" }, { label: "Godina", value: "year" }, { label: "Sve", value: "all" }].map((range) => (
-          <button
-            key={range.value}
-            onClick={() => setTimeRange(range.value)}
-            className={`px-3 py-1 text-xs rounded-full transition-colors ${
-              timeRange === range.value
-                ? "bg-blue-500 dark:bg-blue-600 text-white"
-                : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-            }`}
-          >
-            {range.label}
-          </button>
-        ))}
+  return (
+    <div className="h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 flex flex-col min-h-[400px]">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+        <h2 className="text-medium font-bold text-gray-800 dark:text-white">
+          Performanse portfolija
+        </h2>
+        <div className="flex flex-wrap gap-2">
+          {[{ label: "Nedelja", value: "week" }, { label: "Mesec", value: "month" }, { label: "Godina", value: "year" }, { label: "Sve", value: "all" }].map((range) => (
+            <button
+              key={range.value}
+              onClick={() => setTimeRange(range.value)}
+              className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                timeRange === range.value
+                  ? "bg-blue-500 dark:bg-blue-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+              }`}
+            >
+              {range.label}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
 
-    {/* Ovaj div zauzima preostali prostor u roditelju */}
-    <div className="flex-1 w-full min-h-[300px] flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 overflow-x-auto">
-      {/* content je punih dimenzija */}
-      <div className="w-full h-full max-w-full">
-        {content}
+      <div className="flex-1 w-full flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="w-full h-[300px] sm:h-full max-w-full">
+          {content}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 
 
 }
