@@ -20,7 +20,7 @@ export default function InvestmentCard({ asset }) {
             {asset?.symbol?.toUpperCase() || "N/A"}
           </h2>
           {asset && (
-            <div className="text-sm  items-center text-green-600 dark:text-green-400 mt-1 font-medium">
+            <div className="text-sm  items-center text-green-500 dark:text-green-400 mt-1 font-medium">
               {formatNumber(asset.totalQuantity)}{" "}
               {asset.symbol?.toUpperCase()} (~$
               {formatNumber(asset.currentValue)})

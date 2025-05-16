@@ -7,6 +7,7 @@ import { primaryNavLinks } from '../config/Links';
 import { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import Sidebar from './Sidebar';
+import Search from './Search';
 
 function Header() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -25,7 +26,7 @@ function Header() {
 
   return (
     <>
-      <header className="w-screen flex justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-40">
+      <header className="w-screen flex h-20 justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-40">
         <div className="flex items-center">
           {/* Mobile menu button */}
           <button 
@@ -58,35 +59,46 @@ function Header() {
               ))}
             </ul>
           </nav>
+          
         </div>
-        
-        {/* Right side controls */}
-        <div className="flex items-center space-x-3">
-          {/* Theme toggle */}
-          <button 
-            onClick={toggleTheme}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          >
-            {theme === 'light' ? (
-              <FiMoon className="text-gray-600 dark:text-gray-300" />
-            ) : (
-              <FiSun className="text-gray-600 dark:text-gray-300" />
-            )}
-          </button>
-          
-     
-          
-          <button 
-            onClick={handleRefresh}
-            className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${isRefreshing ? 'animate-spin' : ''}`}
-          >
-            <FiRefreshCw className="text-gray-600 dark:text-gray-300" />
-          </button>
-          
 
-          
-          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 cursor-pointer"></div>
-        </div>
+             
+        
+<div className="flex items-center gap-4 w-full max-w-5xl justify-end">
+  {/* Search na desktopu */}
+  <div className="hidden md:block flex-1">
+    <Search />
+  </div>
+
+  {/* Search dugme na mobilnom */}
+  <div className="md:hidden">
+    <Search />
+  </div>
+
+  {/* Ikonice */}
+  <div className="flex items-center gap-4">
+    <button 
+      onClick={toggleTheme}
+      className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+    >
+      {theme === 'light' ? (
+        <FiMoon className="text-gray-600 dark:text-gray-300" />
+      ) : (
+        <FiSun className="text-gray-600 dark:text-gray-300" />
+      )}
+    </button>
+
+    <button 
+      onClick={handleRefresh}
+      className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${isRefreshing ? 'animate-spin' : ''}`}
+    >
+      <FiRefreshCw className="text-gray-600 dark:text-gray-300" />
+    </button>
+
+    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 cursor-pointer"></div>
+  </div>
+</div>
+
       </header>
 
       {/* Mobile sidebar */}

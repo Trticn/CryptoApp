@@ -84,23 +84,25 @@ function HomePage() {
       </div>
 
       {/* Main Content Below */}
-      <div className="flex flex-col lg:flex-row gap-6 mb-8">
-        {/* Left Section - Chart */}
-        <PortfolioChartSection />
-        
-        {/* Right Section */}
-        <div className="w-full lg:w-96 flex flex-col gap-6">
-          <InvestmentsSection 
-            assets={highestValueAssets} 
-            isFetching={isFetching} 
-          />
-          
-          <TransactionsSection 
-            transactions={allTransactions} 
-            isFetching={isFetching} 
-          />
-        </div>
-      </div>
+     <div className="flex flex-col xl:flex-row gap-6 mb-8 items-stretch">
+  {/* Leva strana: grafikon zauzima sav raspoloživi prostor i iste je visine kao desna strana */}
+  <div className="flex-1">
+    <PortfolioChartSection />
+  </div>
+
+  {/* Desna strana: investicije i transakcije */}
+  <div className="w-full xl:w-96 flex flex-col gap-6">
+    <InvestmentsSection 
+      assets={highestValueAssets} 
+      isFetching={isFetching} 
+    />
+
+    <TransactionsSection 
+      transactions={allTransactions} 
+      isFetching={isFetching} 
+    />
+  </div>
+</div>
 
       <CryptoListing showThead={true} />
     </div>

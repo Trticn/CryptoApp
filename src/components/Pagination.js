@@ -1,5 +1,10 @@
 import React from "react";
-import { FiChevronLeft, FiChevronRight,FiChevronsLeft,FiChevronsRight  } from "react-icons/fi";
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiChevronsLeft,
+  FiChevronsRight,
+} from "react-icons/fi";
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
   const pages = [];
@@ -16,33 +21,34 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
     pages.push(i);
   }
 
-  
-
   return (
-  <div className="flex justify-center items-center mt-6 space-x-2">
+  <div className="flex justify-center items-center mt-6 gap-1 sm:gap-2 md:gap-3 flex-wrap">
+    {/* Prva stranica */}
     <button
       onClick={() => onPageChange(1)}
       disabled={currentPage === 1}
-      className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-40 transition"
+      className="p-2 sm:p-2.5 md:p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-40 transition"
       aria-label="Prva stranica"
     >
-      <FiChevronsLeft size={20} />
+      <FiChevronsLeft className="text-base sm:text-lg md:text-xl" />
     </button>
 
+    {/* Prethodna */}
     <button
       onClick={() => onPageChange(currentPage - 1)}
       disabled={currentPage === 1}
-      className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-40 transition"
+      className="p-2 sm:p-2.5 md:p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-40 transition"
       aria-label="Prethodna"
     >
-      <FiChevronLeft size={20} />
+      <FiChevronLeft className="text-base sm:text-lg md:text-xl" />
     </button>
 
+    {/* Brojevi stranica */}
     {pages.map((page) => (
       <button
         key={page}
         onClick={() => onPageChange(page)}
-        className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+        className={`px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full text-sm sm:text-base md:text-lg font-medium transition ${
           page === currentPage
             ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow"
             : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
@@ -52,24 +58,24 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       </button>
     ))}
 
-
+    {/* Sledeća */}
     <button
       onClick={() => onPageChange(currentPage + 1)}
       disabled={currentPage === totalPages}
-      className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-40 transition"
+      className="p-2 sm:p-2.5 md:p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-40 transition"
       aria-label="Sledeća"
     >
-      <FiChevronRight size={20} />
+      <FiChevronRight className="text-base sm:text-lg md:text-xl" />
     </button>
 
-
+    {/* Poslednja stranica */}
     <button
       onClick={() => onPageChange(totalPages)}
       disabled={currentPage === totalPages}
-      className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-40 transition"
+      className="p-2 sm:p-2.5 md:p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-40 transition"
       aria-label="Poslednja stranica"
     >
-      <FiChevronsRight size={20} />
+      <FiChevronsRight className="text-base sm:text-lg md:text-xl" />
     </button>
   </div>
 );

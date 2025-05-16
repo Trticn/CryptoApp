@@ -48,8 +48,7 @@ function PortfolioPage() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = '';
-
+    document.body.style.overflow = 'visible';
     setSelectedCrypto(null);
   };
 
