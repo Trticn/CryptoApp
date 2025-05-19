@@ -1,6 +1,6 @@
-import { useRemoveTransactionMutation } from "../store";
+import { useRemoveTransactionMutation } from '../store';
 import { ArrowUpIcon, ArrowDownIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { formatDate,formatNumber } from "../helpers";
+import { formatDate, formatNumber } from '../helpers';
 function TransactionListItem({ transaction }) {
   const [removeTransaction, results] = useRemoveTransactionMutation();
 
@@ -12,17 +12,20 @@ function TransactionListItem({ transaction }) {
     }
   };
 
-
-
   return (
-    <div key={transaction.id} className="transition-all min-h-[120px] hover:bg-gray-100 dark:hover:bg-gray-900 p-4 rounded-lg">
+    <div
+      key={transaction.id}
+      className="transition-all min-h-[120px] hover:bg-gray-100 dark:hover:bg-gray-900 p-4 rounded-lg"
+    >
       <div className="flex justify-between items-start">
         <div className="flex items-start">
-          <div className={`p-3 rounded-lg mr-4 ${
-            transaction.type === 'buy'
-              ? 'bg-green-100 text-green-700 dark:bg-green-800/20 dark:text-green-400'
-              : 'bg-red-100 text-red-700 dark:bg-red-800/20 dark:text-red-400'
-          }`}>
+          <div
+            className={`p-3 rounded-lg mr-4 ${
+              transaction.type === 'buy'
+                ? 'bg-green-100 text-green-700 dark:bg-green-800/20 dark:text-green-400'
+                : 'bg-red-100 text-red-700 dark:bg-red-800/20 dark:text-red-400'
+            }`}
+          >
             {transaction.type === 'buy' ? (
               <ArrowUpIcon className="h-5 w-5" />
             ) : (
@@ -58,11 +61,13 @@ function TransactionListItem({ transaction }) {
         </div>
         <div className="flex flex-col items-end">
           <div className="flex items-center">
-            <p className={`text-lg font-semibold ${
-              transaction.type === 'buy'
-                ? 'text-green-500 dark:text-green-400'
-                : 'text-red-500 dark:text-red-400'
-            }`}>
+            <p
+              className={`text-lg font-semibold ${
+                transaction.type === 'buy'
+                  ? 'text-green-500 dark:text-green-400'
+                  : 'text-red-500 dark:text-red-400'
+              }`}
+            >
               {transaction.type === 'buy' ? '+' : '-'}${formatNumber(transaction.totalValue)}
             </p>
             <button

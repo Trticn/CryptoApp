@@ -1,47 +1,30 @@
 // pages/HomePage.jsx
-import React from "react";
-import { FiArrowDownCircle } from "react-icons/fi";
-import { usePortfolioData } from "../hooks/usePortfolioData";
-import { Link } from "react-router-dom";
-import { useSavePortfolioSnapshot } from "../hooks/useSavePortfolioSnapshot.js";
-import Skeleton from "../components/Skeleton";
-import CryptoListing from "../components/CryptoListing";
-import BalanceCard from "../components/cards/BalanceCard";
-import InvestmentCard from "../components/cards/InvestmentCard.js";
-import GainerCard from "../components/cards/GainerCard";
-import ErrorScreen from "../components/ErrorScreen";
-import PortfolioChartSection from "../components/sections/PortfolioChart";
-import InvestmentsSection from "../components/sections/InvestmentSection";
-import TransactionsSection from "../components/sections/TransactionsSection";
-
+import React from 'react';
+import { FiArrowDownCircle } from 'react-icons/fi';
+import { usePortfolioData } from '../hooks/usePortfolioData';
+import { Link } from 'react-router-dom';
+import { useSavePortfolioSnapshot } from '../hooks/useSavePortfolioSnapshot.js';
+import Skeleton from '../components/Skeleton';
+import CryptoListing from '../components/CryptoListing';
+import BalanceCard from '../components/cards/BalanceCard';
+import InvestmentCard from '../components/cards/InvestmentCard.js';
+import GainerCard from '../components/cards/GainerCard';
+import ErrorScreen from '../components/ErrorScreen';
+import PortfolioChartSection from '../components/sections/PortfolioChart';
+import InvestmentsSection from '../components/sections/InvestmentSection';
+import TransactionsSection from '../components/sections/TransactionsSection';
 
 function HomePage() {
-
-
-
-  const {
-    isFetching,
-    error,
-    totalValue,
-    change24hPercent,
-    highestValueAssets,
-    allTransactions,
-  } = usePortfolioData();
+  const { isFetching, error, totalValue, change24hPercent, highestValueAssets, allTransactions } =
+    usePortfolioData();
 
   useSavePortfolioSnapshot();
 
-  if (error) return (
-    <ErrorScreen 
-      title="Greška pri učitavanju" 
-      message="Došlo je do problema."
-    />
-  );
+  if (error) return <ErrorScreen title="Greška pri učitavanju" message="Došlo je do problema." />;
 
   const topGainer = highestValueAssets.length
     ? highestValueAssets.reduce((prev, current) =>
-        prev.priceChangePercentage24h > current.priceChangePercentage24h
-          ? prev
-          : current
+        prev.priceChangePercentage24h > current.priceChangePercentage24h ? prev : current,
       )
     : null;
 
@@ -56,18 +39,11 @@ function HomePage() {
             </div>
           ) : (
             <>
-              <BalanceCard 
-                totalValue={totalValue} 
-                change24hPercent={change24hPercent} 
-              />
-              
-              <InvestmentCard 
-                asset={highestValueAssets[0]} 
-              />
-              
-              <GainerCard 
-                topGainer={topGainer} 
-              />
+              <BalanceCard totalValue={totalValue} change24hPercent={change24hPercent} />
+
+              <InvestmentCard asset={highestValueAssets[0]} />
+
+              <GainerCard topGainer={topGainer} />
             </>
           )}
         </div>
@@ -84,25 +60,19 @@ function HomePage() {
       </div>
 
       {/* Main Content Below */}
-     <div className="flex flex-col xl:flex-row gap-6 mb-8 items-stretch">
-  {/* Leva strana: grafikon zauzima sav raspoloživi prostor i iste je visine kao desna strana */}
-  <div className="flex-1">
-    <PortfolioChartSection />
-  </div>
+      <div className="flex flex-col xl:flex-row gap-6 mb-8 items-stretch">
+        {/* Leva strana: grafikon zauzima sav raspoloživi prostor i iste je visine kao desna strana */}
+        <div className="flex-1">
+          <PortfolioChartSection />
+        </div>
 
-  {/* Desna strana: investicije i transakcije */}
-  <div className="w-full xl:w-96 flex flex-col gap-6">
-    <InvestmentsSection 
-      assets={highestValueAssets} 
-      isFetching={isFetching} 
-    />
+        {/* Desna strana: investicije i transakcije */}
+        <div className="w-full xl:w-96 flex flex-col gap-6">
+          <InvestmentsSection assets={highestValueAssets} isFetching={isFetching} />
 
-    <TransactionsSection 
-      transactions={allTransactions} 
-      isFetching={isFetching} 
-    />
-  </div>
-</div>
+          <TransactionsSection transactions={allTransactions} isFetching={isFetching} />
+        </div>
+      </div>
 
       <CryptoListing showThead={true} />
     </div>

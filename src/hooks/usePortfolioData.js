@@ -1,8 +1,7 @@
 // hooks/usePortfolioData.js
-import { useMemo } from "react";
-import { useFetchTransactionsQuery, useFetchCryptoCollectionQuery } from '../store'
-import { groupTransactionsByCrypto, enrichGroupedTransactions } from "../helpers"
-
+import { useMemo } from 'react';
+import { useFetchTransactionsQuery, useFetchCryptoCollectionQuery } from '../store';
+import { groupTransactionsByCrypto, enrichGroupedTransactions } from '../helpers';
 
 export const usePortfolioData = () => {
   const { data: allTransactions, error, isFetching } = useFetchTransactionsQuery();
@@ -11,15 +10,14 @@ export const usePortfolioData = () => {
     {
       skip: !allTransactions,
       pollingInterval: 20000, // ⏱ osvežava svakih 30 sekundi
-    }
+    },
   );
-  
 
   const combined = useMemo(() => {
     if (!allTransactions || !cryptoCollection) return null;
     return allTransactions.map((transaction) => {
       const matchingCrypto = cryptoCollection.find(
-        (crypto) => crypto.id.toLowerCase() === transaction.title.toLowerCase()
+        (crypto) => crypto.id.toLowerCase() === transaction.title.toLowerCase(),
       );
       return {
         ...transaction,
@@ -52,7 +50,7 @@ export const usePortfolioData = () => {
     totalProfit,
     change24hValue,
     change24hPercent,
-    highestValueAssets
+    highestValueAssets,
   } = useMemo(() => {
     if (!portfolio) {
       return {
@@ -61,21 +59,21 @@ export const usePortfolioData = () => {
         totalProfit: 0,
         change24hValue: 0,
         change24hPercent: 0,
-        highestValueAssets: []
+        highestValueAssets: [],
       };
     }
 
     const totalVal = portfolio.reduce((sum, asset) => sum + asset.currentValue, 0);
     const totalInv = portfolio.reduce((sum, asset) => sum + asset.totalInvested, 0);
-    const highestValueAssets =  portfolio
-    .sort((a, b) => b.currentValue - a.currentValue)  // sortiraj opadajuće
-    .slice(0, 3);                                     // uzmi prva 3
+    const highestValueAssets = portfolio
+      .sort((a, b) => b.currentValue - a.currentValue) // sortiraj opadajuće
+      .slice(0, 3); // uzmi prva 3
     const totalProfit = totalVal - totalInv;
 
     const change24hVal = portfolio.reduce((sum, asset) => {
       const percent = asset.priceChangePercentage24h;
       if (percent == null) return sum;
-      return sum + (asset.currentValue * percent / 100);
+      return sum + (asset.currentValue * percent) / 100;
     }, 0);
 
     const change24hPercent = totalVal > 0 ? (change24hVal / totalVal) * 100 : 0;
@@ -86,7 +84,7 @@ export const usePortfolioData = () => {
       totalProfit: totalProfit,
       change24hValue: change24hVal,
       change24hPercent,
-      highestValueAssets
+      highestValueAssets,
     };
   }, [portfolio]);
 
@@ -102,6 +100,6 @@ export const usePortfolioData = () => {
     change24hPercent,
     isFetching,
     highestValueAssets,
-    error
+    error,
   };
 };

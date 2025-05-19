@@ -1,8 +1,8 @@
-import CryptoListingItem from "./CryptoListingItem";
+import CryptoListingItem from './CryptoListingItem';
 import Skeleton from './Skeleton';
 import Pagination from './Pagination';
 import usePagination from '../hooks/usePagination';
-import { useFetchPopularCryptoQuery } from "../store";
+import { useFetchPopularCryptoQuery } from '../store';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 function CryptoListing({ showThead }) {
@@ -10,12 +10,7 @@ function CryptoListing({ showThead }) {
     pollingInterval: 60000,
   });
 
-  const {
-    currentPage,
-    setCurrentPage,
-    paginationData,
-    totalPages,
-  } = usePagination(data);
+  const { currentPage, setCurrentPage, paginationData, totalPages } = usePagination(data);
 
   let content;
 

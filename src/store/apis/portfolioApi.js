@@ -21,9 +21,6 @@ const portfolioApi = createApi({
   }),
 });
 
-export const {
-  useGetPortfolioSnapshotsQuery,
-  useAddPortfolioSnapshotMutation,
-} = portfolioApi;
+export const { useGetPortfolioSnapshotsQuery, useAddPortfolioSnapshotMutation } = portfolioApi;
 
-export {portfolioApi}
+export { portfolioApi };

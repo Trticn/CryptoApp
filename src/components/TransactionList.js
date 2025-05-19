@@ -1,30 +1,21 @@
-import { useFetchTransactionsQuery } from "../store";
+import { useFetchTransactionsQuery } from '../store';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import Skeleton from "./Skeleton";
-import TransactionListItem from "./TransactionListItem.js";
-import Pagination from "./Pagination.js";
-import usePagination from "../hooks/usePagination.js";
+import Skeleton from './Skeleton';
+import TransactionListItem from './TransactionListItem.js';
+import Pagination from './Pagination.js';
+import usePagination from '../hooks/usePagination.js';
 
 function TransactionList({ transactionType }) {
   const { data, error, isFetching } = useFetchTransactionsQuery();
 
-  
-
   let filteredTransactions = data ?? [];
 
   if (transactionType !== 'all') {
-    filteredTransactions = filteredTransactions.filter(t => t.type === transactionType);
+    filteredTransactions = filteredTransactions.filter((t) => t.type === transactionType);
   }
-  
 
-  
-  const {
-    currentPage,
-    setCurrentPage,
-    paginationData,
-    totalPages,
-  } = usePagination(filteredTransactions);
-
+  const { currentPage, setCurrentPage, paginationData, totalPages } =
+    usePagination(filteredTransactions);
 
   let content;
 
@@ -45,8 +36,6 @@ function TransactionList({ transactionType }) {
         </div>
       </div>
     );
-    
-   
   } else if (filteredTransactions.length === 0) {
     content = (
       <div className="p-4 sm:p-6 m-4 rounded-2xl border border-blue-300 dark:border-blue-800  shadow-sm">
@@ -55,38 +44,36 @@ function TransactionList({ transactionType }) {
           <p className="text-sm text-blue-800 dark:text-blue-300">
             {transactionType === 'all'
               ? 'Nema pronađenih transakcija.'
-              : `Nema pronađenih ${transactionType === 'sell' ? 'izlaznih' : 'ulaznih'} transakcija.`}
+              : `Nema pronađenih ${
+                  transactionType === 'sell' ? 'izlaznih' : 'ulaznih'
+                } transakcija.`}
           </p>
         </div>
       </div>
     );
   } else {
-
-      content = (
-        <div className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
-          {paginationData.map((transaction) => (
-            <TransactionListItem  
-              key={transaction.id} 
-              transaction={transaction}
-            />
-          ))}
-        </div>
-      );
-    
+    content = (
+      <div className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
+        {paginationData.map((transaction) => (
+          <TransactionListItem key={transaction.id} transaction={transaction} />
+        ))}
+      </div>
+    );
   }
-  
 
-  return <>
-  {content}
+  return (
+    <>
+      {content}
 
-   {totalPages > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
-        )}
-  </>;
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
+    </>
+  );
 }
 
 export default TransactionList;
