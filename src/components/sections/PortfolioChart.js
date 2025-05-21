@@ -186,7 +186,7 @@ export default function PortfolioChartSection() {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 flex flex-col flex-wrap min-h-[400px]">
+    <div className="bg-white dark:bg-gray-800 h-full rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 flex flex-col flex-wrap min-h-[400px]">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <h2 className="text-medium font-bold text-gray-800 dark:text-white">
           Performanse portfolija

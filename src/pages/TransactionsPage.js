@@ -8,7 +8,7 @@ function TransactionsPage() {
   return (
     <div className="p-6 md:p-10">
       <header className="mb-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-5">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <ListBulletIcon className="w-6 h-6" />
@@ -19,7 +19,7 @@ function TransactionsPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md px-3 py-2 transition-all duration-300">
+          <div className="flex items-center justify-between  bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md px-3 py-2 transition-all duration-300">
             <button
               onClick={() => setTransactionType('all')}
               className={`px-4 py-1.5 rounded-xl text-sm font-medium transition-all duration-200 ease-in-out transform hover:scale-105 ${

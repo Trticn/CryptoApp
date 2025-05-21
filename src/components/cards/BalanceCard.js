@@ -6,7 +6,7 @@ import { formatNumber } from '../../helpers';
 export default function BalanceCard({ totalValue, change24hPercent }) {
   return (
     <div
-      className="w-full md:max-w-sm p-6 rounded-2xl shadow-lg border transition-all duration-300 
+      className="w-full  p-6 rounded-2xl shadow-lg border transition-all duration-300 
      
         bg-gradient-to-br from-white to-gray-50 border-gray-200 hover:border-blue-500 hover:shadow-blue-500/20
         dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-700 dark:border-gray-700 dark:hover:border-blue-500 dark:hover:shadow-blue-500/20

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import PortfolioListItem from './PortfolioListItem';
 import { ChartBarIcon } from '@heroicons/react/24/outline';
 
@@ -17,9 +18,12 @@ function PortfolioList({ portfolio, openCryptoModal, isFullscreen }) {
           Trenutno nemaš nijednu kripto transakciju. Kada dodaš svoju prvu transakciju, ovde ćeš
           videti pregled svog portfolija.
         </p>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+        <Link
+          to="/add-transaction"
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+        >
           Dodaj prvu transakciju
-        </button>
+        </Link>
       </div>
     );
 

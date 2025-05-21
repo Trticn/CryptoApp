@@ -15,8 +15,20 @@ const cryptoListingApi = createApi({
       }),
 
       fetchSearchedCrypto: builder.query({
-        query: (id) => `https://api.coingecko.com/api/v3/coins/${id}`,
-        providesTags: ['SingleCrypto'],
+        async queryFn(arg, _queryApi, _extraOptions, fetchWithBQ) {
+          const searchResult = await fetchWithBQ(`search?query=${arg}`);
+          if (searchResult.error) return { error: searchResult.error };
+
+          const ids = searchResult.data.coins.map((coin) => coin.id).join(',');
+          if (!ids) return { data: [] };
+
+          const pricesResult = await fetchWithBQ(
+            `coins/markets?vs_currency=usd&ids=${ids}&sparkline=false`,
+          );
+          if (pricesResult.error) return { error: pricesResult.error };
+
+          return { data: pricesResult.data };
+        },
       }),
 
       fetchCryptoCollection: builder.query({

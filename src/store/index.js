@@ -4,6 +4,13 @@ import { cryptoListingApi } from './apis/cryptoListingApi';
 import { transactionsApi } from './apis/transactionsApi';
 import { portfolioApi } from './apis/portfolioApi';
 import { transactionFormReducer } from './apis/slices/transactionFormSlice';
+import { searchSliceReducer } from './apis/slices/searchSlice';
+import {
+  changeQuery,
+  changeDebouncedQuery,
+  changeShowResults,
+  clearSearch,
+} from './apis/slices/searchSlice';
 import {
   changeQuantity,
   changeDate,
@@ -19,6 +26,7 @@ export const store = configureStore({
     [cryptoListingApi.reducerPath]: cryptoListingApi.reducer,
     [portfolioApi.reducerPath]: portfolioApi.reducer,
     transactionForm: transactionFormReducer,
+    search: searchSliceReducer,
   },
 
   middleware: (getDefaultMiddleware) => {
@@ -31,7 +39,18 @@ export const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export { changeQuantity, changeDate, changeDescription, changeTitle, changeType, resetForm };
+export {
+  changeQuantity,
+  changeDate,
+  changeDescription,
+  changeTitle,
+  changeType,
+  resetForm,
+  changeQuery,
+  changeDebouncedQuery,
+  changeShowResults,
+  clearSearch,
+};
 
 export {
   useFetchCryptoCollectionQuery,
