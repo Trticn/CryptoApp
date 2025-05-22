@@ -1,5 +1,3 @@
-// pages/HomePage.jsx
-import React from 'react';
 import { FiArrowDownCircle } from 'react-icons/fi';
 import { usePortfolioData } from '../hooks/usePortfolioData';
 import { Link } from 'react-router-dom';
@@ -9,18 +7,15 @@ import CryptoListing from '../components/CryptoListing';
 import BalanceCard from '../components/cards/BalanceCard';
 import InvestmentCard from '../components/cards/InvestmentCard.js';
 import GainerCard from '../components/cards/GainerCard';
-import ErrorScreen from '../components/ErrorScreen';
 import PortfolioChartSection from '../components/sections/PortfolioChart';
 import InvestmentsSection from '../components/sections/InvestmentSection';
 import TransactionsSection from '../components/sections/TransactionsSection';
 
 function HomePage() {
-  const { isFetching, error, totalValue, change24hPercent, highestValueAssets, allTransactions } =
+  const { isFetching, totalValue, change24hPercent, highestValueAssets, allTransactions } =
     usePortfolioData();
 
   useSavePortfolioSnapshot();
-
-  if (error) return <ErrorScreen title="Greška pri učitavanju" message="Došlo je do problema." />;
 
   const topGainer = highestValueAssets.length
     ? highestValueAssets.reduce((prev, current) =>

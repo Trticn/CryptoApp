@@ -2,7 +2,7 @@ import CryptoListingItem from './CryptoListingItem';
 import Skeleton from './Skeleton';
 import Pagination from './Pagination';
 import usePagination from '../hooks/usePagination';
-import { useFetchPopularCryptoQuery } from '../store';
+import { useFetchPopularCryptoQuery, useFetchWatchlistQuery } from '../store';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 function CryptoListing({ showThead }) {
@@ -10,7 +10,19 @@ function CryptoListing({ showThead }) {
     pollingInterval: 60000,
   });
 
-  const { currentPage, setCurrentPage, paginationData, totalPages } = usePagination(data);
+  const { data: watchlist } = useFetchWatchlistQuery();
+
+  // --- Dodaj isWatchlist prop svakom kriptu ---
+  const watchlistIds = watchlist?.map((item) => item.id) || [];
+
+  const dataWithWatchlist = data?.map((crypto) => ({
+    ...crypto,
+    isWatchlist: watchlistIds.includes(crypto.id),
+  }));
+
+  // --- Pagination ---
+  const { currentPage, setCurrentPage, paginationData, totalPages } =
+    usePagination(dataWithWatchlist);
 
   let content;
 
@@ -19,7 +31,7 @@ function CryptoListing({ showThead }) {
       <>
         {[...Array(10)].map((_, i) => (
           <tr key={i}>
-            {[...Array(8)].map((_, j) => (
+            {[...Array(9)].map((_, j) => (
               <td key={j} className="p-4">
                 <Skeleton className="h-4 w-full rounded" times={1} />
               </td>
@@ -41,6 +53,7 @@ function CryptoListing({ showThead }) {
           {showThead && (
             <thead className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white">
               <tr>
+                <th className="p-4 text-left font-semibold"></th>
                 <th className="p-4 text-left font-semibold">Naziv</th>
                 <th className="p-4 text-left font-semibold">Cena</th>
                 <th className="p-4 text-left font-semibold">24h%</th>

@@ -186,11 +186,7 @@ function PortfolioPage() {
         </div>
       </div>
 
-      <PortfolioList
-        portfolio={portfolio}
-        isFullscreen={isFullscreen}
-        openCryptoModal={openCryptoModal}
-      />
+      <PortfolioList portfolio={portfolio} openCryptoModal={openCryptoModal} />
 
       <CryptoModal isOpen={isModalOpen} onClose={closeModal} crypto={selectedCrypto} />
     </div>

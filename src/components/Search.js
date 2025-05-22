@@ -57,6 +57,7 @@ const Search = () => {
     const handleClickOutside = (e) => {
       if (searchRef.current && !searchRef.current.contains(e.target)) {
         if (isMobile) {
+          document.body.style.overflow = 'visible';
           setIsOpen(false);
         } else {
           dispatch(changeShowResults(false));
@@ -115,7 +116,7 @@ const Search = () => {
   } else if (!data || data.length === 0) {
     content = (
       <div className="p-4 sm:p-6 text-sm text-blue-800 dark:text-blue-300">
-        Nema rezultata za <strong>{query}</strong>.
+        Nema rezultata za <strong>{query}</strong>
       </div>
     );
   } else {
@@ -221,6 +222,7 @@ const Search = () => {
                 onClick={() => {
                   handleClearSearch();
                   setIsOpen(false);
+                  document.body.style.overflow = 'visible';
                 }}
                 className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
               >
@@ -253,6 +255,13 @@ const Search = () => {
               onFocus={handleInputFocus}
               ref={inputRef}
             />
+            <button
+              type="button"
+              onClick={handleClearSearch}
+              className="absolute right-6 top-1/2 transform -translate-y-1/2 p-1"
+            >
+              <FiX className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+            </button>
           </div>
         </form>
         {showResults && query.trim() !== '' && (
@@ -269,6 +278,7 @@ const Search = () => {
       <button
         onClick={() => {
           setIsOpen(true);
+          document.body.style.overflow = 'hidden';
           if (query.trim() !== '') {
             dispatch(changeShowResults(true));
           }

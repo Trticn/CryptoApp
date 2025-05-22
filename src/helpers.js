@@ -98,15 +98,19 @@ export const groupTransactionsByCrypto = (combined) => {
 
 export const enrichGroupedTransactions = (grouped) => {
   return Object.values(grouped).map((group) => {
-    const totalQuantity = group.allTransactions.reduce((sum, tx) => sum + tx.quantity, 0);
-    const totalInvested = group.allTransactions.reduce(
+    // Filter samo "buy" transakcije
+    const buyTransactions = group.allTransactions.filter((tx) => tx.type !== 'sell');
+
+    const totalQuantity = buyTransactions.reduce((sum, tx) => sum + tx.quantity, 0);
+    const totalInvested = buyTransactions.reduce(
       (sum, tx) => sum + tx.quantity * tx.priceAtTransaction,
       0,
     );
-    const averageBuyPrice = totalInvested / totalQuantity;
+
+    const averageBuyPrice = totalQuantity > 0 ? totalInvested / totalQuantity : 0;
     const currentValue = totalQuantity * group.currentPrice;
     const profit = currentValue - totalInvested;
-    const profitPercent = (profit / totalInvested) * 100;
+    const profitPercent = totalInvested > 0 ? (profit / totalInvested) * 100 : 0;
 
     return {
       ...group,

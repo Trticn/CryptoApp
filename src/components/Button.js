@@ -18,7 +18,7 @@ function Button({
 }) {
   const classes = className(
     rest.className,
-    'relative flex items-center justify-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group',
+    'relative flex items-center justify-center  transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group',
     {
       'opacity-80 cursor-not-allowed': loading,
       'px-8 py-3 text-base font-medium shadow-lg': !modal,
@@ -84,12 +84,13 @@ function Button({
   return (
     <button {...rest} disabled={loading} className={classes}>
       {liquidShine}
-      {loading ? (
-        <GoSync className="animate-spin" />
-      ) : transaction ? (
+      {transaction ? (
         transactionIcon
       ) : (
-        <span className="relative z-10 flex items-center gap-2">{children}</span>
+        <span className="relative z-10 flex items-center justify-center">
+          <span className={loading ? 'invisible' : ''}>{children}</span>
+          {loading && <GoSync className="absolute animate-spin text-yellow-400" />}
+        </span>
       )}
     </button>
   );

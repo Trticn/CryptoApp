@@ -5,11 +5,15 @@ import { groupTransactionsByCrypto, enrichGroupedTransactions } from '../helpers
 
 export const usePortfolioData = () => {
   const { data: allTransactions, error, isFetching } = useFetchTransactionsQuery();
-  const { data: cryptoCollection } = useFetchCryptoCollectionQuery(
+  const {
+    data: cryptoCollection,
+    error: errorCollection,
+    isFetching: isFetchingCollection,
+  } = useFetchCryptoCollectionQuery(
     allTransactions?.map((tr) => tr.title),
     {
       skip: !allTransactions,
-      pollingInterval: 20000, // ⏱ osvežava svakih 30 sekundi
+      pollingInterval: 30000, // ⏱ osvežava svakih 30 sekundi
     },
   );
 
@@ -62,7 +66,7 @@ export const usePortfolioData = () => {
         highestValueAssets: [],
       };
     }
-
+    console.log(portfolio);
     const totalVal = portfolio.reduce((sum, asset) => sum + asset.currentValue, 0);
     const totalInv = portfolio.reduce((sum, asset) => sum + asset.totalInvested, 0);
     const highestValueAssets = portfolio
@@ -98,8 +102,8 @@ export const usePortfolioData = () => {
     totalProfit,
     change24hValue,
     change24hPercent,
-    isFetching,
+    isFetching: isFetching || isFetchingCollection,
     highestValueAssets,
-    error,
+    error: error || errorCollection,
   };
 };

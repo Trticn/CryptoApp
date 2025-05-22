@@ -1,6 +1,10 @@
 import { formatNumber } from '../helpers';
-
+import { useAddCryptoToWatchlistMutation, useRemoveCryptoFromWatchlistMutation } from '../store';
+import Button from './Button';
 function CryptoListingItem({ crypto }) {
+  const [addCryptoToWatchlist, results] = useAddCryptoToWatchlistMutation();
+  const [removeCryptoFromWatchlist, removeResults] = useRemoveCryptoFromWatchlistMutation();
+
   const {
     name,
     symbol,
@@ -17,9 +21,35 @@ function CryptoListingItem({ crypto }) {
     id,
   } = crypto;
 
+  const toggleWatchlist = () => {
+    if (crypto.isWatchlist) {
+      removeCryptoFromWatchlist(crypto);
+    } else {
+      addCryptoToWatchlist({
+        id: crypto.id,
+      });
+    }
+  };
+
   return (
     <tr key={id} className="border-b hover:bg-gray-100 dark:hover:bg-gray-900 transition-all">
+      <td className="min-h-[95px] text-center">
+        <div className="flex justify-center items-center h-full">
+          <Button
+            loading={results.isLoading || removeResults.isLoading}
+            onClick={toggleWatchlist}
+            className={`text-yellow-400 hover:text-yellow-500 transition text-xl min-w-[40px] h-[40px]`}
+            title="Dodaj u favorite"
+          >
+            <span className={results.isLoading || removeResults.isLoading ? 'invisible' : ''}>
+              {crypto.isWatchlist ? '★' : '☆'}
+            </span>
+          </Button>
+        </div>
+      </td>
+
       {/* Name */}
+
       <td className="p-4 min-h-[95px] flex items-center gap-3">
         <img src={image} alt={name} className="w-6 h-6" />
         <div>

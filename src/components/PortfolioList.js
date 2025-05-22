@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import PortfolioListItem from './PortfolioListItem';
 import { ChartBarIcon } from '@heroicons/react/24/outline';
 
-function PortfolioList({ portfolio, openCryptoModal, isFullscreen }) {
+function PortfolioList({ portfolio, openCryptoModal }) {
   if (!portfolio) return null;
 
   if (portfolio.length < 1)
@@ -29,11 +29,8 @@ function PortfolioList({ portfolio, openCryptoModal, isFullscreen }) {
 
   return (
     <div
-      className={`grid grid-cols-1 ${
-        isFullscreen
-          ? 'sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6'
-          : 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-      } gap-6`}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6
+      "
     >
       {portfolio.map((asset) => (
         <PortfolioListItem

@@ -36,6 +36,11 @@ const cryptoListingApi = createApi({
         keepUnusedDataFor: 30,
       }),
 
+      fetchCryptoFromWatchlist: builder.query({
+        query: (ids) => `/coins/markets?vs_currency=usd&ids=${ids}`,
+        keepUnusedDataFor: 30,
+      }),
+
       fetchHistoricalPrice: builder.query({
         query: ({ coinId, date }) => `/coins/${coinId}/history?date=${date}`, // API endpoint
       }),
@@ -46,6 +51,7 @@ const cryptoListingApi = createApi({
 export const {
   useFetchCryptoCollectionQuery,
   useFetchPopularCryptoQuery,
+  useFetchCryptoFromWatchlistQuery,
   useFetchSearchedCryptoQuery,
   useLazyFetchHistoricalPriceQuery,
 } = cryptoListingApi;

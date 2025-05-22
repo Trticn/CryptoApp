@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { cryptoListingApi } from './apis/cryptoListingApi';
 import { transactionsApi } from './apis/transactionsApi';
 import { portfolioApi } from './apis/portfolioApi';
+import { watchlistApi } from './apis/watchlistApi';
 import { transactionFormReducer } from './apis/slices/transactionFormSlice';
 import { searchSliceReducer } from './apis/slices/searchSlice';
 import {
@@ -25,6 +26,7 @@ export const store = configureStore({
     [transactionsApi.reducerPath]: transactionsApi.reducer,
     [cryptoListingApi.reducerPath]: cryptoListingApi.reducer,
     [portfolioApi.reducerPath]: portfolioApi.reducer,
+    [watchlistApi.reducerPath]: watchlistApi.reducer,
     transactionForm: transactionFormReducer,
     search: searchSliceReducer,
   },
@@ -33,7 +35,8 @@ export const store = configureStore({
     return getDefaultMiddleware()
       .concat(cryptoListingApi.middleware)
       .concat(transactionsApi.middleware)
-      .concat(portfolioApi.middleware);
+      .concat(portfolioApi.middleware)
+      .concat(watchlistApi.middleware);
   },
 });
 
@@ -55,6 +58,7 @@ export {
 export {
   useFetchCryptoCollectionQuery,
   useFetchPopularCryptoQuery,
+  useFetchCryptoFromWatchlistQuery,
   useFetchSearchedCryptoQuery,
   useLazyFetchHistoricalPriceQuery,
 } from './apis/cryptoListingApi';
@@ -69,3 +73,9 @@ export {
   useGetPortfolioSnapshotsQuery,
   useAddPortfolioSnapshotMutation,
 } from './apis/portfolioApi';
+
+export {
+  useFetchWatchlistQuery,
+  useAddCryptoToWatchlistMutation,
+  useRemoveCryptoFromWatchlistMutation,
+} from './apis/watchlistApi';

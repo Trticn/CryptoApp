@@ -7,6 +7,7 @@ import AddTransaction from './components/AddTransaction';
 import PortfolioPage from './pages/PortfolioPage';
 import TransactionsPage from './pages/TransactionsPage';
 import NotFoundPage from './pages/NotFoundPage';
+import WatchlistPage from './pages/WatchlistPage';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: '/add-transaction', element: <AddTransaction /> },
       { path: '/portfolio', element: <PortfolioPage /> },
       { path: '/transactions', element: <TransactionsPage /> },
+      { path: '/watchlist', element: <WatchlistPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
