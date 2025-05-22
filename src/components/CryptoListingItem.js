@@ -41,9 +41,7 @@ function CryptoListingItem({ crypto }) {
             className={`text-yellow-400 hover:text-yellow-500 transition text-xl min-w-[40px] h-[40px]`}
             title="Dodaj u favorite"
           >
-            <span className={results.isLoading || removeResults.isLoading ? 'invisible' : ''}>
-              {crypto.isWatchlist ? '★' : '☆'}
-            </span>
+            {crypto.isWatchlist ? '★' : '☆'}
           </Button>
         </div>
       </td>

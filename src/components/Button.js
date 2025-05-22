@@ -18,10 +18,10 @@ function Button({
 }) {
   const classes = className(
     rest.className,
-    'relative flex items-center justify-center  transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group',
+    'relative flex items-center justify-center  transition-all duration-500',
     {
       'opacity-80 cursor-not-allowed': loading,
-      'px-8 py-3 text-base font-medium shadow-lg': !modal,
+      'px-8 py-3 text-base font-medium ': !modal,
       'h-8 px-4 py-2 text-sm': !modal && !transaction,
 
       // Primary - Modern 3D stretch effect
