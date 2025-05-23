@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import { useSavePortfolioSnapshot } from '../hooks/useSavePortfolioSnapshot.js';
 import Skeleton from '../components/Skeleton';
 import CryptoListing from '../components/CryptoListing';
-import BalanceCard from '../components/cards/BalanceCard';
-import InvestmentCard from '../components/cards/InvestmentCard.js';
-import GainerCard from '../components/cards/GainerCard';
-import PortfolioChartSection from '../components/sections/PortfolioChart';
-import InvestmentsSection from '../components/sections/InvestmentSection';
-import TransactionsSection from '../components/sections/TransactionsSection';
+import BalanceCard from '../components/homepage/cards/BalanceCard.js';
+import InvestmentCard from '../components/homepage/cards/InvestmentCard.js';
+import GainerCard from '../components/homepage/cards/GainerCard.js';
+import PortfolioChartSection from '../components/homepage/sections/PortfolioChart.js';
+import InvestmentsSection from '../components/homepage/sections/InvestmentSection.js';
+import TransactionsSection from '../components/homepage/sections/TransactionsSection.js';
 
 function HomePage() {
   const { isFetching, totalValue, change24hPercent, highestValueAssets, allTransactions } =

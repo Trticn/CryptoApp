@@ -1,7 +1,7 @@
 // components/cards/BalanceCard.jsx
 import { FiPieChart, FiDollarSign, FiArrowUp, FiArrowDown } from 'react-icons/fi';
 
-import { formatNumber } from '../../helpers';
+import { formatNumber } from '../../../helpers';
 
 export default function BalanceCard({ totalValue, change24hPercent }) {
   return (

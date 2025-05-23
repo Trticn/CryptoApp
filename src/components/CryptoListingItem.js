@@ -1,6 +1,7 @@
 import { formatNumber } from '../helpers';
 import { useAddCryptoToWatchlistMutation, useRemoveCryptoFromWatchlistMutation } from '../store';
 import Button from './Button';
+import { Link } from 'react-router-dom';
 function CryptoListingItem({ crypto }) {
   const [addCryptoToWatchlist, results] = useAddCryptoToWatchlistMutation();
   const [removeCryptoFromWatchlist, removeResults] = useRemoveCryptoFromWatchlistMutation();
@@ -48,12 +49,16 @@ function CryptoListingItem({ crypto }) {
 
       {/* Name */}
 
-      <td className="p-4 min-h-[95px] flex items-center gap-3">
-        <img src={image} alt={name} className="w-6 h-6" />
-        <div>
-          <p className="font-semibold text-gray-900 dark:text-gray-100">{name}</p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">{symbol.toUpperCase()}</p>
-        </div>
+      <td className="p-4 min-h-[95px] flex items-center ">
+        <Link to={`/crypto/${crypto.id}`}>
+          <div className="flex items-center space-x-2 gap-1">
+            <img src={image} alt={name} className="w-6 h-6" />
+            <div>
+              <p className="font-semibold text-gray-900 dark:text-gray-100">{name}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{symbol.toUpperCase()}</p>
+            </div>
+          </div>
+        </Link>
       </td>
 
       {/* Price */}
@@ -101,7 +106,7 @@ function CryptoListingItem({ crypto }) {
           atl_change_percentage >= 0 ? 'text-green-500' : 'text-red-500'
         }`}
       >
-        ${atl.toFixed(2)} ({atl_change_percentage.toFixed(2)}%)
+        ${formatNumber(atl)} ({atl_change_percentage.toFixed(2)}%)
       </td>
     </tr>
   );

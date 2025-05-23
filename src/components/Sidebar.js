@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FiX } from 'react-icons/fi';
 import { Links } from '../config/Links';
+
 function Sidebar({ isOpen, onClose }) {
   return (
     <div
@@ -8,32 +9,31 @@ function Sidebar({ isOpen, onClose }) {
         isOpen ? 'visible' : 'invisible'
       }`}
     >
-      {/* Overlay */}
       <div
         className={`absolute inset-0 bg-black transition-opacity ${
           isOpen ? 'opacity-40' : 'opacity-0'
         }`}
         onClick={onClose}
-      ></div>
+      />
 
-      {/* Sidebar */}
-      <div
+      <aside
         className={`absolute left-0 top-0 h-full w-72 md:w-96 bg-white dark:bg-gray-800 shadow-2xl rounded-r-2xl transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="py-4 px-6 h-20 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <div className="flex items-center justify-between px-6 py-4 h-20 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl mr-3 shadow-md">
               N
             </div>
-            <p className="font-semibold text-gray-800 dark:text-gray-200 text-sm">
+            <span className="font-semibold text-sm text-gray-800 dark:text-gray-200">
               nikolina@example.com
-            </p>
+            </span>
           </div>
           <button
             onClick={onClose}
             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            aria-label="Close sidebar"
           >
             <FiX className="text-gray-600 dark:text-gray-300 text-xl" />
           </button>
@@ -42,18 +42,17 @@ function Sidebar({ isOpen, onClose }) {
         <nav className="p-5">
           <ul className="space-y-3">
             {Links.map((item, index) => (
-              <li key={index}>
-                <Link
-                  to={item.path}
-                  className="flex items-center px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium"
-                  onClick={onClose}
-                >
-                  <span className="mr-3 text-lg text-indigo-500 dark:text-indigo-400">
-                    {item.icon}
-                  </span>
-                  <span>{item.label}</span>
-                </Link>
-              </li>
+              <Link
+                key={index}
+                to={item.path}
+                className="flex items-center px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium"
+                onClick={onClose}
+              >
+                <span className="mr-3 text-lg text-indigo-500 dark:text-indigo-400">
+                  {item.icon}
+                </span>
+                <span>{item.label}</span>
+              </Link>
             ))}
           </ul>
         </nav>
@@ -63,7 +62,7 @@ function Sidebar({ isOpen, onClose }) {
             Odjava
           </button>
         </div>
-      </div>
+      </aside>
     </div>
   );
 }

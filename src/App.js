@@ -8,7 +8,7 @@ import PortfolioPage from './pages/PortfolioPage';
 import TransactionsPage from './pages/TransactionsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import WatchlistPage from './pages/WatchlistPage';
-
+import CryptoDetail from './components/CryptoDetail';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -20,6 +20,7 @@ const router = createBrowserRouter([
       { path: '/portfolio', element: <PortfolioPage /> },
       { path: '/transactions', element: <TransactionsPage /> },
       { path: '/watchlist', element: <WatchlistPage /> },
+      { path: '/crypto/:id', element: <CryptoDetail /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

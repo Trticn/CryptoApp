@@ -10,15 +10,15 @@ import {
   CartesianGrid,
 } from 'recharts';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import { useGetPortfolioSnapshotsQuery } from '../../store';
+import { useGetPortfolioSnapshotsQuery } from '../../../store';
 import { subDays, subMonths, subYears } from 'date-fns';
 import {
   filterSnapshotsByDate,
   groupByLatestPerMonth,
   groupByLatestPerYear,
   formatChartData,
-} from '../../helpers';
-import Skeleton from '../Skeleton';
+} from '../../../helpers';
+import Skeleton from '../../Skeleton';
 
 export default function PortfolioChartSection() {
   const { data: snapshots = [], isFetching, error } = useGetPortfolioSnapshotsQuery();

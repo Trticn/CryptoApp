@@ -10,6 +10,7 @@ function CryptoListing({ showThead }) {
     pollingInterval: 60000,
   });
 
+  console.log(data);
   const { data: watchlist } = useFetchWatchlistQuery();
 
   // --- Dodaj isWatchlist prop svakom kriptu ---

@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import { DB_LINK } from '../../config';
 const transactionsApi = createApi({
   reducerPath: 'transactions',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://cryptoappbackend.onrender.com',
+    baseUrl: DB_LINK,
   }),
 
   endpoints(builder) {

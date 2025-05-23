@@ -1,6 +1,3 @@
-// components/Footer.jsx
-import React from 'react';
-
 const Footer = () => {
   return (
     <footer className="mt-12 border-t border-gray-200 dark:border-gray-700 py-6 px-4 bg-white dark:bg-gray-900 transition-all">

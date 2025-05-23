@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import { API_LINK } from '../../config';
 const cryptoListingApi = createApi({
   reducerPath: 'crypto',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.coingecko.com/api/v3',
+    baseUrl: API_LINK,
   }),
 
   endpoints(builder) {
@@ -44,6 +44,11 @@ const cryptoListingApi = createApi({
       fetchHistoricalPrice: builder.query({
         query: ({ coinId, date }) => `/coins/${coinId}/history?date=${date}`, // API endpoint
       }),
+
+      fetchCryptoDetails: builder.query({
+        query: (id) =>
+          `/coins/${id}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=true&sparkline=false`,
+      }),
     };
   },
 });
@@ -54,6 +59,7 @@ export const {
   useFetchCryptoFromWatchlistQuery,
   useFetchSearchedCryptoQuery,
   useLazyFetchHistoricalPriceQuery,
+  useFetchCryptoDetailsQuery,
 } = cryptoListingApi;
 
 export { cryptoListingApi };

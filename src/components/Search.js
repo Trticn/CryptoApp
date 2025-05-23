@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { FiSearch, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { createPortal } from 'react-dom';
 import { useFetchSearchedCryptoQuery } from '../store';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import Skeleton from './Skeleton';
 import { formatNumber } from '../helpers';
-import { useDispatch, useSelector } from 'react-redux';
 import { changeQuery, changeDebouncedQuery, changeShowResults, clearSearch } from '../store';
+import Skeleton from './Skeleton';
 
 const DEBOUNCE_DELAY = 2000;
 
@@ -60,6 +61,9 @@ const Search = () => {
           document.body.style.overflow = 'visible';
           setIsOpen(false);
         } else {
+          if (e.target.closest('[data-search-result]')) {
+            return; // Ako je klik na rezultat, ne radimo ništa
+          }
           dispatch(changeShowResults(false));
         }
       }
@@ -79,9 +83,10 @@ const Search = () => {
     skip: debouncedQuery.trim() === '',
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (query.trim() && isMobile) setIsOpen(false);
+  const handleSubmit = () => {
+    dispatch(clearSearch());
+    setIsOpen(false);
+    document.body.style.overflow = 'visible';
   };
 
   const handleInputFocus = () => {
@@ -123,56 +128,54 @@ const Search = () => {
     content = (
       <div className="min-w-[500px] divide-y divide-gray-100 dark:divide-gray-700">
         {data?.map((coin) => (
-          <div
-            key={coin.id}
-            onClick={handleClearSearch}
-            className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer gap-4"
-          >
-            {/* Levo: Ikonica + Ime + Symbol */}
-            <div className="flex items-center gap-2 w-[130px] shrink-0">
-              <img
-                src={coin?.thumb || coin?.image}
-                alt={coin.name}
-                className="w-6 h-6 rounded-full"
-                loading="lazy"
-              />
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-gray-800 dark:text-white truncate">
-                  {coin.name}
+          <Link data-search-result onClick={handleSubmit} key={coin.id} to={`/crypto/${coin.id}`}>
+            <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer gap-4">
+              {/* Levo: Ikonica + Ime + Symbol */}
+              <div className="flex items-center gap-2 w-[130px] shrink-0">
+                <img
+                  src={coin?.thumb || coin?.image}
+                  alt={coin.name}
+                  className="w-6 h-6 rounded-full"
+                  loading="lazy"
+                />
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-gray-800 dark:text-white truncate">
+                    {coin.name}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase truncate">
+                    {coin.symbol}
+                  </p>
+                </div>
+              </div>
+
+              {/* Sredina: Market Cap + Volume */}
+              <div className="flex flex-col text-center min-w-[140px] flex-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  Market Cap: ${formatNumber(coin.market_cap)}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase truncate">
-                  {coin.symbol}
+                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  Vol 24h: ${formatNumber(coin.total_volume)}
+                </p>
+              </div>
+
+              {/* Desno: Cena + Promena */}
+              <div className="text-right w-[110px] shrink-0">
+                <p className="text-sm font-semibold text-gray-800 dark:text-white truncate">
+                  ${formatNumber(coin.current_price)}
+                </p>
+                <p
+                  className={`text-xs truncate ${
+                    coin.price_change_percentage_24h >= 0
+                      ? 'text-green-600 dark:text-green-400'
+                      : 'text-red-600 dark:text-red-400'
+                  }`}
+                >
+                  {coin.price_change_percentage_24h >= 0 ? '▲' : '▼'}{' '}
+                  {formatNumber(coin.price_change_percentage_24h)}%
                 </p>
               </div>
             </div>
-
-            {/* Sredina: Market Cap + Volume */}
-            <div className="flex flex-col text-center min-w-[140px] flex-1">
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                Market Cap: ${formatNumber(coin.market_cap)}
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                Vol 24h: ${formatNumber(coin.total_volume)}
-              </p>
-            </div>
-
-            {/* Desno: Cena + Promena */}
-            <div className="text-right w-[110px] shrink-0">
-              <p className="text-sm font-semibold text-gray-800 dark:text-white truncate">
-                ${formatNumber(coin.current_price)}
-              </p>
-              <p
-                className={`text-xs truncate ${
-                  coin.price_change_percentage_24h >= 0
-                    ? 'text-green-600 dark:text-green-400'
-                    : 'text-red-600 dark:text-red-400'
-                }`}
-              >
-                {coin.price_change_percentage_24h >= 0 ? '▲' : '▼'}{' '}
-                {formatNumber(coin.price_change_percentage_24h)}%
-              </p>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     );

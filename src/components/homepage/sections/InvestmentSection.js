@@ -1,6 +1,6 @@
 import { FiArrowUp, FiArrowDown } from 'react-icons/fi';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import Skeleton from '../Skeleton';
+import Skeleton from '../../Skeleton';
 import { Link } from 'react-router-dom';
 
 export default function InvestmentsSection({ assets, isFetching }) {

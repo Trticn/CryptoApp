@@ -1,7 +1,7 @@
 // components/cards/InvestmentCard.jsx
 import { FiAward, FiBarChart2, FiArrowUp, FiArrowDown } from 'react-icons/fi';
 
-import { formatNumber } from '../../helpers';
+import { formatNumber } from '../../../helpers';
 export default function InvestmentCard({ asset }) {
   return (
     <div

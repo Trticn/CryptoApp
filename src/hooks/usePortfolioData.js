@@ -4,7 +4,12 @@ import { useFetchTransactionsQuery, useFetchCryptoCollectionQuery } from '../sto
 import { groupTransactionsByCrypto, enrichGroupedTransactions } from '../helpers';
 
 export const usePortfolioData = () => {
-  const { data: allTransactions, error, isFetching } = useFetchTransactionsQuery();
+  const {
+    data: allTransactions,
+    error: errorTransactions,
+    isFetching: isFetchingTransactions,
+  } = useFetchTransactionsQuery();
+
   const {
     data: cryptoCollection,
     error: errorCollection,
@@ -13,16 +18,24 @@ export const usePortfolioData = () => {
     allTransactions?.map((tr) => tr.title),
     {
       skip: !allTransactions,
-      pollingInterval: 30000, // ⏱ osvežava svakih 30 sekundi
+      pollingInterval: 30000,
     },
   );
 
+  // Kreiraj mapu za brzi pristup crypto podacima
+  const cryptoMap = useMemo(() => {
+    if (!cryptoCollection) return {};
+    return cryptoCollection.reduce((acc, crypto) => {
+      acc[crypto.id.toLowerCase()] = crypto;
+      return acc;
+    }, {});
+  }, [cryptoCollection]);
+
+  // Kombinuj transakcije sa odgovarajućim crypto podacima
   const combined = useMemo(() => {
     if (!allTransactions || !cryptoCollection) return null;
     return allTransactions.map((transaction) => {
-      const matchingCrypto = cryptoCollection.find(
-        (crypto) => crypto.id.toLowerCase() === transaction.title.toLowerCase(),
-      );
+      const matchingCrypto = cryptoMap[transaction.title.toLowerCase()];
       return {
         ...transaction,
         currentPrice: matchingCrypto?.current_price,
@@ -40,22 +53,17 @@ export const usePortfolioData = () => {
         totalVolume: matchingCrypto?.total_volume,
       };
     });
-  }, [allTransactions, cryptoCollection]);
+  }, [allTransactions, cryptoMap, cryptoCollection]);
 
+  // Grupisanje i obogaćivanje portfolija
   const portfolio = useMemo(() => {
     if (!combined) return null;
     const grouped = groupTransactionsByCrypto(combined);
     return enrichGroupedTransactions(grouped);
   }, [combined]);
 
-  const {
-    totalValue,
-    totalInvested,
-    totalProfit,
-    change24hValue,
-    change24hPercent,
-    highestValueAssets,
-  } = useMemo(() => {
+  // Statistika portfolija (memoizovano)
+  const analytics = useMemo(() => {
     if (!portfolio) {
       return {
         totalValue: 0,
@@ -66,27 +74,30 @@ export const usePortfolioData = () => {
         highestValueAssets: [],
       };
     }
-    console.log(portfolio);
-    const totalVal = portfolio.reduce((sum, asset) => sum + asset.currentValue, 0);
-    const totalInv = portfolio.reduce((sum, asset) => sum + asset.totalInvested, 0);
-    const highestValueAssets = portfolio
-      .sort((a, b) => b.currentValue - a.currentValue) // sortiraj opadajuće
-      .slice(0, 3); // uzmi prva 3
-    const totalProfit = totalVal - totalInv;
 
-    const change24hVal = portfolio.reduce((sum, asset) => {
-      const percent = asset.priceChangePercentage24h;
-      if (percent == null) return sum;
-      return sum + (asset.currentValue * percent) / 100;
-    }, 0);
+    let totalValue = 0;
+    let totalInvested = 0;
+    let change24hValue = 0;
 
-    const change24hPercent = totalVal > 0 ? (change24hVal / totalVal) * 100 : 0;
+    const sorted = [...portfolio].sort((a, b) => b.currentValue - a.currentValue);
+    const highestValueAssets = sorted.slice(0, 3);
+
+    for (const asset of portfolio) {
+      totalValue += asset.currentValue;
+      totalInvested += asset.totalInvested;
+      if (asset.priceChangePercentage24h != null) {
+        change24hValue += (asset.currentValue * asset.priceChangePercentage24h) / 100;
+      }
+    }
+
+    const totalProfit = totalValue - totalInvested;
+    const change24hPercent = totalValue > 0 ? (change24hValue / totalValue) * 100 : 0;
 
     return {
-      totalValue: totalVal,
-      totalInvested: totalInv,
-      totalProfit: totalProfit,
-      change24hValue: change24hVal,
+      totalValue,
+      totalInvested,
+      totalProfit,
+      change24hValue,
       change24hPercent,
       highestValueAssets,
     };
@@ -97,13 +108,8 @@ export const usePortfolioData = () => {
     cryptoCollection,
     combined,
     portfolio,
-    totalValue,
-    totalInvested,
-    totalProfit,
-    change24hValue,
-    change24hPercent,
-    isFetching: isFetching || isFetchingCollection,
-    highestValueAssets,
-    error: error || errorCollection,
+    isFetching: isFetchingTransactions || isFetchingCollection,
+    error: errorTransactions || errorCollection,
+    ...analytics,
   };
 };

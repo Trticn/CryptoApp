@@ -1,8 +1,8 @@
 import { FiArrowUp, FiArrowDown } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../helpers';
+import { formatDate } from '../../../helpers';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import Skeleton from '../Skeleton';
+import Skeleton from '../../Skeleton';
 
 export default function TransactionsSection({ transactions, isFetching }) {
   let content;

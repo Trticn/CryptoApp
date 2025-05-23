@@ -28,6 +28,8 @@ function WatchlistListing() {
 
   let content;
 
+  console.log(dataWithWatchlist);
+
   if (isFetching || isFetchingWatchlist) {
     content = (
       <>

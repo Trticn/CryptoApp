@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { FiRefreshCw, FiMenu, FiMoon, FiSun } from 'react-icons/fi';
-import crypto from '../images/crypto.png';
-import { primaryNavLinks } from '../config/Links';
 import { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import { primaryNavLinks } from '../config/Links';
 import Sidebar from './Sidebar';
 import Search from './Search';
+
+import crypto from '../images/crypto.png';
 
 function Header() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -14,30 +15,24 @@ function Header() {
 
   const handleRefresh = () => {
     setIsRefreshing(true);
-    setTimeout(() => setIsRefreshing(false), 1000);
-    window.location.reload();
-  };
-
-  const toggleMobileSidebar = () => {
-    setIsMobileSidebarOpen(!isMobileSidebarOpen);
   };
 
   return (
     <>
-      <header className="w-screen flex h-20 justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-40">
+      <header className="sticky top-0 z-40 w-screen flex items-center justify-between px-6 py-4 h-20 bg-white dark:bg-gray-800 shadow-sm">
         <div className="flex items-center">
-          {/* Mobile menu button */}
+          {/* Mobile menu */}
           <button
-            onClick={toggleMobileSidebar}
-            className="lg:hidden mr-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            onClick={() => setIsMobileSidebarOpen(true)}
+            className="lg:hidden mr-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition"
           >
             <FiMenu className="text-gray-600 dark:text-gray-300 text-xl" />
           </button>
 
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="w-8 h8 rounded-lg flex items-center justify-center mr-3">
-              <img alt="K" src={crypto} />
+            <div className="w-8 h-8 rounded-lg overflow-hidden mr-3">
+              <img src={crypto} alt="Logo" loading="lazy" className="w-8 h-8" />
             </div>
           </Link>
 
@@ -48,7 +43,7 @@ function Header() {
                 <li key={index}>
                   <Link
                     to={item.path}
-                    className="flex items-center p-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center p-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   >
                     <span className="mr-2">{item.icon}</span>
                     <span>{item.label}</span>
@@ -59,22 +54,19 @@ function Header() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-4 w-full max-w-5xl justify-end">
-          {/* Search na desktopu */}
+        <div className="flex items-center gap-4 max-w-5xl justify-end w-full">
           <div className="hidden md:block flex-1">
             <Search />
           </div>
 
-          {/* Search dugme na mobilnom */}
           <div className="md:hidden">
             <Search />
           </div>
 
-          {/* Ikonice */}
           <div className="flex items-center gap-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             >
               {theme === 'light' ? (
                 <FiMoon className="text-gray-600 dark:text-gray-300" />
@@ -85,20 +77,19 @@ function Header() {
 
             <button
               onClick={handleRefresh}
-              className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+              className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition ${
                 isRefreshing ? 'animate-spin' : ''
               }`}
             >
               <FiRefreshCw className="text-gray-600 dark:text-gray-300" />
             </button>
 
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 cursor-pointer"></div>
+            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 cursor-pointer" />
           </div>
         </div>
       </header>
 
-      {/* Mobile sidebar */}
-      <Sidebar isOpen={isMobileSidebarOpen} onClose={toggleMobileSidebar} />
+      <Sidebar isOpen={isMobileSidebarOpen} onClose={() => setIsMobileSidebarOpen(false)} />
     </>
   );
 }

@@ -8,11 +8,8 @@ import {
 import { usePortfolioData } from '../hooks/usePortfolioData';
 import CryptoModal from '../components/CryptoModal';
 import PortfolioList from '../components/PortfolioList';
-import { useSavePortfolioSnapshot } from '../hooks/useSavePortfolioSnapshot';
 
 function PortfolioPage() {
-  useSavePortfolioSnapshot();
-
   const { portfolio, isFetching, error, totalValue, totalInvested, totalProfit, change24hPercent } =
     usePortfolioData();
   const [isFullscreen, setIsFullscreen] = useState(false);

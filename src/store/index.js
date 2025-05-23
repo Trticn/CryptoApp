@@ -61,6 +61,7 @@ export {
   useFetchCryptoFromWatchlistQuery,
   useFetchSearchedCryptoQuery,
   useLazyFetchHistoricalPriceQuery,
+  useFetchCryptoDetailsQuery,
 } from './apis/cryptoListingApi';
 
 export {
