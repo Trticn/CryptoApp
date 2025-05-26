@@ -14,20 +14,22 @@ import { useNavigate } from 'react-router-dom';
 import { FiTrendingUp, FiArrowDown, FiArrowUp } from 'react-icons/fi';
 import { formatNumber, formatDateTime } from '../helpers';
 import { useFetchCryptoDetailsQuery } from '../store';
-import MetricCard from './cryptoDetails/MetricCard';
-import PerformanceItem from './cryptoDetails/PerformanceItem';
-import StatItem from './cryptoDetails/StatItem';
+import MetricCard from '../components/cryptoDetails/MetricCard';
+import PerformanceItem from '../components/cryptoDetails/PerformanceItem';
+import StatItem from '../components/cryptoDetails/StatItem';
+import ErrorScreen from '../components/ErrorScreen';
+import CryptoDescription from '../components/cryptoDetails/CryptoDescription';
 
-function CryptoDetail({ onBack }) {
+function CryptoDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: crypto, error, isFetching } = useFetchCryptoDetailsQuery(id);
-
+  console.log(crypto);
   const handleBack = () => {
     if (window.history.length > 2) {
-      navigate(-1); // Idi nazad ako postoji prethodna stranica
+      navigate(-1);
     } else {
-      navigate('/'); // Ili idi na neku bezbednu default stranicu
+      navigate('/');
     }
   };
   if (isFetching)
@@ -40,23 +42,7 @@ function CryptoDetail({ onBack }) {
       </div>
     );
 
-  if (error)
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-center p-6 rounded-lg max-w-md bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-          <h2 className="text-xl font-semibold text-red-600 dark:text-red-400">
-            Greška pri učitavanju
-          </h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">Došlo je do problema.</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition"
-          >
-            Pokušaj ponovo
-          </button>
-        </div>
-      </div>
-    );
+  if (error) return <ErrorScreen />;
 
   const marketData = crypto.market_data || {};
   const links = crypto.links || {};
@@ -75,7 +61,7 @@ function CryptoDetail({ onBack }) {
       ? 'text-green-500 dark:text-green-400'
       : 'text-red-500 dark:text-red-400';
 
-  // Social links data
+  // Podaci o društvenim mrežama
   const socialLinks = [
     links.subreddit_url && {
       name: 'Reddit',
@@ -88,7 +74,7 @@ function CryptoDetail({ onBack }) {
       color: 'bg-red-100 dark:bg-red-900/50 text-red-500 dark:text-red-400',
     },
     links.homepage && {
-      name: 'Website',
+      name: 'Vebsajt',
       url: links.homepage[0] || links.homepage,
       icon: (
         <img
@@ -139,13 +125,12 @@ function CryptoDetail({ onBack }) {
 
   return (
     <div className="p-6 md:p-10 ">
-      {/* Header section */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
           <button
             onClick={handleBack}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-            aria-label="Back to list"
+            className="p-2 rounded-lg  hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            aria-label="Nazad na listu"
           >
             <ArrowLeftIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
           </button>
@@ -166,26 +151,24 @@ function CryptoDetail({ onBack }) {
               </h2>
               <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                 <ClockIcon className="h-4 w-4" />
-                <span>Updated: {formatDateTime(crypto.last_updated)}</span>
+                <span>Ažurirano: {formatDateTime(crypto.last_updated)}</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
-          <span className="text-gray-500 dark:text-gray-300 text-sm">Rank:</span>
+          <span className="text-gray-500 dark:text-gray-300 text-sm">Rang:</span>
           <span className="font-bold text-gray-800 dark:text-white">#{crypto.market_cap_rank}</span>
         </div>
       </div>
 
-      {/* Price and stats section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {/* Price card */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-blue-600 dark:text-blue-300 font-medium flex items-center gap-2">
               <CurrencyDollarIcon className="h-5 w-5" />
-              Current Price
+              Trenutna cena
             </h3>
           </div>
           <div className="flex items-center flex-wrap gap-3 mb-2">
@@ -202,26 +185,31 @@ function CryptoDetail({ onBack }) {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4">
-            <StatItem label="Market Cap" value={`$${formatNumber(marketData.market_cap?.usd)}`} />
-            <StatItem label="24h Volume" value={`$${formatNumber(marketData.total_volume?.usd)}`} />
+            <StatItem
+              label="Tržišna kapitalizacija"
+              value={`$${formatNumber(marketData.market_cap?.usd)}`}
+            />
+            <StatItem
+              label="Volumen (24h)"
+              value={`$${formatNumber(marketData.total_volume?.usd)}`}
+            />
           </div>
         </div>
 
-        {/* Market stats card */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
           <h3 className="text-purple-600 dark:text-purple-300 font-medium flex items-center gap-2 mb-4">
             <ChartBarIcon className="h-5 w-5" />
-            Market Stats
+            Tržišna statistika
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <StatItem
-              label="Circulating"
+              label="U opticaju"
               value={`${formatNumber(
                 marketData.circulating_supply,
               )} ${crypto.symbol.toUpperCase()}`}
             />
             <StatItem
-              label="Total Supply"
+              label="Ukupna ponuda"
               value={
                 marketData.total_supply
                   ? `${formatNumber(marketData.total_supply)} ${crypto.symbol.toUpperCase()}`
@@ -229,7 +217,7 @@ function CryptoDetail({ onBack }) {
               }
             />
             <StatItem
-              label="Fully Diluted"
+              label="Potpuno razređena"
               value={
                 marketData.fully_diluted_valuation?.usd
                   ? `$${formatNumber(marketData.fully_diluted_valuation.usd)}`
@@ -237,7 +225,7 @@ function CryptoDetail({ onBack }) {
               }
             />
             <StatItem
-              label="Max Supply"
+              label="Maksimalna ponuda"
               value={
                 marketData.max_supply
                   ? `${formatNumber(marketData.max_supply)} ${crypto.symbol.toUpperCase()}`
@@ -247,22 +235,21 @@ function CryptoDetail({ onBack }) {
           </div>
         </div>
 
-        {/* Performance card */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
           <h3 className="text-amber-600 dark:text-amber-300 font-medium flex items-center gap-2 mb-4">
             <FiTrendingUp className="h-5 w-5" />
-            Performance
+            Performanse
           </h3>
           <div className="space-y-4">
             <PerformanceItem
-              label="All-Time High"
+              label="Istorijski maksimum"
               value={`$${formatNumber(marketData.ath?.usd)}`}
               change={marketData.ath_change_percentage?.usd}
               date={formatDateTime(marketData.ath_date?.eur)}
               changeClass={athChangeClass}
             />
             <PerformanceItem
-              label="All-Time Low"
+              label="Istorijski minimum"
               value={`$${formatNumber(marketData.atl?.usd)}`}
               change={marketData.atl_change_percentage?.usd}
               date={formatDateTime(marketData.atl_date?.eur)}
@@ -272,15 +259,15 @@ function CryptoDetail({ onBack }) {
         </div>
       </div>
 
-      {/* Additional metrics */}
+      {/* Dodatne metrike */}
       <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-6">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
           <FireIcon className="h-5 w-5 text-orange-500" />
-          Price Metrics
+          Metrike cena
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <MetricCard
-            title="Price Change (24h)"
+            title="Promena cene (24h)"
             value={`$${formatNumber(marketData.price_change_24h)}`}
             change={marketData.price_change_percentage_24h}
             icon={
@@ -294,7 +281,7 @@ function CryptoDetail({ onBack }) {
             }
           />
           <MetricCard
-            title="Market Cap Change (24h)"
+            title="Promena kapitalizacije (24h)"
             value={`$${formatNumber(marketData.market_cap_change_24h)}`}
             change={marketData.market_cap_change_percentage_24h}
             icon={
@@ -308,7 +295,7 @@ function CryptoDetail({ onBack }) {
             }
           />
           <MetricCard
-            title="High (24h)"
+            title="Maksimum (24h)"
             value={`$${formatNumber(marketData.high_24h?.usd)}`}
             icon={
               <ArrowTrendingUpIcon
@@ -326,7 +313,7 @@ function CryptoDetail({ onBack }) {
             }
           />
           <MetricCard
-            title="Low (24h)"
+            title="Minimum (24h)"
             value={`$${formatNumber(marketData.low_24h?.usd)}`}
             change={
               ((marketData.current_price?.usd - marketData.low_24h?.usd) /
@@ -346,37 +333,14 @@ function CryptoDetail({ onBack }) {
         </div>
       </div>
 
-      {/* About Section */}
-      {crypto.description?.en && (
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-6">
-          <h3 className="text-lg font-semibold text-center text-gray-800 dark:text-white mb-4">
-            About {crypto.name}
-          </h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">{crypto.description.en}</p>
+      {/* Sekcija o kriptovaluti */}
+      {crypto.description?.en && <CryptoDescription crypto={crypto} />}
 
-          {crypto.categories?.length > 0 && (
-            <div className="mb-4">
-              <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-2">Categories</h4>
-              <div className="flex flex-wrap gap-2">
-                {crypto.categories.map((category) => (
-                  <span
-                    key={category}
-                    className="px-3 py-1 text-sm rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200"
-                  >
-                    {category}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Social links section */}
+      {/* Sekcija društvenih mreža */}
       {socialLinks.length > 0 && (
         <div className="bg-white dark:bg-gray-800  p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
           <h3 className="text-lg text-center font-semibold text-gray-800 dark:text-white mb-4">
-            Community Links
+            Linkovi zajednice
           </h3>
           <div className="flex justify-center items-center gap-6 flex-wrap">
             {socialLinks.map((link, index) => (
@@ -398,4 +362,4 @@ function CryptoDetail({ onBack }) {
   );
 }
 
-export default CryptoDetail;
+export default CryptoDetailsPage;

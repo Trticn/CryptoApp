@@ -142,7 +142,10 @@ export default function PortfolioChartSection() {
             labelStyle={{ color: '#374151', fontWeight: 500 }}
             itemStyle={{ color: '#4b5563' }}
             formatter={(value, name) => [`${name}: $${value.toFixed(2)}`]}
-            labelFormatter={(date) => `Datum: ${date}`}
+            labelFormatter={(date) => {
+              const [year, month, day] = date.split('-');
+              return `${day}/${month}/${year}`;
+            }}
           />
 
           <Legend

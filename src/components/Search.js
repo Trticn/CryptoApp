@@ -206,7 +206,7 @@ const Search = () => {
               <input
                 ref={inputRef}
                 type="text"
-                placeholder="Search cryptocurrencies..."
+                placeholder="Pretraži kriptovalute..."
                 className="w-full py-4 pl-12 pr-12 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none text-lg"
                 value={query}
                 onChange={(e) => dispatch(changeQuery(e.target.value))}
@@ -251,7 +251,7 @@ const Search = () => {
             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
-              placeholder="Search cryptocurrencies..."
+              placeholder="Pretraži kriptovalute..."
               className="w-full pl-10 pr-4 py-2 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
               value={query}
               onChange={(e) => dispatch(changeQuery(e.target.value))}
