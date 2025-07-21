@@ -7,7 +7,7 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 function CryptoListing({ showThead }) {
   const { data, error, isFetching } = useFetchPopularCryptoQuery(undefined, {
-    pollingInterval: 60000,
+    pollingInterval: 120000,
   });
 
   const { data: watchlist } = useFetchWatchlistQuery();

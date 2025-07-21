@@ -7,6 +7,7 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 function WatchlistListing({ showThead }) {
   const { data, error, isFetching } = useFetchWatchlistQuery();
+
   const {
     data: watchlistCollection,
     error: watchlistError,
@@ -28,6 +29,7 @@ function WatchlistListing({ showThead }) {
     usePagination(dataWithWatchlist);
 
   let content;
+  console.log(dataWithWatchlist)
 
   if (isFetching || isFetchingWatchlist) {
     content = (
@@ -78,8 +80,8 @@ function WatchlistListing({ showThead }) {
   }
 
   return (
-    <>
-      <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl">
+    <div className='flex flex-col'>
+      <div className="flex-1 overflow-x-auto bg-white dark:bg-gray-800 rounded-xl">
         <table className="w-full min-w-[1000px] table-auto text-sm">
           {showThead && (
             <thead className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white">
@@ -100,14 +102,14 @@ function WatchlistListing({ showThead }) {
         </table>
       </div>
 
-      {!error && !watchlistError && totalPages > 1 && (
+      {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={(page) => setCurrentPage(page)}
         />
       )}
-    </>
+    </div>
   );
 }
 

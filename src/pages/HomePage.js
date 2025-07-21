@@ -1,7 +1,7 @@
 import { FiArrowDownCircle } from 'react-icons/fi';
 import { usePortfolioData } from '../hooks/usePortfolioData';
 import { Link } from 'react-router-dom';
-import { useSavePortfolioSnapshot } from '../hooks/useSavePortfolioSnapshot.js';
+// import { useSavePortfolioSnapshot } from '../hooks/useSavePortfolioSnapshot.js';
 import Skeleton from '../components/Skeleton';
 import CryptoListing from '../components/CryptoListing';
 import BalanceCard from '../components/homepage/cards/BalanceCard.js';
@@ -10,7 +10,7 @@ import GainerCard from '../components/homepage/cards/GainerCard.js';
 import PortfolioChartSection from '../components/homepage/sections/PortfolioChart.js';
 import InvestmentsSection from '../components/homepage/sections/InvestmentSection.js';
 import TransactionsSection from '../components/homepage/sections/TransactionsSection.js';
-import ErrorScreen from '../components/ErrorScreen.js';
+// import ErrorScreen from '../components/ErrorScreen.js';
 
 function HomePage() {
   const {
@@ -20,12 +20,9 @@ function HomePage() {
     topGainer,
     highestValueAssets,
     allTransactions,
-    error,
+    error
   } = usePortfolioData();
 
-  useSavePortfolioSnapshot();
-
-  if (error) return <ErrorScreen />;
   return (
     <div className="pt-5 p-4 md:p-8">
       {/* Hero Section with Cards */}
@@ -66,9 +63,9 @@ function HomePage() {
 
         {/* Desna strana: investicije i transakcije */}
         <div className="w-full xl:w-96 flex flex-col gap-6">
-          <InvestmentsSection assets={highestValueAssets} isFetching={isFetching} />
+          <InvestmentsSection assets={highestValueAssets} isFetching={isFetching} error={error} />
 
-          <TransactionsSection transactions={allTransactions} isFetching={isFetching} />
+          <TransactionsSection transactions={allTransactions} isFetching={isFetching} error = {error} />
         </div>
       </div>
 

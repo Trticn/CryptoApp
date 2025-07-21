@@ -4,14 +4,18 @@ import { cryptoListingApi } from './apis/cryptoListingApi';
 import { transactionsApi } from './apis/transactionsApi';
 import { portfolioApi } from './apis/portfolioApi';
 import { watchlistApi } from './apis/watchlistApi';
+import { authApi } from './apis/authApi';
 import { transactionFormReducer } from './apis/slices/transactionFormSlice';
 import { searchSliceReducer } from './apis/slices/searchSlice';
+import { authReducer } from './apis/slices/authSlice';
+import { setCredentials,setUserLogout,setInitialized } from './apis/slices/authSlice';
 import {
   changeQuery,
   changeDebouncedQuery,
   changeShowResults,
   clearSearch,
 } from './apis/slices/searchSlice';
+
 import {
   changeQuantity,
   changeDate,
@@ -27,8 +31,10 @@ export const store = configureStore({
     [cryptoListingApi.reducerPath]: cryptoListingApi.reducer,
     [portfolioApi.reducerPath]: portfolioApi.reducer,
     [watchlistApi.reducerPath]: watchlistApi.reducer,
+    [authApi.reducerPath]:authApi.reducer,
     transactionForm: transactionFormReducer,
     search: searchSliceReducer,
+    auth:authReducer
   },
 
   middleware: (getDefaultMiddleware) => {
@@ -36,7 +42,8 @@ export const store = configureStore({
       .concat(cryptoListingApi.middleware)
       .concat(transactionsApi.middleware)
       .concat(portfolioApi.middleware)
-      .concat(watchlistApi.middleware);
+      .concat(watchlistApi.middleware)
+      .concat(authApi.middleware);
   },
 });
 
@@ -53,6 +60,10 @@ export {
   changeDebouncedQuery,
   changeShowResults,
   clearSearch,
+  setCredentials,
+  setUserLogout,
+  setInitialized
+  
 };
 
 export {
@@ -80,3 +91,15 @@ export {
   useAddCryptoToWatchlistMutation,
   useRemoveCryptoFromWatchlistMutation,
 } from './apis/watchlistApi';
+
+
+export {
+  useRegisterMutation,
+  useLoginMutation,
+  useGoogleLoginMutation,
+  useRefreshTokenMutation,
+  useLogoutMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useGetCurrentUserQuery
+} from './apis/authApi';

@@ -3,7 +3,8 @@ import { DB_LINK } from '../../config';
 const transactionsApi = createApi({
   reducerPath: 'transactions',
   baseQuery: fetchBaseQuery({
-    baseUrl: DB_LINK,
+    baseUrl: DB_LINK + '/api',
+    credentials:'include'
   }),
 
   endpoints(builder) {
@@ -23,10 +24,17 @@ const transactionsApi = createApi({
         }),
         invalidatesTags: ['Transactions'],
       }),
-
+      updateTransaction: builder.mutation({
+        query: ({ id, ...transaction }) => ({
+          url: `/transactions/${id}`,
+          method: 'PUT',
+          body: transaction,
+        }),
+        invalidatesTags: ['Transactions'],
+      }),
       removeTransaction: builder.mutation({
         query: (transaction) => ({
-          url: `/transactions/${transaction.id}`,
+          url: `/transactions/${transaction._id}`,
           method: 'DELETE',
         }),
         invalidatesTags: ['Transactions'],
@@ -38,6 +46,7 @@ const transactionsApi = createApi({
 export const {
   useFetchTransactionsQuery,
   useAddTransactionMutation,
+  useUpdateTransactionMutation,
   useRemoveTransactionMutation,
 } = transactionsApi;
 

@@ -24,10 +24,9 @@ function AddTransaction() {
   const [addTransaction, results] = useAddTransactionMutation();
 
   const [triggerGetPrice, { isLoading }] = useLazyFetchHistoricalPriceQuery();
-
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.transactionForm);
-
+  console.log(formData.date.split('T')[0])
   const [notification, setNotification] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,13 +48,13 @@ function AddTransaction() {
 
       const priceAtTransaction = priceResult.data?.market_data.current_price['usd'];
       const totalValue = formData.quantity * priceAtTransaction;
-
+  
       // Dodaj transakciju u bazu
       await addTransaction({
         title: formData.title.toLowerCase(),
         quantity: formData.quantity,
         description: formData.description,
-        date: formData.date,
+        date: formData.date.split('T')[0],
         type: formData.type,
         priceAtTransaction,
         totalValue,
@@ -90,7 +89,8 @@ function AddTransaction() {
   return (
     <div className="py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-md rounded-2xl p-6 space-y-6 transition-colors">
+
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-2xl p-6 space-y-6 transition-colors">
           <h2 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
             <PlusCircleIcon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             Add New Transaction
@@ -98,11 +98,11 @@ function AddTransaction() {
 
           {notification && (
             <div
-              className={`p-3 rounded-lg flex items-center text-sm font-medium ${
-                notification.isSuccess
-                  ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300'
-                  : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300'
-              }`}
+              className={`p-3 rounded-lg flex items-center text-sm font-medium shadow border
+                ${notification.isSuccess
+                  ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 border-green-200 dark:border-green-700'
+                  : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-red-200 dark:border-red-700'}
+              `}
             >
               {notification.isSuccess ? (
                 <CheckCircleIcon className="w-5 h-5 mr-2" />
@@ -129,7 +129,7 @@ function AddTransaction() {
                   value={formData.title}
                   onChange={(e) => dispatch(changeTitle(e.target.value))}
                   placeholder="e.g. Bitcoin"
-                  className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                  className="w-full py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
                 />
               </div>
 
@@ -148,7 +148,7 @@ function AddTransaction() {
                   value={formData.quantity}
                   onChange={(e) => dispatch(changeQuantity(+e.target.value))}
                   placeholder="0.00"
-                  className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                  className="w-full py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
                 />
               </div>
             </div>
@@ -199,12 +199,12 @@ function AddTransaction() {
                     type="date"
                     value={formData.date}
                     onChange={(e) => dispatch(changeDate(e.target.value))}
-                    className="flex-1 px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                    className="flex-1 w-full py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
                   />
                   <button
                     type="button"
                     onClick={handleUseCurrentDate}
-                    className="px-4 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-600 transition"
+                    className="px-4 py-2 rounded-xl bg-zinc-100 dark:bg-gray-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-gray-600 border border-zinc-200 dark:border-gray-700 transition"
                   >
                     <CalendarIcon className="w-4 h-4 inline mr-1" />
                     Today
@@ -227,7 +227,7 @@ function AddTransaction() {
                 onChange={(e) => dispatch(changeDescription(e.target.value))}
                 rows="3"
                 placeholder="Optional notes..."
-                className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                className="w-full py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
               />
             </div>
 
@@ -235,7 +235,7 @@ function AddTransaction() {
               <button
                 type="submit"
                 disabled={isLoading || results.isLoading}
-                className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center justify-center transition"
+                className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-semibold flex items-center justify-center transition"
               >
                 {isLoading || results.isLoading ? (
                   <>

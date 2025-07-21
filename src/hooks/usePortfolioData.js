@@ -17,7 +17,7 @@ export const usePortfolioData = () => {
   } = useFetchCryptoCollectionQuery(
     allTransactions?.map((tr) => tr.title),
     {
-      skip: !allTransactions,
+      skip: !allTransactions || allTransactions.length === 0,
       pollingInterval: 30000,
     },
   );

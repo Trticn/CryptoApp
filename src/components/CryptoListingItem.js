@@ -32,9 +32,10 @@ function CryptoListingItem({ crypto }) {
     }
   };
 
+
   return (
     <tr key={id} className="border-b hover:bg-gray-100 dark:hover:bg-gray-900 transition-all">
-      <td className="min-h-[95px] text-center">
+      <td className="min-h-[115px] text-center">
         <div className="flex justify-center items-center h-full">
           <Button
             loading={results.isLoading || removeResults.isLoading}
@@ -49,8 +50,8 @@ function CryptoListingItem({ crypto }) {
 
       {/* Name */}
 
-      <td className="p-4 min-h-[95px] flex items-center ">
-        <Link to={`/crypto/${crypto.id}`}>
+      <td className="p-4 min-h-[115px] flex items-center ">
+        <Link to={`/search/${crypto.id}`}>
           <div className="flex items-center space-x-2 gap-1">
             <img src={image} alt={name} className="w-6 h-6" />
             <div>
@@ -62,13 +63,13 @@ function CryptoListingItem({ crypto }) {
       </td>
 
       {/* Price */}
-      <td className="p-4 min-h-[95px] font-medium text-gray-800 dark:text-gray-200">
+      <td className="p-4 min-h-[115px] font-medium text-gray-800 dark:text-gray-200">
         ${formatNumber(current_price)}
       </td>
 
       {/* 24h % */}
       <td
-        className={`p-4 font-medium min-h-[95px] ${
+        className={`p-4 font-medium min-h-[115px] ${
           price_change_percentage_24h >= 0 ? 'text-green-500' : 'text-red-500'
         }`}
       >
@@ -78,22 +79,22 @@ function CryptoListingItem({ crypto }) {
       {/* ATH (All-Time High) */}
 
       {/* Market Cap */}
-      <td className="p-4 font-medium  min-h-[95px] text-gray-800 dark:text-gray-200">
+      <td className="p-4 font-medium  min-h-[115px] text-gray-800 dark:text-gray-200">
         ${formatNumber(market_cap)}
       </td>
 
       {/* Volume (24h) */}
-      <td className="p-4 font-medium min-h-[95px] text-gray-800 dark:text-gray-200">
+      <td className="p-4 font-medium min-h-[115px] text-gray-800 dark:text-gray-200">
         ${formatNumber(total_volume)}
       </td>
 
       {/* Circulating Supply */}
-      <td className="p-4 font-medium min-h-[95px] text-gray-800 dark:text-gray-200">
+      <td className="p-4 font-medium min-h-[115px] text-gray-800 dark:text-gray-200">
         {formatNumber(circulating_supply)} {symbol.toUpperCase()}
       </td>
 
       <td
-        className={`p-4 font-medium min-h-[95px] ${
+        className={`p-4 font-medium min-h-[115px] ${
           ath_change_percentage >= 0 ? 'text-green-500' : 'text-red-500'
         }`}
       >
@@ -102,7 +103,7 @@ function CryptoListingItem({ crypto }) {
 
       {/* ATL (All-Time Low) */}
       <td
-        className={`p-4 font-medium min-h-[95px] ${
+        className={`p-4 font-medium min-h-[115px] ${
           atl_change_percentage >= 0 ? 'text-green-500' : 'text-red-500'
         }`}
       >

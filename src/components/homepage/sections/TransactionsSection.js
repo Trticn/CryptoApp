@@ -13,7 +13,7 @@ export default function TransactionsSection({ transactions, isFetching, error })
         <Skeleton className="h-16 w-full rounded-lg dark:bg-gray-700" times={3} />
       </div>
     );
-  } else if (transactions.length === 0) {
+  } else if (!transactions) {
     content = (
       <div className="p-4 sm:p-6 m-4 rounded-2xl border border-blue-300 dark:border-blue-800  shadow-sm">
         <div className="flex items-start items-center gap-3">

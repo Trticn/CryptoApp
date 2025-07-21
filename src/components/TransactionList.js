@@ -9,7 +9,7 @@ import usePagination from '../hooks/usePagination.js';
 
 function TransactionList({ transactionType }) {
   const { data, error, isFetching } = useFetchTransactionsQuery();
-
+  console.log(data)
   let filteredTransactions = data ?? [];
 
   if (transactionType !== 'all') {
@@ -78,16 +78,17 @@ function TransactionList({ transactionType }) {
     content = (
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
         {paginationData.map((transaction) => (
-          <TransactionListItem key={transaction.id} transaction={transaction} />
+          <TransactionListItem key={transaction._id} transaction={transaction} />
         ))}
       </div>
     );
   }
 
   return (
-    <>
+    <div className='min-h-screen flex flex-col overflow-hidden'>
+      <div className='flex-1'>
       {content}
-
+      </div>
       {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
@@ -95,7 +96,7 @@ function TransactionList({ transactionType }) {
           onPageChange={(page) => setCurrentPage(page)}
         />
       )}
-    </>
+    </div>
   );
 }
 

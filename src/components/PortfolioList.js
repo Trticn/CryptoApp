@@ -3,9 +3,12 @@ import PortfolioListItem from './PortfolioListItem';
 import { ChartBarIcon } from '@heroicons/react/24/outline';
 
 function PortfolioList({ portfolio, openCryptoModal }) {
-  if (!portfolio) return null;
 
-  if (portfolio.length < 1)
+
+
+
+  
+  if (!portfolio)
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
         <div className="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-full mb-4">

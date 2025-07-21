@@ -1,24 +1,20 @@
 import { useRemoveTransactionMutation } from '../store';
 import { ArrowUpIcon, ArrowDownIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { formatDate, formatNumber } from '../helpers';
+
 function TransactionListItem({ transaction }) {
   const [removeTransaction, results] = useRemoveTransactionMutation();
 
-  const handleRemoveTransaction = async () => {
-    try {
-      await removeTransaction(transaction).unwrap();
-    } catch (error) {
-      console.error('Failed to delete transaction:', error);
-    }
+  const handleRemoveTransaction = () => {
+    removeTransaction(transaction);
   };
 
   return (
     <div
-      key={transaction.id}
-      className="transition-all min-h-[120px] hover:bg-gray-100 dark:hover:bg-gray-900 p-4 rounded-lg"
+      className="transition-all hover:bg-gray-100 dark:hover:bg-gray-900 p-4 rounded-lg"
     >
-      <div className="flex justify-between items-start">
-        <div className="flex items-start">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center">
           <div
             className={`p-3 rounded-lg mr-4 ${
               transaction.type === 'buy'
@@ -59,8 +55,8 @@ function TransactionListItem({ transaction }) {
             )}
           </div>
         </div>
-        <div className="flex flex-col items-end">
-          <div className="flex items-center">
+        <div className="flex flex-col items-end justify-center h-full">
+          <div className="flex items-center justify-center h-full">
             <p
               className={`text-lg font-semibold ${
                 transaction.type === 'buy'

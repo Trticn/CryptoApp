@@ -17,7 +17,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
   return (
     <div className="flex justify-center items-center mt-6 gap-1 sm:gap-2 md:gap-3 flex-wrap">
-      {/* Prva stranica */}
       <button
         onClick={() => onPageChange(1)}
         disabled={currentPage === 1}
@@ -26,8 +25,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       >
         <FiChevronsLeft className="text-base sm:text-lg md:text-xl" />
       </button>
-
-      {/* Prethodna */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
@@ -36,8 +33,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       >
         <FiChevronLeft className="text-base sm:text-lg md:text-xl" />
       </button>
-
-      {/* Brojevi stranica */}
       {pages.map((page) => (
         <button
           key={page}
@@ -51,8 +46,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           {page}
         </button>
       ))}
-
-      {/* Sledeća */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
@@ -61,8 +54,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       >
         <FiChevronRight className="text-base sm:text-lg md:text-xl" />
       </button>
-
-      {/* Poslednja stranica */}
       <button
         onClick={() => onPageChange(totalPages)}
         disabled={currentPage === totalPages}

@@ -128,7 +128,7 @@ const Search = () => {
     content = (
       <div className="min-w-[500px] divide-y divide-gray-100 dark:divide-gray-700">
         {data?.map((coin) => (
-          <Link data-search-result onClick={handleSubmit} key={coin.id} to={`/crypto/${coin.id}`}>
+          <Link data-search-result onClick={handleSubmit} key={coin.id} to={`/search/${coin.id}`}>
             <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer gap-4">
               {/* Levo: Ikonica + Ime + Symbol */}
               <div className="flex items-center gap-2 w-[130px] shrink-0">

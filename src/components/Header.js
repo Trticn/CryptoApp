@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { primaryNavLinks } from '../config/Links';
 import Sidebar from './Sidebar';
 import Search from './Search';
+import ProfileNavigation from './ProfileNavigation';
 
 import crypto from '../images/crypto.png';
 
@@ -12,10 +13,15 @@ function Header() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const [isProfileNavigationOpen, setIsProfileNavigationOpen] = useState(false)
 
   const handleRefresh = () => {
     setIsRefreshing(true);
   };
+
+  const toggleProfileNavigation =()=>{
+    setIsProfileNavigationOpen(!isProfileNavigationOpen)
+  }
 
   return (
     <>
@@ -83,12 +89,24 @@ function Header() {
             >
               <FiRefreshCw className="text-gray-600 dark:text-gray-300" />
             </button>
-
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 cursor-pointer" />
+            
+      
+              <div
+                onClick={toggleProfileNavigation}
+                className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 cursor-pointer"
+              />
+      
+            
+            
+           
           </div>
         </div>
       </header>
+      {isProfileNavigationOpen&&
+      <ProfileNavigation isOpen={isProfileNavigationOpen} onClose={() => setIsProfileNavigationOpen(false)} />
+      }
 
+              
       <Sidebar isOpen={isMobileSidebarOpen} onClose={() => setIsMobileSidebarOpen(false)} />
     </>
   );
