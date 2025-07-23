@@ -35,7 +35,7 @@ const router = createBrowserRouter([
           { path: '/portfolio', element: <PortfolioPage /> },
           { path: '/transactions', element: <TransactionsPage /> },
           { path: '/watchlist', element: <WatchlistPage /> },
-          { path: '/search/:id', element: <CryptoDetailsPage /> },
+   
           { path: '/add-transaction', element: <AddTransaction /> },
         ],
       },
@@ -43,6 +43,7 @@ const router = createBrowserRouter([
         element: <PublicRoute />,
         children: [
           { path: '/auth', element: <AuthPage /> },
+          { path: '/search/:id', element: <CryptoDetailsPage /> },
         ],
       },
     ],

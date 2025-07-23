@@ -60,8 +60,10 @@ function PortfolioPage() {
   return (
     <div
       className={`${
-        isFullscreen ? 'fixed inset-0 z-50 p-4 overflow-auto' : 'min-h-screen'
-      } bg-gradient-to-b p-4 sm:p-6 md:p-10`}
+        isFullscreen
+          ? 'fixed inset-0 z-[9999] overflow-auto bg-white dark:bg-gray-900  min-h-screen'
+          : 'min-h-screen'
+      } p-6 md:p-10`}
     >
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mt-5">

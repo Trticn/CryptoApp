@@ -26,16 +26,13 @@ function AddTransaction() {
   const [triggerGetPrice, { isLoading }] = useLazyFetchHistoricalPriceQuery();
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.transactionForm);
-  console.log(formData.date.split('T')[0])
   const [notification, setNotification] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Provera da li su sva obavezna polja popunjena
-    if (!formData.title || !formData.quantity || !formData.date || !formData.type)
-      throw new Error('Molimo popunite sva obavezna polja!');
-
     try {
+      if (!formData.title || !formData.quantity || !formData.date || !formData.type)
+      throw new Error('Molimo popunite sva obavezna polja!');
       const rawDate = formData.date.split('T')[0]; // "2025-04-29T00:00:00" → "2025-04-29"
       const coinGeckoDate = rawDate.split('-').reverse().join('-'); // "29-04-2025"
 

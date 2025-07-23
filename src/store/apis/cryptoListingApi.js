@@ -10,7 +10,7 @@ const cryptoListingApi = createApi({
     return {
       fetchPopularCrypto: builder.query({
         query: () => '/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1',
-        keepUnusedDataFor: 60,
+        keepUnusedDataFor: 300, // čuva podatke 5 minuta
         providesTags: ['PopularTransactions'],
       }),
 

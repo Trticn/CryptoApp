@@ -2,7 +2,7 @@ import { formatNumber } from '../helpers';
 import { useAddCryptoToWatchlistMutation, useRemoveCryptoFromWatchlistMutation } from '../store';
 import Button from './Button';
 import { Link } from 'react-router-dom';
-function CryptoListingItem({ crypto }) {
+function CryptoListingItem({ crypto,onRemove }) {
   const [addCryptoToWatchlist, results] = useAddCryptoToWatchlistMutation();
   const [removeCryptoFromWatchlist, removeResults] = useRemoveCryptoFromWatchlistMutation();
 
@@ -25,6 +25,7 @@ function CryptoListingItem({ crypto }) {
   const toggleWatchlist = () => {
     if (crypto.isWatchlist) {
       removeCryptoFromWatchlist(crypto);
+      onRemove?.()
     } else {
       addCryptoToWatchlist({
         id: crypto.id,

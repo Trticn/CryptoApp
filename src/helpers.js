@@ -200,3 +200,25 @@ export function formatNumber(num) {
 
   return Math.abs(num);
 }
+
+
+
+export function formatRelativeDays(isoDateString) {
+  const createdAt = new Date(isoDateString);
+  const now = new Date();
+
+
+  createdAt.setHours(0, 0, 0, 0);
+  now.setHours(0, 0, 0, 0);
+
+  const diffMs = now - createdAt;
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) {
+    return "danas";
+  } else if (diffDays === 1) {
+    return "pre 1 dan";
+  } else {
+    return `pre ${diffDays} dana`;
+  }
+}

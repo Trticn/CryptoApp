@@ -5,6 +5,7 @@ import { transactionsApi } from './apis/transactionsApi';
 import { portfolioApi } from './apis/portfolioApi';
 import { watchlistApi } from './apis/watchlistApi';
 import { authApi } from './apis/authApi';
+import { userBlogApi } from './apis/userBlogApi';
 import { transactionFormReducer } from './apis/slices/transactionFormSlice';
 import { searchSliceReducer } from './apis/slices/searchSlice';
 import { authReducer } from './apis/slices/authSlice';
@@ -32,6 +33,7 @@ export const store = configureStore({
     [portfolioApi.reducerPath]: portfolioApi.reducer,
     [watchlistApi.reducerPath]: watchlistApi.reducer,
     [authApi.reducerPath]:authApi.reducer,
+    [userBlogApi.reducerPath]:userBlogApi.reducer,
     transactionForm: transactionFormReducer,
     search: searchSliceReducer,
     auth:authReducer
@@ -43,7 +45,8 @@ export const store = configureStore({
       .concat(transactionsApi.middleware)
       .concat(portfolioApi.middleware)
       .concat(watchlistApi.middleware)
-      .concat(authApi.middleware);
+      .concat(authApi.middleware)
+      .concat(userBlogApi.middleware)
   },
 });
 
@@ -93,6 +96,7 @@ export {
 } from './apis/watchlistApi';
 
 
+
 export {
   useRegisterMutation,
   useLoginMutation,
@@ -103,3 +107,10 @@ export {
   useResetPasswordMutation,
   useGetCurrentUserQuery
 } from './apis/authApi';
+
+export {
+  useFetchUserBlogsQuery,
+  useAddUserBlogMutation,
+  useUpdateUserBlogMutation,
+  useRemoveUserBlogMutation,
+} from './apis/userBlogApi'

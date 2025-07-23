@@ -1,27 +1,29 @@
-import { useEffect,useRef } from 'react';
+
+import { useSelector } from 'react-redux';
+import { useEffect} from 'react';
 import { useDispatch} from 'react-redux';
 import { setCredentials, setUserLogout, setInitialized, useGetCurrentUserQuery } from '../store';
+
 
 function AuthInitializer({ children }) {
   const dispatch = useDispatch();
   const { data, error, isLoading, isUninitialized } = useGetCurrentUserQuery();
-  const initializedRef = useRef(false); // Čuva informaciju da li smo već inicijalizovali auth
-
+  const initialized = useSelector(state => state.auth.initialized);
   useEffect(() => {
-    if (initializedRef.current || isLoading || isUninitialized) return;
+    if (initialized || isLoading || isUninitialized) return;
 
-    if (data?.user) {
-      dispatch(setCredentials({ user: data.user }));
-    } else if (error?.status === 401) {
-      dispatch(setUserLogout());
+    if (data?.data?.user) {
+      dispatch(setCredentials({ user: data.data.user }));
+      dispatch(setInitialized());
+    } else if (error) {
+      if (error.status === 401) {
+        dispatch(setUserLogout());
+      }
+      dispatch(setInitialized());
     }
-
-    dispatch(setInitialized());
-    initializedRef.current = true;
-  }, [data, error, isLoading, isUninitialized, dispatch]);
+    // Ako nema ni data ni error (npr. prvi render), ne radi ništa
+  }, [data, error, isLoading, isUninitialized, initialized, dispatch]);
 
   return children;
 }
-  
-
 export default AuthInitializer;

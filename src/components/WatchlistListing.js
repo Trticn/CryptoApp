@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import CryptoListingItem from './CryptoListingItem';
 import Skeleton from './Skeleton';
 import Pagination from './Pagination';
@@ -7,29 +8,49 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 function WatchlistListing({ showThead }) {
   const { data, error, isFetching } = useFetchWatchlistQuery();
+  const [watchlistIds, setWatchlistIds] = useState([]);
 
+  // Postavi lokalne ID-jeve kada se data učita
+  useEffect(() => {
+    if (Array.isArray(data)) {
+      setWatchlistIds(data.map(item => item.id));
+    }
+  }, [data]);
+
+  // Fetch samo ako postoji barem jedan ID
   const {
     data: watchlistCollection,
     error: watchlistError,
     isFetching: isFetchingWatchlist,
-  } = useFetchCryptoFromWatchlistQuery(
-    data?.map((cr) => cr.id),
-    {
-      skip: !data,
-      pollingInterval: 120000,
-    },
-  );
+  } = useFetchCryptoFromWatchlistQuery(watchlistIds, {
+    pollingInterval: 120_000,
+    skip: watchlistIds.length === 0,
+  });
 
-  const dataWithWatchlist = watchlistCollection?.map((crypto) => ({
+  // Dodaj oznaku da je iz watchliste
+  const dataWithWatchlist = (watchlistCollection || [])
+  .filter(crypto => watchlistIds.includes(crypto.id))
+  .map(crypto => ({
     ...crypto,
     isWatchlist: true,
   }));
 
-  const { currentPage, setCurrentPage, paginationData, totalPages } =
-    usePagination(dataWithWatchlist);
+  const {
+    currentPage,
+    setCurrentPage,
+    paginationData,
+    totalPages,
+  } = usePagination(dataWithWatchlist);
 
+  // Ako se ukloni zadnji sa stranice, idi na prethodnu
+  useEffect(() => {
+    if (paginationData.length === 0 && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  }, [paginationData, currentPage, setCurrentPage]);
+
+  // Glavni render sadržaj
   let content;
-  console.log(dataWithWatchlist)
 
   if (isFetching || isFetchingWatchlist) {
     content = (
@@ -76,7 +97,16 @@ function WatchlistListing({ showThead }) {
       </tr>
     );
   } else {
-    content = paginationData.map((crypto) => <CryptoListingItem key={crypto.id} crypto={crypto} />);
+    content = paginationData.map((crypto) => (
+      <CryptoListingItem
+        key={crypto.id}
+        crypto={crypto}
+        onRemove={() => {
+          // ukloni lokalno ID iz state-a da ne čeka refetch
+          setWatchlistIds(prev => prev.filter(id => id !== crypto.id));
+        }}
+      />
+    ));
   }
 
   return (

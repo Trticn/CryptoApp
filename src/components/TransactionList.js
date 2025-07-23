@@ -85,7 +85,7 @@ function TransactionList({ transactionType }) {
   }
 
   return (
-    <div className='min-h-screen flex flex-col overflow-hidden'>
+    <div className='flex flex-col  justify-center overflow-hidden'>
       <div className='flex-1'>
       {content}
       </div>

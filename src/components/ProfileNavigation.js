@@ -27,7 +27,7 @@ function ProfileNavigation({onClose}) {
         content =<>
         <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow">
             {/* Inicijal korisnika, ili ikonica */}
-            <span>P</span>
+            <span>{user.username?.[0]}</span>
         </div>
         <div>
             <div className="text-md font-semibold text-gray-800 dark:text-white">{user.username}</div>

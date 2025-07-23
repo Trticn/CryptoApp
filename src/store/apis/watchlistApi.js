@@ -9,7 +9,6 @@ const watchlistApi = createApi({
     fetchWatchlist: builder.query({
       query: () => '/watchlist',
       providesTags: ['Watchlist'],
-      // Očekuje array objekata {id: string}
     }),
     addCryptoToWatchlist: builder.mutation({
       query: (crypto) => ({

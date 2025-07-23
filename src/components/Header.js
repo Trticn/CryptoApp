@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { FiRefreshCw, FiMenu, FiMoon, FiSun } from 'react-icons/fi';
 import { useState } from 'react';
-import { useTheme } from '../context/ThemeContext';
+import { useSelector} from "react-redux";
+import { useTheme } from '../context/ThemeContext'
 import { primaryNavLinks } from '../config/Links';
 import Sidebar from './Sidebar';
 import Search from './Search';
@@ -14,7 +15,7 @@ function Header() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const [isProfileNavigationOpen, setIsProfileNavigationOpen] = useState(false)
-
+  const user = useSelector(state => state.auth.user);
   const handleRefresh = () => {
     setIsRefreshing(true);
   };
@@ -24,8 +25,8 @@ function Header() {
   }
 
   return (
-    <>
-      <header className="sticky top-0 z-40 w-screen flex items-center justify-between px-6 py-4 h-20 bg-white dark:bg-gray-800 shadow-sm">
+    <div className='overflow-hidden'>
+      <header className="w-screen flex overflow-hidden items-center justify-between px-6 md:px-10 py-4 h-20 bg-white dark:bg-gray-800 shadow-sm">
         <div className="flex items-center">
           {/* Mobile menu */}
           <button
@@ -93,11 +94,9 @@ function Header() {
       
               <div
                 onClick={toggleProfileNavigation}
-                className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 cursor-pointer"
-              />
-      
-            
-            
+                className="flex justify-center bg-gradient-to-r from-blue-500 to-indigo-600 items-center text-white text-lg font-bold w-8 h-8 rounded-full  cursor-pointer"
+              > <span>{user?.username?.[0]}</span></div>      
+    
            
           </div>
         </div>
@@ -108,7 +107,7 @@ function Header() {
 
               
       <Sidebar isOpen={isMobileSidebarOpen} onClose={() => setIsMobileSidebarOpen(false)} />
-    </>
+    </div>
   );
 }
 

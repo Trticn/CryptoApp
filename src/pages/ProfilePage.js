@@ -1,7 +1,10 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FiUser, FiCalendar, FiEye, FiPlus } from 'react-icons/fi';
+import { useState } from 'react';
 import ErrorScreen from '../components/ErrorScreen';
+import BlogList from '../components/BlogList';
+import AddBlogPost from '../components/AddBlogPost';
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -11,7 +14,20 @@ function formatDate(dateString) {
 export default function ProfilePage() {
   const user = useSelector(state => state.auth.user);
   const initialized = useSelector(state => state.auth.initialized);
+  const [showAddBlogModal, setShowAddBlogModal] = useState(false);
 
+
+
+  const showModal = () =>{
+    document.body.style.overflow = 'hidden';
+    setShowAddBlogModal(true)
+  }
+
+  const closeModal = () =>{
+    document.body.style.overflow = 'visible';
+    setShowAddBlogModal(false)
+
+  }
   if (!initialized) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
@@ -62,31 +78,16 @@ export default function ProfilePage() {
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Tvoji postovi</h3>
-            <button  className="flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-medium text-base shadow-lg  transition-all hover:opacity-90">
+            <button
+              className="flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-medium text-base shadow-lg  transition-all hover:opacity-90"
+              onClick={showModal}
+            >
               <FiPlus className='text-lg' /> Novi post
             </button>
           </div>
           {/* Dummy postovi */}
           <div className="flex flex-col gap-4">
-            <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold text-gray-800 dark:text-white">{user.firstName} {user.lastName}</span>
-                <span className="text-xs text-gray-400">pre 2 dana</span>
-              </div>
-              <div className="text-gray-700 dark:text-gray-200">Ovo je primer tvog posta na platformi. Možeš ovde deliti svoja razmišljanja o kriptu!
-              Ovo je primer tvog posta na platformi. Možeš ovde deliti svoja razmišljanja o kriptu!
-              Ovo je primer tvog posta na platformi. Možeš ovde deliti svoja razmišljanja o kriptu!
-              Ovo je primer tvog posta na platformi. Možeš ovde deliti svoja razmišljanja o kriptu!
-
-              </div>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold text-gray-800 dark:text-white">{user.firstName} {user.lastName}</span>
-                <span className="text-xs text-gray-400">pre 5 dana</span>
-              </div>
-              <div className="text-gray-700 dark:text-gray-200">Još jedan primer posta. U budućnosti ovde mogu biti tvoje prave objave!</div>
-            </div>
+              <BlogList/>
           </div>
         </div>
         {/* Rezervisana kolona za buduće widgete ili statistiku */}
@@ -94,6 +95,7 @@ export default function ProfilePage() {
           <span className="text-gray-400 dark:text-gray-500">Ovde može ići tvoja statistika, omiljene coine, ili nešto drugo.</span>
         </div>
       </div>
+      <AddBlogPost open={showAddBlogModal} onClose={closeModal} />
     </div>
   );
 } 

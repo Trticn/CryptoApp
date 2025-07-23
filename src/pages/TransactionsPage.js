@@ -7,7 +7,7 @@ function TransactionsPage() {
 
   return (
     <div className="p-6 md:p-10">
-      <header className="mb-8">
+      <div className="mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-5">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -56,7 +56,7 @@ function TransactionsPage() {
             </button>
           </div>
         </div>
-      </header>
+      </div>
       <TransactionList transactionType={transactionType} />
     </div>
   );
