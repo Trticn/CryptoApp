@@ -9,7 +9,6 @@ import usePagination from '../hooks/usePagination.js';
 
 function TransactionList({ transactionType }) {
   const { data, error, isFetching } = useFetchTransactionsQuery();
-  console.log(data)
   let filteredTransactions = data ?? [];
 
   if (transactionType !== 'all') {

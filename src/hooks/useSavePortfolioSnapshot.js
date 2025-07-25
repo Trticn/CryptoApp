@@ -1,5 +1,5 @@
 // hooks/useSavePortfolioSnapshot.js
-import { useEffect, useRef } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import { useAddPortfolioSnapshotMutation, useGetPortfolioSnapshotsQuery } from '../store';
 import { usePortfolioData } from './usePortfolioData';
 
@@ -15,50 +15,54 @@ export const useSavePortfolioSnapshot = () => {
     error,
   } = usePortfolioData();
 
-  const [addSnapshot] = useAddPortfolioSnapshotMutation();
-  const { data: existingSnapshots, isFetching: isFetchingSnapshots } =
-    useGetPortfolioSnapshotsQuery();
+  const [addSnapshot, { isLoading: isSaving, isSuccess, isError, error: saveError }] = useAddPortfolioSnapshotMutation();
+  const { data: existingSnapshots, isFetching: isFetchingSnapshots } = useGetPortfolioSnapshotsQuery();
 
-  const hasAttemptedRef = useRef(false); // Track if we've attempted to save
+  // Calculate today's date string once
+  const today = useMemo(() => new Date().toISOString().split('T')[0], []);
+  const snapshotExists = useMemo(() => {
+    if (isFetchingSnapshots || !existingSnapshots) return false;
+    return existingSnapshots.some((snap) => snap.date === today);
+  }, [existingSnapshots, today, isFetchingSnapshots]);
 
-  useEffect(() => {
-    // Only proceed if we have all data and haven't attempted yet
-    if (
-      hasAttemptedRef.current ||
-      isFetching ||
-      isFetchingSnapshots ||
-      error ||
-      !portfolio ||
-      !existingSnapshots
-    ) {
-      return;
-    }
-    const today = new Date().toISOString().split('T')[0];
-    const snapshotExists = existingSnapshots.some((snap) => snap.date === today);
-    if (snapshotExists) return;
-
-    addSnapshot({
-      date: today,
-      totalValue,
-      totalInvested,
-      totalProfit,
-      change24hValue,
-      change24hPercent,
-    })
-      .unwrap()
-      .catch((err) => {
-        console.error('Error while saving snapshot:', err);
-        // Možeš da obavestiš korisnika o grešci
-      });
-
-    hasAttemptedRef.current = true; // Mark that we've attempted to save
+  const canSave = useMemo(() => {
+    return (
+      !isFetching &&
+      !isFetchingSnapshots &&
+      !error &&
+      portfolio &&
+      existingSnapshots &&
+      !snapshotExists &&
+      !isSaving
+    );
   }, [
-    portfolio,
-    existingSnapshots,
     isFetching,
     isFetchingSnapshots,
     error,
+    portfolio,
+    existingSnapshots,
+    snapshotExists,
+    isSaving,
+  ]);
+
+  // Save snapshot function, memoized
+  const saveSnapshot = useCallback(async () => {
+    if (!canSave) return;
+    try {
+      await addSnapshot({
+        date: today,
+        totalValue,
+        totalInvested,
+        totalProfit,
+        change24hValue,
+        change24hPercent,
+      }).unwrap();
+    } catch (err) {
+    }
+  }, [
+    canSave,
     addSnapshot,
+    today,
     totalValue,
     totalInvested,
     totalProfit,
@@ -66,15 +70,21 @@ export const useSavePortfolioSnapshot = () => {
     change24hPercent,
   ]);
 
-  // This return is optional but can be useful for debugging
+  // Optionally, auto-save on mount if possible
+  useEffect(() => {
+    if (canSave) {
+      saveSnapshot();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canSave, saveSnapshot]);
+
   return {
-    hasAttempted: hasAttemptedRef.current,
-    shouldSave:
-      !hasAttemptedRef.current &&
-      !isFetching &&
-      !isFetchingSnapshots &&
-      !error &&
-      portfolio &&
-      existingSnapshots,
+    canSave,
+    isSaving,
+    isSuccess,
+    isError: isError || !!saveError,
+    saveError,
+    saveSnapshot,
+    snapshotExists,
   };
 };

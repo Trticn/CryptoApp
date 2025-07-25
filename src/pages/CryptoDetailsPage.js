@@ -10,9 +10,9 @@ import {
   LinkIcon,
 } from '@heroicons/react/24/outline';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { FiTrendingUp, FiArrowDown, FiArrowUp } from 'react-icons/fi';
 import { formatNumber, formatDateTime } from '../helpers';
+import useHandleBack from '../hooks/useHandleBack';
 import { useFetchCryptoDetailsQuery } from '../store';
 import MetricCard from '../components/cryptoDetails/MetricCard';
 import PerformanceItem from '../components/cryptoDetails/PerformanceItem';
@@ -22,16 +22,8 @@ import CryptoDescription from '../components/cryptoDetails/CryptoDescription';
 
 function CryptoDetailsPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { data: crypto, error, isFetching } = useFetchCryptoDetailsQuery(id);
-  console.log(crypto);
-  const handleBack = () => {
-    if (window.history.length > 2) {
-      navigate(-1);
-    } else {
-      navigate('/');
-    }
-  };
+  const handleBack = useHandleBack();
   if (isFetching)
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">

@@ -1,22 +1,33 @@
 import { useState } from 'react';
 import TransactionList from '../components/TransactionList';
-import { ArrowUpIcon, ArrowDownIcon, ListBulletIcon } from '@heroicons/react/24/outline';
-
+import { ArrowUpIcon, ArrowDownIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
+import useHandleBack from '../hooks/useHandleBack';
 function TransactionsPage() {
   const [transactionType, setTransactionType] = useState('all');
-
+  const handleBack = useHandleBack();
   return (
     <div className="p-6 md:p-10">
       <div className="mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-5">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <ListBulletIcon className="w-6 h-6" />
-              Sve transakcije
-            </h1>
+          <div className='flex gap-6'>
+            <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+            <button
+            onClick={handleBack}
+            className="p-2 rounded-lg flex justify-center items-center  hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            aria-label="Nazad na listu"
+          >
+            <ArrowLeftIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+          </button>
+       
+          
+            </div>
+
+            <div className='text-2xl md:text-3xl fpnt-semibold text-gray-900 dark:text-white gap-4'>
+            <h1 className='font-bold'>Sve transakcije</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Pregled svih tvojih kupljenih i prodatih kriptovaluta
             </p>
+            </div>
           </div>
 
           <div className="flex items-center justify-between  bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md px-3 py-2 transition-all duration-300">

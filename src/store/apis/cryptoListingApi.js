@@ -31,6 +31,8 @@ const cryptoListingApi = createApi({
         },
       }),
 
+
+
       fetchCryptoCollection: builder.query({
         query: (ids) => `/coins/markets?vs_currency=usd&ids=${ids}`,
         keepUnusedDataFor: 30,

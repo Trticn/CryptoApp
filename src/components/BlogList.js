@@ -46,7 +46,7 @@ function BlogList() {
     }
 
     return (
-        <div className="max-h-[500px]  overflow-y-auto">
+        <div className="max-h-[650px]  overflow-y-auto">
             {content}
         </div>
     );

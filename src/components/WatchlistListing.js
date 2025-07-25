@@ -17,7 +17,6 @@ function WatchlistListing({ showThead }) {
     }
   }, [data]);
 
-  // Fetch samo ako postoji barem jedan ID
   const {
     data: watchlistCollection,
     error: watchlistError,
@@ -102,7 +101,6 @@ function WatchlistListing({ showThead }) {
         key={crypto.id}
         crypto={crypto}
         onRemove={() => {
-          // ukloni lokalno ID iz state-a da ne čeka refetch
           setWatchlistIds(prev => prev.filter(id => id !== crypto.id));
         }}
       />

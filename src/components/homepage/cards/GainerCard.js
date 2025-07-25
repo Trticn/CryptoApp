@@ -1,5 +1,5 @@
 // components/cards/GainerCard.jsx
-import { FiTrendingUp, FiArrowUp } from 'react-icons/fi';
+import { FiTrendingUp, FiArrowUp,FiArrowDown } from 'react-icons/fi';
 
 export default function GainerCard({ topGainer }) {
   return (
@@ -21,10 +21,21 @@ export default function GainerCard({ topGainer }) {
                 {topGainer?.symbol?.toUpperCase() || 'N/A'}
               </h2>
               <div className="flex items-center mt-1">
-                <FiArrowUp className="text-green-500 dark:text-green-400 mr-1" />
-                <span className="text-green-500 dark:text-green-400 text-sm font-medium">
-                  {topGainer.priceChangePercentage24h.toFixed(2)}% danas
-                </span>
+                {topGainer.priceChangePercentage24h > 0 ? (
+                  <>
+                    <FiArrowUp className="text-green-500 dark:text-green-400 mr-1" />
+                    <span className="text-green-500 dark:text-green-400 text-sm font-medium">
+                      {topGainer.priceChangePercentage24h.toFixed(2)}% danas
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <FiArrowDown className="text-red-500 dark:text-red-400 mr-1" />
+                    <span className="text-red-500 dark:text-red-400 text-sm font-medium">
+                      {topGainer.priceChangePercentage24h.toFixed(2)}% danas
+                    </span>
+                  </>
+                )}
               </div>
             </>
           ) : (

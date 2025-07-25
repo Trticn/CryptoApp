@@ -2,29 +2,76 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { DB_LINK } from '../../config';
 
+
 const baseQuery = fetchBaseQuery({
   baseUrl: DB_LINK + '/api/auth',
   credentials: 'include',
 });
 
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, result = null) => {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(result);
+    }
+  });
+  failedQueue = [];
+};
+
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  if (result.error && result.error.status === 401) {
-    // Pokušaj refresh tokena
-    const refreshResult = await baseQuery(
-      { url: '/refresh-token', method: 'POST' },
-      api,
-      extraOptions
-    );
-    if (refreshResult.data) {
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      await baseQuery({ url: '/logout', method: 'POST' }, api, extraOptions);
+
+  const is401 = result?.error?.status === 401;
+  const isRefreshCall = typeof args === 'object' && args?.url?.includes('/refresh-token');
+
+  if (is401 && !isRefreshCall) {
+    if (isRefreshing) {
+      // Ako je refresh već u toku, čekamo njegov završetak
+      return new Promise((resolve, reject) => {
+        failedQueue.push({
+          resolve: async () => {
+            const retried = await baseQuery(args, api, extraOptions);
+            resolve(retried);
+          },
+          reject: (err) => reject(err),
+        });
+      });
+    }
+
+    isRefreshing = true;
+
+    try {
+      const refreshResult = await baseQuery(
+        { url: '/refresh-token', method: 'POST' },
+        api,
+        extraOptions
+      );
+
+      if (refreshResult?.data) {
+        processQueue(null);
+        result = await baseQuery(args, api, extraOptions);
+      } else {
+        // Ako refresh nije uspeo (npr. cookie ne postoji), radimo logout
+        processQueue(new Error('Refresh token failed'));
+        await baseQuery({ url: '/logout', method: 'POST' }, api, extraOptions);
+        api.dispatch({ type: 'auth/logout' });
+      }
+    } catch (err) {
+      processQueue(err);
       api.dispatch({ type: 'auth/logout' });
+    } finally {
+      isRefreshing = false;
     }
   }
+
   return result;
 };
+
+
 
 export const authApi = createApi({
   reducerPath: 'authApi',

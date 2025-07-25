@@ -18,8 +18,38 @@ import ProfilePage from './pages/ProfilePage';
 
 
 
+// Da bi handleBack bio dostupan na svakom Page-u, najbolje je da ga implementiraš kao custom React hook.
+// Kreiraj fajl npr. src/hooks/useHandleBack.js sa sledećim kodom:
 
-// Router setup (ostaje isto)
+/*
+// src/hooks/useHandleBack.js
+import { useNavigate } from 'react-router-dom';
+
+export default function useHandleBack() {
+  const navigate = useNavigate();
+  return () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
+  };
+}
+*/
+
+// Onda u svakom Page-u gde ti treba handleBack, samo importuješ i koristiš ovaj hook:
+
+/*
+import useHandleBack from '../hooks/useHandleBack';
+
+function SomePage() {
+  const handleBack = useHandleBack();
+  // ...
+}
+*/
+
+// Ostatak App.js ostaje isti, handleBack se ne definiše ovde već koristi kao hook u svakom Page-u po potrebi.
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -27,6 +57,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: '*', element: <NotFoundPage /> },
+      { path: '/search/:id', element: <CryptoDetailsPage /> },
 
       {
         element: <ProtectedRoute />,
@@ -43,7 +74,7 @@ const router = createBrowserRouter([
         element: <PublicRoute />,
         children: [
           { path: '/auth', element: <AuthPage /> },
-          { path: '/search/:id', element: <CryptoDetailsPage /> },
+
         ],
       },
     ],

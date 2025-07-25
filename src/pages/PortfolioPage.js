@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { formatNumber } from '../helpers';
+import useHandleBack from '../hooks/useHandleBack';
 import {
   ArrowsPointingOutIcon,
   ArrowsPointingInIcon,
-  ChartBarIcon,
+  ArrowLeftIcon
 } from '@heroicons/react/24/outline';
 import { usePortfolioData } from '../hooks/usePortfolioData';
 import CryptoModal from '../components/CryptoModal';
@@ -16,6 +17,7 @@ function PortfolioPage() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedCrypto, setSelectedCrypto] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleBack = useHandleBack();
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -63,17 +65,29 @@ function PortfolioPage() {
         isFullscreen
           ? 'fixed inset-0 z-[9999] overflow-auto bg-white dark:bg-gray-900  min-h-screen'
           : 'min-h-screen'
-      } p-6 md:p-10`}
+      } p-6 md:p-10 w-screen`}
     >
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mt-5">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <ChartBarIcon className="w-6 h-6" /> Tvoj Portfolio
-            </h1>
+        <div className='flex gap-6'>
+            <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+            <button
+            onClick={handleBack}
+            className="p-2 rounded-lg flex justify-center items-center  hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            aria-label="Nazad na listu"
+          >
+            <ArrowLeftIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+          </button>
+       
+          
+            </div>
+
+            <div className='text-2xl md:text-3xl fpnt-semibold text-gray-900 dark:text-white gap-4'>
+            <h1 className='font-bold'>Tvoj Portfolio</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Pregled svih tvojih kripto investicija
             </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-4">

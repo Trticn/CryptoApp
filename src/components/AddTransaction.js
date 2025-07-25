@@ -90,7 +90,7 @@ function AddTransaction() {
       <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-2xl p-6 space-y-6 transition-colors">
           <h2 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
             <PlusCircleIcon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-            Add New Transaction
+            Dodaj novu transakciju
           </h2>
 
           {notification && (
@@ -117,7 +117,7 @@ function AddTransaction() {
                   htmlFor="title"
                   className="block text-sm mb-1 text-zinc-600 dark:text-zinc-400"
                 >
-                  Cryptocurrency*
+                  Kriptovaluta*
                 </label>
                 <input
                   id="title"
@@ -135,7 +135,7 @@ function AddTransaction() {
                   htmlFor="quantity"
                   className="block text-sm mb-1 text-zinc-600 dark:text-zinc-400"
                 >
-                  Quantity*
+                 Količina*
                 </label>
                 <input
                   id="quantity"
@@ -152,7 +152,7 @@ function AddTransaction() {
 
             <div>
               <span className="block text-sm mb-1 text-zinc-600 dark:text-zinc-400">
-                Transaction Type*
+                Tip transakcije*
               </span>
               <div className="grid grid-cols-2 gap-4">
                 {['buy', 'sell'].map((type) => (
@@ -175,7 +175,7 @@ function AddTransaction() {
                     ) : (
                       <ArrowDownIcon className="w-5 h-5 mr-2" />
                     )}
-                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                    {type === 'buy' ? 'Kupi' : 'Prodaj'}
                   </button>
                 ))}
               </div>
@@ -187,7 +187,7 @@ function AddTransaction() {
                   htmlFor="date"
                   className="block text-sm mb-1 text-zinc-600 dark:text-zinc-400"
                 >
-                  Date*
+                  Datum*
                 </label>
                 <div className="flex gap-2">
                   <input
@@ -198,14 +198,16 @@ function AddTransaction() {
                     onChange={(e) => dispatch(changeDate(e.target.value))}
                     className="flex-1 w-full py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
                   />
+                
                   <button
                     type="button"
                     onClick={handleUseCurrentDate}
-                    className="px-4 py-2 rounded-xl bg-zinc-100 dark:bg-gray-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-gray-600 border border-zinc-200 dark:border-gray-700 transition"
+                    className="px-4 py-2 flex justify-center items-center rounded-xl bg-zinc-100 dark:bg-gray-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-gray-600 border border-zinc-200 dark:border-gray-700 transition"
                   >
                     <CalendarIcon className="w-4 h-4 inline mr-1" />
-                    Today
+                    Danas
                   </button>
+             
                 </div>
               </div>
             </div>
@@ -215,7 +217,7 @@ function AddTransaction() {
                 htmlFor="description"
                 className="block text-sm mb-1 text-zinc-600 dark:text-zinc-400"
               >
-                Description
+                Deskripcija
               </label>
               <textarea
                 id="description"
