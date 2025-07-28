@@ -37,7 +37,7 @@ function ProfileNavigation({onClose}) {
    
     }
     return (
-        <div className="fixed right-3 mt-1 top-20 z-50 w-[300px] rounded-xl shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-5 flex flex-col  transition-colors">
+        <div className="absolute right-3 mt-1 top-20 z-50 w-[300px] rounded-xl shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-5 flex flex-col  transition-colors">
             <div className="flex space-x-2 border-b border-gray-200 dark:border-gray-700 pb-3 mb-3">
              {content}
             </div>

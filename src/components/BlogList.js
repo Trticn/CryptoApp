@@ -3,8 +3,10 @@ import { useFetchUserBlogsQuery } from "../store";
 import BlogListItem from "./BlogListItem";
 import Skeleton from "./Skeleton";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { useRef } from "react";
 function BlogList() {
     const { data, error, isFetching } = useFetchUserBlogsQuery();
+    const scrollContainerRef = useRef(null)
     let content;
 
     if (isFetching) {
@@ -39,14 +41,14 @@ function BlogList() {
         content = (
             <div className="space-y-2">
                 {data && data.map((blog) => (
-                    <BlogListItem key={blog._id} blog={blog} />
+                    <BlogListItem scrollContainerRef={scrollContainerRef} key={blog._id} blog={blog} />
                 ))}
             </div>
         );
     }
 
     return (
-        <div className="max-h-[650px]  overflow-y-auto">
+        <div ref={scrollContainerRef} className="max-h-[650px]  overflow-y-auto">
             {content}
         </div>
     );

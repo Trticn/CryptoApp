@@ -33,7 +33,7 @@ function Header() {
             onClick={() => setIsMobileSidebarOpen(true)}
             className="lg:hidden mr-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition"
           >
-            <FiMenu className="text-gray-600 dark:text-gray-300 text-xl" />
+            <FiMenu className="text-gray-600 dark:text-gray-300 text-2xl" />
           </button>
 
           {/* Logo */}

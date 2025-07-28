@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { FiX } from 'react-icons/fi';
 import { Links } from '../config/Links';
 
+import crypto from '../images/crypto.png';
 function Sidebar({ isOpen, onClose }) {
   return (
     <div
@@ -23,11 +24,11 @@ function Sidebar({ isOpen, onClose }) {
       >
         <div className="flex items-center justify-between px-6 py-4 h-20 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl mr-3 shadow-md">
-              N
+          <div className="w-8 h-8 rounded-lg overflow-hidden mr-3">
+              <img src={crypto} alt="Logo" loading="lazy" className="w-8 h-8" />
             </div>
-            <span className="font-semibold text-sm text-gray-800 dark:text-gray-200">
-              nikolina@example.com
+            <span className="font-medium text-lg tracking-widest text-gray-800 dark:text-gray-200">
+              Kriptomat
             </span>
           </div>
           <button
@@ -57,11 +58,7 @@ function Sidebar({ isOpen, onClose }) {
           </ul>
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-100 dark:border-gray-700">
-          <button className="w-full py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl text-gray-700 dark:text-gray-300 font-medium transition">
-            Odjava
-          </button>
-        </div>
+   
       </aside>
     </div>
   );

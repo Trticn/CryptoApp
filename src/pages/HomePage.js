@@ -27,7 +27,7 @@ function HomePage() {
     <div className="pt-5 p-4 md:p-8">
       {/* Hero Section with Cards */}
       <div className="bg-gradient-to-b mb-8 from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 rounded-2xl p-4 md:p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-        <div className="flex flex-col md:flex-col lg:flex-row items-stretch mb-8 justify-center relative z-10">
+        <div className="flex flex-col md:flex-col lg:flex-row gap-1 items-stretch mb-8 justify-center relative z-10">
           {isFetching ? (
             <div className="flex flex-col md:flex-col lg:flex-row p-6 w-full">
               <Skeleton className="h-40 w-full rounded-xl dark:bg-gray-700" times={3} />

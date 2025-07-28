@@ -84,7 +84,7 @@ function AddTransaction() {
   };
 
   return (
-    <div className="py-6 px-4 sm:px-6 lg:px-8">
+    <div className=" py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
 
       <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-2xl p-6 space-y-6 transition-colors">
@@ -166,7 +166,7 @@ function AddTransaction() {
                       ? type === 'buy'
                         ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 border-green-300 dark:border-green-700'
                         : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-red-300 dark:border-red-700'
-                      : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700'
+                      : 'bg-gray-100 dark:bg-gray-700 border border-transparent text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700'
                   }
                 `}
                   >
@@ -224,7 +224,7 @@ function AddTransaction() {
                 name="description"
                 value={formData.description}
                 onChange={(e) => dispatch(changeDescription(e.target.value))}
-                rows="3"
+                rows="5"
                 placeholder="Optional notes..."
                 className="w-full py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
               />
@@ -256,7 +256,7 @@ function AddTransaction() {
                     Saving...
                   </>
                 ) : (
-                  `${formData.type === 'buy' ? 'Buy' : 'Sell'} crypto`
+                  `${formData.type === 'buy' ? 'Kupi' : 'Prodaj'} kriptovalutu`
                 )}
               </button>
             </div>

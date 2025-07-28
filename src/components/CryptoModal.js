@@ -1,5 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { formatNumber, InfoRow, formatDate } from '../helpers';
+import { Link } from 'react-router-dom';
+
 
 function CryptoModal({ crypto, onClose }) {
   if (!crypto) return;
@@ -7,15 +9,20 @@ function CryptoModal({ crypto, onClose }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white dark:bg-gray-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white dark:bg-gray-900 p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <div className="flex items-center gap-3">
+          <Link
+            to={`/crypto/${crypto.id}`}
+            className="flex items-center gap-3 hover:opacity-80"
+  
+          >
             <img src={crypto.image} alt={crypto.title} className="w-10 h-10 rounded-full" />
+
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
               {crypto.title}{' '}
               <span className="text-gray-500 dark:text-gray-400 uppercase text-sm">
                 {crypto.symbol}
               </span>
             </h2>
-          </div>
+          </Link>
           <button
             onClick={onClose}
             className="absolute top-4 right-4 p-[10px] bg-white/70 dark:bg-gray-800/30 backdrop-blur-md rounded-full border border-gray-300 dark:border-gray-700 shadow-md hover:shadow-xl hover:bg-white/90 dark:hover:bg-gray-700/50 transition-all duration-300 group"

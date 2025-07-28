@@ -1,6 +1,7 @@
 import { formatNumber, InfoRow } from '../helpers';
 import { ArrowUpIcon, ArrowDownIcon, ArrowsPointingOutIcon } from '@heroicons/react/24/outline';
 
+
 function PortfolioListItem({ asset, onClick }) {
   const profitPositive = asset.profit >= 0;
 

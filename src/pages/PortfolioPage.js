@@ -63,7 +63,7 @@ function PortfolioPage() {
     <div
       className={`${
         isFullscreen
-          ? 'fixed inset-0 z-[9999] overflow-auto bg-white dark:bg-gray-900  min-h-screen'
+          ? 'fixed inset-0 z-[9999]  bg-white dark:bg-gray-900  min-h-screen'
           : 'min-h-screen'
       } p-6 md:p-10 w-screen`}
     >
