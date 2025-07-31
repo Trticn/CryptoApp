@@ -6,10 +6,11 @@ import {
   changeDate,
   changeType,
   resetForm,
-} from '../store';
+} from '../../store';
 
 import { useState } from 'react';
-import { useAddTransactionMutation, useLazyFetchHistoricalPriceQuery } from '../store';
+import { useAddTransactionMutation } from '../../store/apis/transactionsApi';
+import { useLazyFetchHistoricalPriceQuery } from '../../store/apis/cryptoListingApi';
 
 import {
   CheckCircleIcon,
@@ -33,8 +34,8 @@ function AddTransaction() {
     try {
       if (!formData.title || !formData.quantity || !formData.date || !formData.type)
       throw new Error('Molimo popunite sva obavezna polja!');
-      const rawDate = formData.date.split('T')[0]; // "2025-04-29T00:00:00" → "2025-04-29"
-      const coinGeckoDate = rawDate.split('-').reverse().join('-'); // "29-04-2025"
+      const rawDate = formData.date.split('T')[0]; // 
+      const coinGeckoDate = rawDate.split('-').reverse().join('-'); 
 
       const priceResult = await triggerGetPrice({
         coinId: formData.title.toLowerCase(),
@@ -142,8 +143,12 @@ function AddTransaction() {
                   name="quantity"
                   type="number"
                   step="0.01"
-                  value={formData.quantity}
-                  onChange={(e) => dispatch(changeQuantity(+e.target.value))}
+                  value={formData.quantity === 0 ? "" : formData.quantity}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    // Allow empty string so user can clear the field
+                    dispatch(changeQuantity(val === "" ? "" : +val));
+                  }}
                   placeholder="0.00"
                   className="w-full py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
                 />
@@ -166,7 +171,7 @@ function AddTransaction() {
                       ? type === 'buy'
                         ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 border-green-300 dark:border-green-700'
                         : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-red-300 dark:border-red-700'
-                      : 'bg-gray-100 dark:bg-gray-700 border border-transparent text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700'
+                      : 'bg-gray-100 dark:bg-gray-700 border border-transparent text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-gray-600'
                   }
                 `}
                   >
@@ -196,13 +201,13 @@ function AddTransaction() {
                     type="date"
                     value={formData.date}
                     onChange={(e) => dispatch(changeDate(e.target.value))}
-                    className="flex-1 w-full py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
+                    className="flex-1 w-full   py-2 px-4 outline-none rounded-xl bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-400 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 shadow-sm"
                   />
                 
                   <button
                     type="button"
                     onClick={handleUseCurrentDate}
-                    className="px-4 py-2 flex justify-center items-center rounded-xl bg-zinc-100 dark:bg-gray-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-gray-600 border border-zinc-200 dark:border-gray-700 transition"
+                    className="px-4 py-2 flex justify-center items-center rounded-xl bg-zinc-100 dark:bg-gray-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-gray-600  border border-zinc-200 dark:border-gray-700 transition"
                   >
                     <CalendarIcon className="w-4 h-4 inline mr-1" />
                     Danas

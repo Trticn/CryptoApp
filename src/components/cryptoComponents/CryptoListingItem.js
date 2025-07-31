@@ -1,7 +1,9 @@
-import { formatNumber } from '../helpers';
-import { useAddCryptoToWatchlistMutation, useRemoveCryptoFromWatchlistMutation } from '../store';
-import Button from './Button';
+import { formatNumber } from '../../helpers';
+import { useAddCryptoToWatchlistMutation, useRemoveCryptoFromWatchlistMutation } from '../../store/apis/watchlistApi';
+import Button from '../Button'
 import { Link } from 'react-router-dom';
+
+
 function CryptoListingItem({ crypto,onRemove }) {
   const [addCryptoToWatchlist, results] = useAddCryptoToWatchlistMutation();
   const [removeCryptoFromWatchlist, removeResults] = useRemoveCryptoFromWatchlistMutation();
@@ -50,15 +52,12 @@ function CryptoListingItem({ crypto,onRemove }) {
       </td>
 
       {/* Name */}
-
       <td className="p-4 min-h-[115px] flex items-center ">
-        <Link to={`/search/${crypto.id}`}>
-          <div className="flex items-center space-x-2 gap-1">
-            <img src={image} alt={name} className="w-6 h-6" />
-            <div>
-              <p className="font-semibold text-gray-900 dark:text-gray-100">{name}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{symbol.toUpperCase()}</p>
-            </div>
+        <Link to={`/search/${crypto.id}`} className="flex items-center space-x-2 gap-1 hover:underline focus:outline-none">
+          <img src={image} alt={name} className="w-6 h-6" />
+          <div>
+            <p className="font-semibold text-gray-900 dark:text-gray-100">{name}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{symbol.toUpperCase()}</p>
           </div>
         </Link>
       </td>

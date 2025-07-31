@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAddUserBlogMutation } from "../store";
+import { useAddUserBlogMutation } from '../../store/apis/userBlogApi';
 import { CheckCircleIcon, XCircleIcon, PlusCircleIcon,XMarkIcon } from "@heroicons/react/24/outline";
 
 function AddBlogPost({ open, onClose }) {

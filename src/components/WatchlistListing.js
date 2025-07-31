@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import CryptoListingItem from './CryptoListingItem';
+
+import CryptoListingItem from './cryptoComponents/CryptoListingItem'
 import Skeleton from './Skeleton';
 import Pagination from './Pagination';
 import usePagination from '../hooks/usePagination';

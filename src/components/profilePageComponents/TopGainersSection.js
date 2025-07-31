@@ -1,7 +1,8 @@
-import { useFetchPopularCryptoQuery} from "../store"
+import { useFetchPopularCryptoQuery } from '../../store/apis/cryptoListingApi';
 import { FiArrowUp, FiArrowDown } from 'react-icons/fi';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import Skeleton from "./Skeleton";
+import Skeleton from '../Skeleton';
+import { Link } from 'react-router-dom';
 
 function TopGainersSection({type}) {
   const { data, isFetching, error } = useFetchPopularCryptoQuery(); 
@@ -47,8 +48,9 @@ function TopGainersSection({type}) {
     );
   } else {
     content = filteredData.map((coin, index) => (
+      <Link   key={coin.id || index} to={`/search/${coin.id}`}>
       <div
-        key={coin.id || index}
+      
         className="flex items-center hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors duration-200"
       >
         <div className="w-10 h-10 rounded-lg flex items-center justify-center mr-3 bg-gray-100 dark:bg-gray-700">
@@ -75,6 +77,7 @@ function TopGainersSection({type}) {
           <span>{coin.price_change_percentage_24h?.toFixed(2)}%</span>
         </div>
       </div>
+      </Link>
     ));
   }
 

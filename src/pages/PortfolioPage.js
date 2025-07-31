@@ -7,8 +7,8 @@ import {
   ArrowLeftIcon
 } from '@heroicons/react/24/outline';
 import { usePortfolioData } from '../hooks/usePortfolioData';
-import CryptoModal from '../components/CryptoModal';
-import PortfolioList from '../components/PortfolioList';
+import CryptoModal from '../components/cryptoComponents/CryptoModal';
+import PortfolioList from '../components/portfolioPageComponents/PortfolioList';
 import ErrorScreen from '../components/ErrorScreen';
 
 function PortfolioPage() {
@@ -57,13 +57,15 @@ function PortfolioPage() {
       </div>
     );
 
-  if (error) return <ErrorScreen />;
+  if (error){
+     return <ErrorScreen />;
+  }
 
   return (
     <div
       className={`${
         isFullscreen
-          ? 'fixed inset-0 z-[9999]  bg-white dark:bg-gray-900  min-h-screen'
+          ? 'fixed inset-0 z-[9999]  bg-white dark:bg-gray-900'
           : 'min-h-screen'
       } p-6 md:p-10 w-screen`}
     >

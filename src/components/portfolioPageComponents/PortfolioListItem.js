@@ -1,4 +1,4 @@
-import { formatNumber, InfoRow } from '../helpers';
+import { formatNumber, InfoRow } from '../../helpers';
 import { ArrowUpIcon, ArrowDownIcon, ArrowsPointingOutIcon } from '@heroicons/react/24/outline';
 
 

@@ -7,7 +7,7 @@ function WatchlistPage() {
   const handleBack = useHandleBack();
 
   return (
-    <div className="p-6 md:p-10">
+    <div className="p-6 md:p-10 min-h-screen">
       <header className="mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-5">
                   <div className='flex gap-6'>

@@ -3,7 +3,7 @@ import { usePortfolioData } from '../hooks/usePortfolioData';
 import { Link } from 'react-router-dom';
 // import { useSavePortfolioSnapshot } from '../hooks/useSavePortfolioSnapshot.js';
 import Skeleton from '../components/Skeleton';
-import CryptoListing from '../components/CryptoListing';
+import CryptoListing from '../components/cryptoComponents/CryptoListing';
 import BalanceCard from '../components/homepage/cards/BalanceCard.js';
 import InvestmentCard from '../components/homepage/cards/InvestmentCard.js';
 import GainerCard from '../components/homepage/cards/GainerCard.js';

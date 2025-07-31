@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FiSearch, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useFetchSearchedCryptoQuery } from '../store';
+import { useFetchSearchedCryptoQuery } from '../../store';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import { formatNumber } from '../helpers';
-import { changeQuery, changeDebouncedQuery, changeShowResults, clearSearch } from '../store';
-import Skeleton from './Skeleton';
+import { formatNumber } from '../../helpers';
+import { changeQuery, changeDebouncedQuery, changeShowResults, clearSearch } from '../../store';
+import Skeleton from '../Skeleton';
 
 const DEBOUNCE_DELAY = 2000;
 

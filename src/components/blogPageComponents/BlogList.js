@@ -1,7 +1,7 @@
 
-import { useFetchUserBlogsQuery } from "../store";
+import { useFetchUserBlogsQuery } from '../../store/apis/userBlogApi';
 import BlogListItem from "./BlogListItem";
-import Skeleton from "./Skeleton";
+import Skeleton from '../Skeleton';
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useRef } from "react";
 function BlogList() {

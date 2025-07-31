@@ -1,6 +1,6 @@
-import { useRemoveTransactionMutation } from '../store';
+import { useRemoveTransactionMutation } from '../../store';
 import { ArrowUpIcon, ArrowDownIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { formatDate, formatNumber } from '../helpers';
+import { formatDate, formatNumber } from '../../helpers';
 
 function TransactionListItem({ transaction }) {
   const [removeTransaction, results] = useRemoveTransactionMutation();

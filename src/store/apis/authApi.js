@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { DB_LINK } from '../../config';
 
 
+
 const baseQuery = fetchBaseQuery({
   baseUrl: DB_LINK + '/api/auth',
   credentials: 'include',
@@ -30,7 +31,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
   if (is401 && !isRefreshCall) {
     if (isRefreshing) {
-      // Ako je refresh već u toku, čekamo njegov završetak
       return new Promise((resolve, reject) => {
         failedQueue.push({
           resolve: async () => {
@@ -91,6 +91,7 @@ export const authApi = createApi({
         body: data,
       }),
     }),
+
     googleLogin: builder.mutation({
       query: (data) => ({
         url: '/google-login',

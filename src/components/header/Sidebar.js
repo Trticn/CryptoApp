@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { FiX } from 'react-icons/fi';
-import { Links } from '../config/Links';
 
-import crypto from '../images/crypto.png';
+import { Links } from '../../config/Links';
+
+import crypto from '../../images/crypto.png';
 function Sidebar({ isOpen, onClose }) {
   return (
     <div

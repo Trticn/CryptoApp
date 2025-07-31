@@ -5,6 +5,7 @@ import { transactionsApi } from './apis/transactionsApi';
 import { portfolioApi } from './apis/portfolioApi';
 import { watchlistApi } from './apis/watchlistApi';
 import { authApi } from './apis/authApi';
+import { secureApi } from './apis/secureApi';
 import { userBlogApi } from './apis/userBlogApi';
 import { transactionFormReducer } from './apis/slices/transactionFormSlice';
 import { searchSliceReducer } from './apis/slices/searchSlice';
@@ -33,6 +34,7 @@ export const store = configureStore({
     [portfolioApi.reducerPath]: portfolioApi.reducer,
     [watchlistApi.reducerPath]: watchlistApi.reducer,
     [authApi.reducerPath]:authApi.reducer,
+    [secureApi.reducerPath]:secureApi.reducer,
     [userBlogApi.reducerPath]:userBlogApi.reducer,
     transactionForm: transactionFormReducer,
     search: searchSliceReducer,
@@ -46,11 +48,15 @@ export const store = configureStore({
       .concat(portfolioApi.middleware)
       .concat(watchlistApi.middleware)
       .concat(authApi.middleware)
+      .concat(secureApi.middleware)
       .concat(userBlogApi.middleware)
+
   },
 });
 
 setupListeners(store.dispatch);
+
+
 
 export {
   changeQuantity,
@@ -106,8 +112,15 @@ export {
   useLogoutMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useGetCurrentUserQuery
+  useGetCurrentUserQuery,
+
 } from './apis/authApi';
+
+
+export {
+  useChangePasswordMutation,
+  useChangeEmailMutation,
+} from './apis/secureApi'
 
 export {
   useFetchUserBlogsQuery,
@@ -115,3 +128,4 @@ export {
   useUpdateUserBlogMutation,
   useRemoveUserBlogMutation,
 } from './apis/userBlogApi'
+

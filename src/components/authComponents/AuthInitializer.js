@@ -5,8 +5,8 @@ import {
   setUserLogout,
   setInitialized,
   useGetCurrentUserQuery,
-} from '../store';
-import { useSavePortfolioSnapshot } from '../hooks/useSavePortfolioSnapshot';
+} from '../../store';
+import { useSavePortfolioSnapshot } from '../../hooks/useSavePortfolioSnapshot';
 
 function AuthInitializer({ children }) {
   const dispatch = useDispatch();
@@ -21,18 +21,20 @@ function AuthInitializer({ children }) {
   const initialized = useSelector((state) => state.auth.initialized);
   const { canSave, saveSnapshot } = useSavePortfolioSnapshot();
 
-  // 1. Autentikacija
+  // 1. Authentication
   useEffect(() => {
     if (initialized || isLoading || isUninitialized) return;
 
-    if (isSuccess && data?.data?.user) {
-      dispatch(setCredentials({ user: data.data.user }));
-      dispatch(setInitialized());
-    } else if (isError && error) {
-      if (error.status === 401) {
-        dispatch(setUserLogout());
-      }
-      dispatch(setInitialized());
+    if (isSuccess) {
+      dispatch(setCredentials({ user: data?.data?.user || null }));
+    }
+    
+    // Always set initialized, regardless of success or error
+    dispatch(setInitialized());
+    
+    // Handle specific error case
+    if (isError && error?.status === 401) {
+      dispatch(setUserLogout());
     }
   }, [initialized, isLoading, isUninitialized, isSuccess, data, isError, error, dispatch]);
 
@@ -47,3 +49,5 @@ function AuthInitializer({ children }) {
 }
 
 export default AuthInitializer;
+
+

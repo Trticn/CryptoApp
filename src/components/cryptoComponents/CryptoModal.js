@@ -1,5 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { formatNumber, InfoRow, formatDate } from '../helpers';
+import { formatNumber, InfoRow, formatDate } from '../../helpers';
 import { Link } from 'react-router-dom';
 
 

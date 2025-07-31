@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import TransactionList from '../components/TransactionList';
+import TransactionList from '../components/transactionPageComponents/TransactionList';
 import { ArrowUpIcon, ArrowDownIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import useHandleBack from '../hooks/useHandleBack';
 function TransactionsPage() {
   const [transactionType, setTransactionType] = useState('all');
   const handleBack = useHandleBack();
   return (
-    <div className="p-6 md:p-10">
+    <div className="p-6 md:p-10 min-h-screen">
       <div className="mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-5">
           <div className='flex gap-6'>

@@ -1,5 +1,5 @@
-import { formatRelativeDays } from "../helpers";
-import { useRemoveUserBlogMutation } from "../store";
+import { formatRelativeDays } from "../../helpers";
+import { useRemoveUserBlogMutation } from "../../store";
 
 import { useState,useRef,useEffect } from "react";
 
@@ -39,7 +39,7 @@ if (showBlogOptions && iconRef.current && dropdownRef.current && scrollContainer
         setDropdownDirection("down");
       }
     }
-  }, [showBlogOptions]);
+  }, [showBlogOptions,scrollContainerRef]);
   
   return (
     <div className="bg-gray-50 w-full dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4 ">

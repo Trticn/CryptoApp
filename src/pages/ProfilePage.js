@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { FiUser, FiCalendar, FiEye, FiPlus } from 'react-icons/fi';
 import { useState } from 'react';
 import ErrorScreen from '../components/ErrorScreen';
-import BlogList from '../components/BlogList';
-import AddBlogPost from '../components/AddBlogPost';
-import TopGainersSection from '../components/TopGainersSection';
+import BlogList from '../components/blogPageComponents/BlogList';
+import AddBlogPost from '../components/blogPageComponents/AddBlogPost';
+import TopGainersSection from '../components/profilePageComponents/TopGainersSection';
 import useHandleBack from '../hooks/useHandleBack';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 function formatDate(dateString) {
@@ -47,7 +47,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="p-6 w-screen md:p-10 min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="p-6 w-screen md:p-10 min-h-screen ">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
 

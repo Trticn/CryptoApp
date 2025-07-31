@@ -1,10 +1,10 @@
 import { FiMail,FiPhone,FiGlobe,FiLinkedin,FiInstagram,FiMessageCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { Links } from "../../../config/Links";
-import crypto from '../../../images/crypto.png'
+import { Links } from "../config/Links";
+import crypto from '../images/crypto.png'
 function Footer(){
   return (
-<footer className="bg-zinc-50 dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-900 dark:to-black border-t border-gray-200 dark:border-gray-700 text-gray-800 dark:text-zinc-300 relative py-16 mt-20 w-full shadow-inner">
+<footer className="bg-gradient-to-tl dark:bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-50 dark:from-gray-800 dark:via-gray-900 dark:to-black border-t border-gray-200 dark:border-gray-700 text-gray-800 dark:text-zinc-300 relative py-16 mt-20 w-full shadow-inner">
   <div className="container mx-auto px-4 pb-20">
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pb-10">
 
@@ -27,7 +27,7 @@ function Footer(){
         {/* Brzi linkovi */}
         <div className="flex flex-col   text-center lg:text-left space-y-6">
           <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100 mb-2">Brzi linkovi</h3>
-          <div className="space-y-3 text-base flex flex-col text-gray-700 dark:text-zinc-300">
+          <div className="space-y-6 text-base flex flex-col text-gray-700 dark:text-zinc-300">
             {Links.map((item, index) => (
               <Link
                 to={item.path}
@@ -47,7 +47,7 @@ function Footer(){
             <span className="w-5 h-5 flex items-center justify-center text-zinc-600 dark:text-zinc-300">
               <FiMail className="w-5 h-5" />
             </span>
-            <a href="mailto:cryptotrack.support@gmail.com" className="hover:text-zinc-900 dark:hover:text-white transition text-gray-800 dark:text-zinc-300">cryptotrack.support@gmail.com</a>
+            <a href="mailto:kriptomat.support@gmail.com" className="hover:text-zinc-900 dark:hover:text-white transition text-gray-800 dark:text-zinc-300">kriptomat.support@gmail.com</a>
           </div>
           <div className="flex items-center space-x-2 justify-center lg:justify-end">
             <span className="w-5 h-5 flex items-center justify-center text-zinc-600 dark:text-zinc-300">
@@ -76,15 +76,17 @@ function Footer(){
         <a href="https://www.instagram.com/trticn" target="_blank" rel="noopener noreferrer" className="text-zinc-700 dark:text-zinc-300 hover:bg-pink-100 dark:hover:bg-pink-900/30 dark:hover:text-pink-700 hover:text-pink-300 transition flex items-center justify-center w-10 h-10 rounded-full bg-zinc-200 dark:bg-zinc-700/30">
           <FiInstagram className="w-6 h-6" />
         </a>
-        <a href="https://wa.me/38766136261" target="_blank" rel="noopener noreferrer" className="text-zinc-700 dark:text-zinc-300 hover:bg-green-400 hover:bg-opacity-80 transition flex items-center justify-center w-10 h-10 rounded-full bg-zinc-200 dark:bg-zinc-700/30">
+        <a href="https://wa.me/38766136261" target="_blank" rel="noopener noreferrer" className="text-zinc-700 dark:text-zinc-300 dark:hover:bg-green-900 hover:bg-green-400 hover:bg-opacity-80 transition flex items-center justify-center w-10 h-10 rounded-full bg-zinc-200 dark:bg-zinc-700/30">
           <FiMessageCircle className="w-6 h-6" />
         </a>
       </div>
       <div className="text-gray-500 dark:text-zinc-500 text-xs md:text-sm space-y-1">
         <div>
-          Copyright © <span>{new Date().getFullYear()}</span> CryptoTrack. Sva prava zadržana.
+          Copyright © <span>{new Date().getFullYear()}</span> Kriptomat. Sva prava zadržana.
         </div>
-        <div>Izradio Nikola Trtić</div>
+        <div>
+          Web aplikaciju izradio <span className="font-semibold">Nikola Trtić</span>
+        </div>
       </div>
     </div>
   </div>

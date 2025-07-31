@@ -1,11 +1,11 @@
-import { useFetchTransactionsQuery } from '../store';
+import { useFetchTransactionsQuery } from '../../store/apis/transactionsApi';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { ChartBarIcon } from '@heroicons/react/24/outline';
-import Skeleton from './Skeleton';
+import Skeleton from '../Skeleton';
 import TransactionListItem from './TransactionListItem.js';
-import Pagination from './Pagination.js';
-import usePagination from '../hooks/usePagination.js';
+import Pagination from '../Pagination';
+import usePagination from '../../hooks/usePagination';
 
 function TransactionList({ transactionType }) {
   const { data, error, isFetching } = useFetchTransactionsQuery();

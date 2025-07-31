@@ -8,7 +8,8 @@ import {
   useForgotPasswordMutation,
   useResetPasswordMutation,
 } from '../store/apis/authApi';
-import AuthFormContent from '../components/AuthFormContent';
+import AuthFormContent from '../components/authComponents/AuthFormContent';
+
 
 const AuthPage = () => {
   const dispatch = useDispatch();

@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import { FiRefreshCw, FiMenu, FiMoon, FiSun } from 'react-icons/fi';
 import { useState } from 'react';
 import { useSelector} from "react-redux";
-import { useTheme } from '../context/ThemeContext'
-import { primaryNavLinks } from '../config/Links';
+import { useTheme } from '../../context/ThemeContext'
+import { primaryNavLinks } from '../../config/Links';
 import Sidebar from './Sidebar';
 import Search from './Search';
-import ProfileNavigation from './ProfileNavigation';
+import ProfileNavigation from '../profilePageComponents/ProfileNavigation';
 
-import crypto from '../images/crypto.png';
+import crypto from '../../images/crypto.png';
 
 function Header() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);

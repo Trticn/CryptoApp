@@ -34,14 +34,16 @@ export default function InvestmentsSection({ assets, isFetching, error }) {
     );
   } else {
     content = assets.map((coin, index) => (
+      <Link key={coin.id || index} to={`/search/${coin.id}`}>
       <div
-        key={index}
         className="flex items-center hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors duration-200"
       >
         <div className="w-10 h-10 rounded-lg flex items-center justify-center mr-3 bg-gray-100 dark:bg-gray-700">
           <img src={coin.image} alt={coin.title} className="w-6 h-6" />
         </div>
         <div className="flex-1">
+
+          
           <h3 className="font-medium text-gray-800 dark:text-white">{coin.title}</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {coin.currentValue.toFixed(2)}$
@@ -62,6 +64,7 @@ export default function InvestmentsSection({ assets, isFetching, error }) {
           <span>{coin.priceChangePercentage24h.toFixed(2)}%</span>
         </div>
       </div>
+      </Link>
     ));
   }
 
