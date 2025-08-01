@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Links } from "../config/Links";
 import crypto from '../images/crypto.png'
 function Footer(){
+
+
   return (
 <footer className="bg-gradient-to-tl dark:bg-gradient-to-br from-zinc-200 via-zinc-100 to-zinc-50 dark:from-gray-800 dark:via-gray-900 dark:to-black border-t border-gray-200 dark:border-gray-700 text-gray-800 dark:text-zinc-300 relative py-16 mt-20 w-full shadow-inner">
   <div className="container mx-auto px-4 pb-20">
@@ -30,6 +32,7 @@ function Footer(){
           <div className="space-y-6 text-base flex flex-col text-gray-700 dark:text-zinc-300">
             {Links.map((item, index) => (
               <Link
+         
                 to={item.path}
                 key={index}
                 className="hover:text-zinc-900  dark:hover:text-white transition"

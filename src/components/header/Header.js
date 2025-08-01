@@ -18,6 +18,7 @@ function Header() {
   const user = useSelector(state => state.auth.user);
   const handleRefresh = () => {
     setIsRefreshing(true);
+    window.location.reload()
   };
 
   const toggleProfileNavigation =()=>{

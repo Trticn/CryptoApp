@@ -2,9 +2,43 @@ import FaqList from "../components/FaqList";
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { FiMail, FiPhone, FiMessageCircle, FiHelpCircle } from 'react-icons/fi';
 import useHandleBack from '../hooks/useHandleBack';
+import { useState,useRef } from "react";
+import ContactForm from "../components/ContactForm";
 
 function HelpPage() {
   const handleBack = useHandleBack();
+
+  const [view, setView] = useState('faq');
+  const contactRef = useRef(null);
+
+
+  const handleClick = () => {
+    if(view === 'faq'){
+      setView('contact');
+      contactRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    }else{
+      setView('faq');
+      contactRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+
+  let content;
+  if(view === 'faq'){
+    content =    <><h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Najčešća pitanja</h3>
+    <FaqList />
+    {/* Dugme za kontakt ispod FAQ */}
+    <button
+      onClick={handleClick}
+      className="mt-6 w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all"
+    >
+      Kontaktiraj nas
+    </button>
+    </>
+  }else if(view === 'contact'){
+    content = <ContactForm onClick={handleClick} />;
+  }
+
 
   return (
     <div className="p-6 w-screen md:p-10 min-h-screen">
@@ -32,10 +66,17 @@ function HelpPage() {
             Evo svega što trebate da znate o korišćenju naše Crypto aplikacije. 
             Ako ne pronađete odgovor na vaše pitanje, slobodno nas kontaktirajte.
           </p>
+          {/* Dugme za kontakt */}
+          <button
+            onClick={handleClick}
+            className="mt-4 px-6 py-2 bg-white text-blue-700 font-semibold rounded-lg shadow hover:bg-blue-100 transition-colors"
+          >
+            {view === 'faq' ? 'Kontaktiraj nas' : 'FAQ'}
+          </button>
         </div>
 
         {/* Quick Contact Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-5">
           <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm text-center">
             <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-3">
               <FiMail className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -44,7 +85,6 @@ function HelpPage() {
             <a
               href="mailto:kriptomat.support@gmail.com"
               className="text-sm cursor-pointer text-gray-600 dark:text-gray-400"
-             
             >
               kriptomat.support@gmail.com
             </a>
@@ -67,53 +107,15 @@ function HelpPage() {
           </div>
         </div>
 
-        {/* FAQ sekcija */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Najčešća pitanja</h3>
+        {/* Contact Form */}
+        <div ref={contactRef} className='py-5'>
+          <div  className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+            {content}
+          </div>
+        </div>
 
-          
-          <FaqList />
-        </div>
-        
-        {/* Kontakt sekcija */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Pošaljite nam poruku</h3>
-          <form className="flex flex-col gap-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Vaše ime"
-                className="input"
-                required
-              />
-              <input
-                type="email"
-                placeholder="Vaš email"
-                className="input"
-                required
-              />
-            </div>
-            <select className="input">
-              <option value="">Izaberite temu</option>
-              <option value="technical">Tehnička podrška</option>
-              <option value="account">Pitanja o nalogu</option>
-              <option value="billing">Fakturisanje</option>
-              <option value="other">Ostalo</option>
-            </select>
-            <textarea
-              placeholder="Vaša poruka"
-              className="input"
-              rows={4}
-              required
-            />
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all"
-            >
-              Pošalji poruku
-            </button>
-          </form>
-        </div>
+ 
+    
       </div>
     </div>
   );

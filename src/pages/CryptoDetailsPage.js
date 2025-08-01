@@ -14,15 +14,33 @@ import { FiTrendingUp, FiArrowDown, FiArrowUp } from 'react-icons/fi';
 import { formatNumber, formatDateTime } from '../helpers';
 import useHandleBack from '../hooks/useHandleBack';
 import { useFetchCryptoDetailsQuery } from '../store';
+import { useAddCryptoToWatchlistMutation,useRemoveCryptoFromWatchlistMutation,useFetchWatchlistQuery } from '../store';
 import MetricCard from '../components/cryptoDetails/MetricCard';
 import PerformanceItem from '../components/cryptoDetails/PerformanceItem';
 import StatItem from '../components/cryptoDetails/StatItem';
 import ErrorScreen from '../components/ErrorScreen';
 import CryptoDescription from '../components/cryptoDetails/CryptoDescription';
-
+import Button from '../components/Button';
 function CryptoDetailsPage() {
   const { id } = useParams();
+  const { data: watchlist } = useFetchWatchlistQuery();
   const { data: crypto, error, isFetching } = useFetchCryptoDetailsQuery(id);
+  const [addCryptoToWatchlist, results] = useAddCryptoToWatchlistMutation();
+  const [removeCryptoFromWatchlist, removeResults] = useRemoveCryptoFromWatchlistMutation();
+
+
+const checkCryptoWatchlist = watchlist?.find(item => item.id === crypto?.id);
+
+
+const toggleWatchlist = () => {
+  if (checkCryptoWatchlist) {
+    removeCryptoFromWatchlist(crypto);
+  } else {
+    addCryptoToWatchlist({
+      id: crypto.id,
+    });
+  }
+};
   const handleBack = useHandleBack();
   if (isFetching)
     return (
@@ -140,6 +158,24 @@ function CryptoDetailsPage() {
                 <span className="text-gray-500 dark:text-gray-400 font-medium text-lg">
                   {crypto.symbol.toUpperCase()}
                 </span>
+                {/* Zvjezdica za favorite */}
+                {/* <button
+                  onClick={toggleFavorite}
+                  className={`ml-2 text-yellow-400 hover:text-yellow-500 transition text-xl`}
+                  title={isFavorite ? "Ukloni iz favorita" : "Dodaj u favorite"}
+                  aria-label={isFavorite ? "Ukloni iz favorita" : "Dodaj u favorite"}
+                >
+                  {isFavorite ? '★' : '☆'}
+                </button> */}
+
+                <Button
+            loading={results.isLoading || removeResults.isLoading}
+            onClick={toggleWatchlist}
+            className={`text-yellow-400 hover:text-yellow-500  transition text-xl min-w-[40px] h-[40px]`}
+            title="Dodaj u favorite"
+          >
+            {checkCryptoWatchlist ? '★' : '☆'}
+          </Button>
               </h2>
               <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                 <ClockIcon className="h-4 w-4" />

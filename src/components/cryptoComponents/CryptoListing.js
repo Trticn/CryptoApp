@@ -2,7 +2,7 @@ import CryptoListingItem from './CryptoListingItem';
 import Pagination from '../Pagination';
 import Skeleton from '../Skeleton';
 import usePagination from '../../hooks/usePagination';
-import { useFetchPopularCryptoQuery, useFetchCryptoFromWatchlistQuery } from '../../store/apis/cryptoListingApi';
+import { useFetchPopularCryptoQuery,useFetchWatchlistQuery } from '../../store';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 function CryptoListing({ showThead }) {
@@ -10,7 +10,7 @@ function CryptoListing({ showThead }) {
     pollingInterval: 120000,
   });
 
-  const { data: watchlist } = useFetchCryptoFromWatchlistQuery();
+  const { data: watchlist } = useFetchWatchlistQuery();
 
   const watchlistIds = watchlist?.map((item) => item.id) || [];
 

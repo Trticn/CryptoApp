@@ -37,17 +37,17 @@ function Sidebar({ isOpen, onClose }) {
             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             aria-label="Close sidebar"
           >
-            <FiX className="text-gray-600 dark:text-gray-300 text-xl" />
+            <FiX className="text-gray-600 dark:text-gray-300 text-2xl" />
           </button>
         </div>
 
-        <nav className="p-5">
-          <ul className="space-y-3">
+        <nav className="px-8 mt-10">
+          <ul className="space-y-10 flex flex-col text-lg">
             {Links.map((item, index) => (
               <Link
                 key={index}
                 to={item.path}
-                className="flex items-center px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium"
+                className="flex items-center py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium"
                 onClick={onClose}
               >
                 <span className="mr-3 text-lg text-indigo-500 dark:text-indigo-400">
