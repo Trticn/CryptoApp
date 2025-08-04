@@ -48,8 +48,10 @@ function BlogList() {
     }
 
     return (
-        <div ref={scrollContainerRef} className="max-h-[650px]  overflow-y-auto">
-            {content}
+        <div ref={scrollContainerRef} className="max-h-[650px] overflow-y-auto py-2">
+          
+              {content}
+          
         </div>
     );
 }

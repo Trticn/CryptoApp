@@ -3,11 +3,12 @@ import { useLogoutMutation } from "../../store";
 import { ProfileLinks } from "../../config/Links";
 import { useSelector,useDispatch } from "react-redux";
 import { setUserLogout } from "../../store";
+import Button from "../Button";
 
 function ProfileNavigation({isOpen,onClose}) {
     const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user);
-    const [logout] = useLogoutMutation();
+    const [logout,results] = useLogoutMutation();
     const handleLogout = async () => {
         await logout();
         dispatch(setUserLogout())
@@ -71,13 +72,14 @@ function ProfileNavigation({isOpen,onClose}) {
                         </div>
                         { 
                         user &&
-                        <button
+                        <Button
                             onClick={handleLogout}
-                            className="rounded-xl px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 "
+                            className="rounded-xl px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
                             type="button"
+                            loading = {results.isLoading}
                         >
                             Odjava
-                        </button>
+                        </Button>
                         }
                     </div>
                 </div>

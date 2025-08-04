@@ -1,17 +1,30 @@
 import { formatRelativeDays } from "../../helpers";
 import { useRemoveUserBlogMutation } from "../../store";
 
-import { useState,useRef,useEffect } from "react";
+import { useState,useRef} from "react";
 
 import { FiMoreHorizontal, FiTrash, FiEdit } from "react-icons/fi";
+import EditBlogPost from "./EditBlogPost";
 
-function BlogListItem({ blog,scrollContainerRef }) {
+function BlogListItem({ blog}) {
   const [removeBlogPost, results] = useRemoveUserBlogMutation();
   const [showBlogOptions, setShowBlogOptions] = useState(false);
   const [dropdownDirection, setDropdownDirection] = useState("down");
+  const [showEditBlogModal, setShowEditBlogModal] = useState(false)
   const iconRef = useRef(null);
   const dropdownRef = useRef(null)
 
+
+  const showModal = () =>{
+    document.body.style.overflow = 'hidden';
+    setShowEditBlogModal(true)
+  }
+
+  const closeModal = () =>{
+    document.body.style.overflow = 'visible';
+    setShowEditBlogModal(false)
+
+  }
 
   
   const handleRemoveTransaction = () => {
@@ -22,27 +35,10 @@ function BlogListItem({ blog,scrollContainerRef }) {
     setShowBlogOptions(!showBlogOptions)
   }
 
-  useEffect(() => {
-if (showBlogOptions && iconRef.current && dropdownRef.current && scrollContainerRef?.current) {
-      const iconRect = iconRef.current.getBoundingClientRect();
-      const dropdownRect = dropdownRef.current.getBoundingClientRect();
-      const containerRect = scrollContainerRef.current.getBoundingClientRect();
-     
-      // prostor ispod ikone unutar scroll kontejnera
-      const spaceBelow = containerRect.bottom - iconRect.bottom;
-      // prostor iznad ikone unutar scroll kontejnera
-      const spaceAbove = iconRect.top - containerRect.top;
 
-      if (spaceBelow < dropdownRect.height && spaceAbove > dropdownRect.height) {
-        setDropdownDirection("up");
-      } else {
-        setDropdownDirection("down");
-      }
-    }
-  }, [showBlogOptions,scrollContainerRef]);
   
   return (
-    <div className="bg-gray-50 w-full dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4 ">
+    <div className="bg-gray-50 min-h-[145px] w-full dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4 ">
       {showBlogOptions && (
         // Overlay that covers the whole inset area, closes dropdown on click outside
         <div
@@ -66,7 +62,7 @@ if (showBlogOptions && iconRef.current && dropdownRef.current && scrollContainer
               <button
                 className="flex items-center gap-2 w-full rounded-xl text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => {
-                  // TODO: implement edit logic
+                  showModal()
                   setShowBlogOptions(false);
                 }}
               >
@@ -93,6 +89,8 @@ if (showBlogOptions && iconRef.current && dropdownRef.current && scrollContainer
       >
         {blog.description}
       </div>
+
+      <EditBlogPost blog ={blog} open={showEditBlogModal} onClose={closeModal} />
     </div>
   );
 }

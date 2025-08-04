@@ -1,5 +1,5 @@
 // hooks/useSavePortfolioSnapshot.js
-import { useEffect, useCallback, useMemo } from 'react';
+import {useCallback, useMemo } from 'react';
 import { useAddPortfolioSnapshotMutation, useGetPortfolioSnapshotsQuery } from '../store';
 import { usePortfolioData } from './usePortfolioData';
 
@@ -19,13 +19,18 @@ export const useSavePortfolioSnapshot = () => {
   const { data: existingSnapshots, isFetching: isFetchingSnapshots } = useGetPortfolioSnapshotsQuery();
 
   // Calculate today's date string once
-  const today = useMemo(() => new Date().toISOString().split('T')[0], []);
+  const today = new Date().toISOString().split('T')[0];
+
+  const normalizeDate = (dateStr) => new Date(dateStr).toISOString().split('T')[0];
+  
   const snapshotExists = useMemo(() => {
     if (isFetchingSnapshots || !existingSnapshots) return false;
-    return existingSnapshots.some((snap) => snap.date === today);
-  }, [existingSnapshots, today, isFetchingSnapshots]);
+    return existingSnapshots.some((snap) => normalizeDate(snap.date) === today);
+  }, [existingSnapshots, isFetchingSnapshots, today]);
+  
 
   const canSave = useMemo(() => {
+
     return (
       !isFetching &&
       !isFetchingSnapshots &&
@@ -58,6 +63,7 @@ export const useSavePortfolioSnapshot = () => {
         change24hPercent,
       }).unwrap();
     } catch (err) {
+      console.log(err)
     }
   }, [
     canSave,
@@ -70,13 +76,7 @@ export const useSavePortfolioSnapshot = () => {
     change24hPercent,
   ]);
 
-  // Optionally, auto-save on mount if possible
-  useEffect(() => {
-    if (canSave) {
-      saveSnapshot();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canSave, saveSnapshot]);
+
 
   return {
     canSave,

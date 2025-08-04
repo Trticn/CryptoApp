@@ -1,4 +1,7 @@
+import Button from "../Button";
+
 const AuthFormContent = ({ mode, form, onChange, onSubmit, loading }) => {
+  console.log(loading)
     return (
       <form onSubmit={onSubmit} className="flex flex-col space-y-4 text-zinc-600 dark:text-zinc-400">
         {mode === 'register' && (
@@ -46,10 +49,10 @@ const AuthFormContent = ({ mode, form, onChange, onSubmit, loading }) => {
             required
           />
         )}
-        <button
+        <Button
           type="submit"
-          className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition"
-          disabled={loading}
+          className="w-full py-5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition"
+          loading={loading}
         >
           {{
             login: 'Prijavi se',
@@ -57,7 +60,7 @@ const AuthFormContent = ({ mode, form, onChange, onSubmit, loading }) => {
             forgot: 'Pošalji email za reset',
             reset: 'Resetuj lozinku',
           }[mode]}
-        </button>
+        </Button>
       </form>
     );
   };

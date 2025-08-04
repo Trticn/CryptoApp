@@ -10,11 +10,16 @@ import {
 } from '../store/apis/authApi';
 import AuthFormContent from '../components/authComponents/AuthFormContent';
 
-
 const AuthPage = () => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState('login');
-  const [message, setMessage] = useState('');
+  const [notification, setNotification] = useState(null);
+
+  // Prikazuje notifikaciju sa bojom u zavisnosti od uspeha
+  const showNotification = (message, isSuccess) => {
+    setNotification({ message, isSuccess });
+  };
+
   const [form, setForm] = useState({ email: '', password: '', username: '', newPassword: '' });
 
   const [login, { isLoading: loginLoading }] = useLoginMutation();
@@ -25,33 +30,42 @@ const AuthPage = () => {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleGoogleLogin = () => {
-    setMessage('Google login nije implementiran u ovom demo-u.');
+    showNotification('Google login nije implementiran u ovom demo-u.', false);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage('');
+    // Resetuj notifikaciju pre nove akcije
+    setNotification(null);
     try {
       if (mode === 'login') {
         const res = await login({ email: form.email, password: form.password }).unwrap();
         dispatch(setCredentials({ user: res.data.user }));
-        setMessage('Uspešna prijava!');
+        showNotification('Uspešna prijava!', true);
       } else if (mode === 'register') {
         await register(form).unwrap();
-        setMessage('Registracija uspešna! Proverite email.');
+        showNotification('Registracija uspešna! Proverite email.', true);
         setMode('login');
       } else if (mode === 'forgot') {
         await forgotPassword({ email: form.email }).unwrap();
-        setMessage('Poslat je email za reset lozinke.');
+        showNotification('Poslat je email za reset lozinke.', true);
       } else if (mode === 'reset') {
         const token = new URLSearchParams(window.location.search).get('token');
-        if (!token) return setMessage('Token nije pronađen.');
+        if (!token) {
+          showNotification('Token nije pronađen.', false);
+          return;
+        }
         await resetPassword({ token, newPassword: form.newPassword }).unwrap();
-        setMessage('Lozinka uspešno resetovana!');
+        showNotification('Lozinka uspešno resetovana!', true);
         setMode('login');
       }
     } catch (err) {
-      setMessage(err?.data?.message || 'Greška!');
+      console.log(err);
+      showNotification(
+        err?.data?.error?.message ||
+        'Greška!',
+        false
+      );
     }
   };
 
@@ -112,7 +126,17 @@ const AuthPage = () => {
           )}
         </div>
 
-        {message && <div className="mt-4 text-center text-green-600 dark:text-green-400 font-medium">{message}</div>}
+        {notification && (
+          <div
+            className={`mt-4 text-center font-medium transition-all duration-200 ${
+              notification.isSuccess
+                ? 'text-green-600 dark:text-green-400'
+                : 'text-red-600 dark:text-red-400'
+            }`}
+          >
+            {notification.message}
+          </div>
+        )}
       </div>
     </div>
   );

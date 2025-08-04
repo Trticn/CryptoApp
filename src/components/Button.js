@@ -13,7 +13,7 @@ function Button({
   outline,
   rounded,
   loading,
-  transaction, // Nova prop za specijalan transaction efekat
+  transaction,
   ...rest
 }) {
   const classes = className(
@@ -89,7 +89,7 @@ function Button({
       ) : (
         <span className="relative z-10 flex items-center justify-center">
           <span className={loading ? 'invisible' : ''}>{children}</span>
-          {loading && <GoSync className="absolute animate-spin text-yellow-400" />}
+          {loading &&  <GoSync className="absolute animate-spin text-indigo-300" />}
         </span>
       )}
     </button>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch} from "react-redux";
-import { useAddUserBlogMutation } from "../../store/apis/userBlogApi";
+import {useUpdateUserBlogMutation } from "../../store/apis/userBlogApi";
 import {
   showNottification,
 
@@ -11,12 +11,13 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
-function AddBlogPost({ open, onClose }) {
-  const [content, setContent] = useState("");
+function EditBlogPost({ blog,open, onClose }) {
+  const [content, setContent] = useState(blog.description);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const dispatch = useDispatch();
-  const [addUserBlog, results] = useAddUserBlogMutation();
+  // RTK Query funkcija je hook koji vraća mutaciju i rezultate mutacije
+  const [updateUserBlog, results] = useUpdateUserBlogMutation();
 
   const showNotification = (message, isSuccess) => {
     if (!isSuccess) {
@@ -32,15 +33,17 @@ function AddBlogPost({ open, onClose }) {
     try {
       if (!content) throw new Error("Molimo popunite sva obavezna polja!");
 
-     const data = await addUserBlog({
+      // RTK Query mutacija vraća promise koji sadrži {data, error}
+      const result = await updateUserBlog({
+        id: blog._id,
         description: content,
       });
-      
-      if(data.error) throw new Error('Došlo je do greške prilikom dodavanja blog posta');
-      onClose()
+
+      if (result.error) throw new Error('Došlo je do greške prilikom ažuriranja blog posta');
+      onClose();
       dispatch(
         showNottification({
-          message: "Uspešno ste dodali blog post!",
+          message: "Uspešno ste ažurirali blog post!",
           type: "success",
           duration: 2000,
           show: true,
@@ -48,12 +51,11 @@ function AddBlogPost({ open, onClose }) {
       );
 
       setContent("");
- 
-  
     } catch (err) {
       showNotification(
         err?.data?.message ||
-          "Došlo je do greške prilikom dodavanja blog posta.",
+          err?.message ||
+          "Došlo je do greške prilikom ažuriranja blog posta.",
         false
       );
     }
@@ -74,7 +76,7 @@ function AddBlogPost({ open, onClose }) {
 
         <h2 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100 flex items-center gap-2 mb-4">
           <PlusCircleIcon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-          Novi blog post
+          Ažuriraj blog post
         </h2>
 
      
@@ -114,7 +116,7 @@ function AddBlogPost({ open, onClose }) {
               className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold hover:opacity-90 transition"
               disabled={results.isLoading}
             >
-              {results.isLoading ? "Dodavanje..." : "Dodaj post"}
+              {results.isLoading ? "Ažuriranje..." : "Izmeni post"}
             </button>
           </div>
         </form>
@@ -123,4 +125,4 @@ function AddBlogPost({ open, onClose }) {
   );
 }
 
-export default AddBlogPost;
+export default EditBlogPost;

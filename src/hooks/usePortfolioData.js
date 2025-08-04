@@ -10,17 +10,25 @@ export const usePortfolioData = () => {
     isFetching: isFetchingTransactions,
   } = useFetchTransactionsQuery();
 
+  
+  
   const {
     data: cryptoCollection,
     error: errorCollection,
     isFetching: isFetchingCollection,
   } = useFetchCryptoCollectionQuery(
-    allTransactions?.map((tr) => tr.title),
+    allTransactions
+    ? [...new Set(allTransactions.map(tr => tr.title))]
+    : []
+  ,
     {
       skip: !allTransactions || allTransactions.length === 0,
       pollingInterval: 30000,
     },
   );
+
+  console.log(cryptoCollection)
+    
 
   // Kreiraj mapu za brzi pristup crypto podacima
   const cryptoMap = useMemo(() => {

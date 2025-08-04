@@ -10,6 +10,8 @@ import { userBlogApi } from './apis/userBlogApi';
 import { transactionFormReducer } from './apis/slices/transactionFormSlice';
 import { searchSliceReducer } from './apis/slices/searchSlice';
 import { authReducer } from './apis/slices/authSlice';
+import { nottificationReducer } from './apis/slices/nottificationSlice';
+import { showNottification,hideNottification } from './apis/slices/nottificationSlice';
 import { setCredentials,setUserLogout,setInitialized } from './apis/slices/authSlice';
 import {
   changeQuery,
@@ -38,7 +40,8 @@ export const store = configureStore({
     [userBlogApi.reducerPath]:userBlogApi.reducer,
     transactionForm: transactionFormReducer,
     search: searchSliceReducer,
-    auth:authReducer
+    auth:authReducer,
+    nottification:nottificationReducer
   },
 
   middleware: (getDefaultMiddleware) => {
@@ -71,7 +74,9 @@ export {
   clearSearch,
   setCredentials,
   setUserLogout,
-  setInitialized
+  setInitialized,
+  showNottification,
+  hideNottification
   
 };
 

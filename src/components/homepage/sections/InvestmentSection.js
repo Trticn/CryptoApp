@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 export default function InvestmentsSection({ assets, isFetching, error }) {
   let content;
-
   if (isFetching) {
     content = (
       <div className="space-y-3 p-4">
@@ -34,7 +33,8 @@ export default function InvestmentsSection({ assets, isFetching, error }) {
     );
   } else {
     content = assets.map((coin, index) => (
-      <Link key={coin.id || index} to={`/search/${coin.id}`}>
+      
+      <Link key={coin.title || index} to={`/search/${coin.title}`}>
       <div
         className="flex items-center hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors duration-200"
       >

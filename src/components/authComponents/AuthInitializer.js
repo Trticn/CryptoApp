@@ -21,6 +21,8 @@ function AuthInitializer({ children }) {
   const initialized = useSelector((state) => state.auth.initialized);
   const { canSave, saveSnapshot } = useSavePortfolioSnapshot();
 
+
+  console.log(canSave)
   // 1. Authentication
   useEffect(() => {
     if (initialized || isLoading || isUninitialized) return;
@@ -38,12 +40,13 @@ function AuthInitializer({ children }) {
     }
   }, [initialized, isLoading, isUninitialized, isSuccess, data, isError, error, dispatch]);
 
-  // 2. Snapshot
+
+  
   useEffect(() => {
-    if (canSave) {
+    if (isSuccess && canSave) {
       saveSnapshot();
     }
-  }, [canSave, saveSnapshot]);
+  }, [isSuccess, canSave, saveSnapshot]);
 
   return children;
 }
