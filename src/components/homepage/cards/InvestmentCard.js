@@ -53,10 +53,6 @@ export default function InvestmentCard({ asset }) {
               src={asset.image}
               alt={asset.title}
               className="w-6 h-6"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = '/crypto-placeholder.png';
-              }}
             />
           ) : (
             <FiBarChart2 className="text-yellow-600 dark:text-yellow-400 text-xl" />

@@ -1,6 +1,7 @@
 import { Link} from "react-router-dom";
 import { useLogoutMutation } from "../../store";
 import { ProfileLinks } from "../../config/Links";
+import { showNottification } from "../../store";
 import { useSelector,useDispatch } from "react-redux";
 import { setUserLogout } from "../../store";
 import Button from "../Button";
@@ -10,10 +11,37 @@ function ProfileNavigation({isOpen,onClose}) {
     const user = useSelector(state => state.auth.user);
     const [logout,results] = useLogoutMutation();
     const handleLogout = async () => {
-        await logout();
-        dispatch(setUserLogout())
-        onClose()
-        window.location.href = '/auth'
+        try {
+            const res = await logout();
+            if (res.error) throw new Error('Došlo je do greške, proverite internet konekciju.');
+            
+    
+            dispatch(setUserLogout());
+            onClose();
+            dispatch(
+                showNottification({
+                    message: res.data?.message || "Uspešno ste se odjavili.",
+                    type: "success",
+                    duration: 2000,
+                    show: true,
+                })
+            );
+
+            setTimeout(() => {
+                window.location.href = '/auth';
+            }, 1000);
+
+        } catch (err) {
+        
+            dispatch(
+                showNottification({
+                    message: err?.message,
+                    type: "error",
+                    duration: 2000,
+                    show: true,
+                })
+            );
+        }
     };
 
     let content;

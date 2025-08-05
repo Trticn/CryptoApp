@@ -1,7 +1,6 @@
 import Button from "../Button";
 
 const AuthFormContent = ({ mode, form, onChange, onSubmit, loading }) => {
-  console.log(loading)
     return (
       <form onSubmit={onSubmit} className="flex flex-col space-y-4 text-zinc-600 dark:text-zinc-400">
         {mode === 'register' && (

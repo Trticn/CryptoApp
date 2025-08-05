@@ -115,8 +115,7 @@ export {
   useGoogleLoginMutation,
   useRefreshTokenMutation,
   useLogoutMutation,
-  useForgotPasswordMutation,
-  useResetPasswordMutation,
+
   useGetCurrentUserQuery,
 
 } from './apis/authApi';
@@ -125,6 +124,8 @@ export {
 export {
   useChangePasswordMutation,
   useChangeEmailMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 } from './apis/secureApi'
 
 export {

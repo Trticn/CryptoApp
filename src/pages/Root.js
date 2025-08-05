@@ -7,6 +7,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { hideNottification } from '../store';
 import Notification from '../components/Nottification';
 
+
 function Root() {
   const location = useLocation();
   const dispatch = useDispatch()
@@ -15,11 +16,12 @@ function Root() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 ">
       <Header />
 
-      {nottification.show && nottification.type === "success" && (
+      {nottification.show && (
           <Notification
             onClose={() => dispatch(hideNottification())}
           />

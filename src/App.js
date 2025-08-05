@@ -16,6 +16,7 @@ import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
 import HelpPage from './pages/HelpPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 
 
@@ -61,6 +62,7 @@ const router = createBrowserRouter([
       { path: '/search/:id', element: <CryptoDetailsPage /> },
       {path: '/help', element: <HelpPage /> },
 
+
       {
         element: <ProtectedRoute />,
         children: [
@@ -77,6 +79,7 @@ const router = createBrowserRouter([
         element: <PublicRoute />,
         children: [
           { path: '/auth', element: <AuthPage /> },
+          { path: '/reset-password', element: <ResetPasswordPage />}
 
         ],
       },

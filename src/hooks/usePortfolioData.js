@@ -27,7 +27,6 @@ export const usePortfolioData = () => {
     },
   );
 
-  console.log(cryptoCollection)
     
 
   // Kreiraj mapu za brzi pristup crypto podacima

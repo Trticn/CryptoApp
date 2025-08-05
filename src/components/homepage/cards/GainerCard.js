@@ -1,4 +1,4 @@
-// components/cards/GainerCard.jsx
+
 import { FiTrendingUp, FiArrowUp,FiArrowDown } from 'react-icons/fi';
 
 export default function GainerCard({ topGainer }) {
@@ -53,10 +53,6 @@ export default function GainerCard({ topGainer }) {
               src={topGainer.image}
               alt="Top performer"
               className="w-6 h-6"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = '/crypto-placeholder.png';
-              }}
             />
           ) : (
             <FiTrendingUp className="text-green-600 dark:text-green-400 text-xl" />

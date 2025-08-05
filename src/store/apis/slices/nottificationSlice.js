@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   show: false,
   message: '',
-  type: 'info', // 'success', 'error', 'info', 'warning'
+  type: 'error', // 'success', 'error', 'info', 'warning'
   duration: 3000,
 };
 
@@ -12,10 +12,14 @@ const nottificationSlice = createSlice({
   initialState,
   reducers: {
     showNottification: (state, action) => {
+      const validTypes = ['success', 'error', 'info', 'warning'];
+      const type = action.payload.type?.toLowerCase();
+      console.log(type)
+      
       state.show = true;
       state.message = action.payload.message;
-      state.type = action.payload.type || 'info';
-      state.duration = typeof action.payload.duration === 'number' ? action.payload.duration : 3000;
+      state.type = validTypes.includes(type) ? type : 'success'; // fallback na success
+      state.duration = action.payload.duration || 3000;
     },
     hideNottification: (state) => {
       state.show = false;

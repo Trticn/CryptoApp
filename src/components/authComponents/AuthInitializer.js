@@ -22,7 +22,6 @@ function AuthInitializer({ children }) {
   const { canSave, saveSnapshot } = useSavePortfolioSnapshot();
 
 
-  console.log(canSave)
   // 1. Authentication
   useEffect(() => {
     if (initialized || isLoading || isUninitialized) return;

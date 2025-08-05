@@ -18,7 +18,7 @@ function AddBlogPost({ open, onClose }) {
   const dispatch = useDispatch();
   const [addUserBlog, results] = useAddUserBlogMutation();
 
-  const showNotification = (message, isSuccess) => {
+  const showErrorMessage = (message, isSuccess) => {
     if (!isSuccess) {
       setErrorMessage({ message, isSuccess });
       setTimeout(() => setErrorMessage(null), 2000);
@@ -35,12 +35,13 @@ function AddBlogPost({ open, onClose }) {
      const data = await addUserBlog({
         description: content,
       });
-      
-      if(data.error) throw new Error('Došlo je do greške prilikom dodavanja blog posta');
+
+      if(data.error) throw new Error(data?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.')
+
       onClose()
       dispatch(
         showNottification({
-          message: "Uspešno ste dodali blog post!",
+          message: data.data.message,
           type: "success",
           duration: 2000,
           show: true,
@@ -51,9 +52,9 @@ function AddBlogPost({ open, onClose }) {
  
   
     } catch (err) {
-      showNotification(
-        err?.data?.message ||
-          "Došlo je do greške prilikom dodavanja blog posta.",
+      console.log(err)
+      showErrorMessage(
+        err.message,
         false
       );
     }

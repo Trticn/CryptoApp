@@ -2,68 +2,82 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FcGoogle } from "react-icons/fc";
 import { setCredentials } from '../store';
-import {
-  useLoginMutation,
-  useRegisterMutation,
-  useForgotPasswordMutation,
-  useResetPasswordMutation,
-} from '../store/apis/authApi';
+import { useLoginMutation, useRegisterMutation, useForgotPasswordMutation } from '../store';
+import { showNottification } from '../store';
 import AuthFormContent from '../components/authComponents/AuthFormContent';
 
 const AuthPage = () => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState('login');
-  const [notification, setNotification] = useState(null);
 
-  // Prikazuje notifikaciju sa bojom u zavisnosti od uspeha
-  const showNotification = (message, isSuccess) => {
-    setNotification({ message, isSuccess });
+  // errorMessage is now a string (or null)
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // Only set errorMessage as a string
+  const showErrorMessage = (message, isSuccess) => {
+    if (!isSuccess) {
+      setErrorMessage(message);
+      setTimeout(() => setErrorMessage(null), 2000);
+    }
   };
 
   const [form, setForm] = useState({ email: '', password: '', username: '', newPassword: '' });
 
   const [login, { isLoading: loginLoading }] = useLoginMutation();
   const [register, { isLoading: registerLoading }] = useRegisterMutation();
-  const [forgotPassword] = useForgotPasswordMutation();
-  const [resetPassword] = useResetPasswordMutation();
+  const [forgotPassword, { isLoading: forgotPasswordLoading }] = useForgotPasswordMutation();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleGoogleLogin = () => {
-    showNotification('Google login nije implementiran u ovom demo-u.', false);
+    showErrorMessage('Google login nije implementiran u ovom demo-u.', false);
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Resetuj notifikaciju pre nove akcije
-    setNotification(null);
+
     try {
       if (mode === 'login') {
-        const res = await login({ email: form.email, password: form.password }).unwrap();
-        dispatch(setCredentials({ user: res.data.user }));
-        showNotification('Uspešna prijava!', true);
+        const res = await login({ email: form.email, password: form.password });
+        if (res.error) throw new Error(res?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.');
+        dispatch(setCredentials({ user: res.data.data.user }));
+        dispatch(
+          showNottification({
+            message: 'Uspešna prijava!',
+            type: "success",
+            duration: 3000,
+            show: true,
+          })
+        );
       } else if (mode === 'register') {
-        await register(form).unwrap();
-        showNotification('Registracija uspešna! Proverite email.', true);
+        const res = await register(form);
+        if (res.error) throw new Error(res?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.');
+        dispatch(
+          showNottification({
+            message: 'Registracija uspešna! Proverite email.',
+            type: "success",
+            duration: 3000,
+            show: true,
+          })
+        );
         setMode('login');
       } else if (mode === 'forgot') {
-        await forgotPassword({ email: form.email }).unwrap();
-        showNotification('Poslat je email za reset lozinke.', true);
-      } else if (mode === 'reset') {
-        const token = new URLSearchParams(window.location.search).get('token');
-        if (!token) {
-          showNotification('Token nije pronađen.', false);
-          return;
-        }
-        await resetPassword({ token, newPassword: form.newPassword }).unwrap();
-        showNotification('Lozinka uspešno resetovana!', true);
-        setMode('login');
+        const res = await forgotPassword({ email: form.email });
+        if (res.error) throw new Error(res?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.');
+        dispatch(
+          showNottification({
+            message: 'Poslat je email za reset lozinke.',
+            type: "success",
+            duration: 2000,
+            show: true,
+          })
+        );
       }
     } catch (err) {
-      console.log(err);
-      showNotification(
-        err?.data?.error?.message ||
-        'Greška!',
+      console.log(err.message);
+      showErrorMessage(
+        err?.message,
         false
       );
     }
@@ -77,7 +91,6 @@ const AuthPage = () => {
             login: 'Prijava',
             register: 'Registracija',
             forgot: 'Zaboravljena lozinka',
-            reset: 'Resetuj lozinku',
           }[mode]}
         </h2>
 
@@ -86,7 +99,7 @@ const AuthPage = () => {
           form={form}
           onChange={handleChange}
           onSubmit={handleSubmit}
-          loading={loginLoading || registerLoading}
+          loading={loginLoading || registerLoading || forgotPasswordLoading}
         />
 
         <div className="my-4 flex items-center">
@@ -126,15 +139,12 @@ const AuthPage = () => {
           )}
         </div>
 
-        {notification && (
+        {errorMessage && (
           <div
-            className={`mt-4 text-center font-medium transition-all duration-200 ${
-              notification.isSuccess
-                ? 'text-green-600 dark:text-green-400'
-                : 'text-red-600 dark:text-red-400'
-            }`}
+            className='mt-4 text-center font-medium transition-all duration-200
+                text-red-600 dark:text-red-400'
           >
-            {notification.message}
+            {errorMessage}
           </div>
         )}
       </div>

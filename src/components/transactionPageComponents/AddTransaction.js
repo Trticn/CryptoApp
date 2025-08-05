@@ -27,7 +27,7 @@ function AddTransaction() {
   const formData = useSelector((state) => state.transactionForm);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const showNotification = (message, isSuccess) => {
+  const showErrorMessage = (message, isSuccess) => {
     if (!isSuccess) {
       setErrorMessage({ message, isSuccess });
       setTimeout(() => setErrorMessage(null), 2000);
@@ -55,7 +55,7 @@ function AddTransaction() {
       const priceAtTransaction = priceResult.data?.market_data.current_price['usd'];
       const totalValue = formData.quantity * priceAtTransaction;
 
-      await addTransaction({
+      const data = await addTransaction({
         title: formData.title.toLowerCase(),
         quantity: formData.quantity,
         description: formData.description,
@@ -65,9 +65,11 @@ function AddTransaction() {
         totalValue,
       });
 
+      if(data.error) throw new Error(data?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.')
+
       dispatch(
         showNottification({
-          message: 'Transakcija je uspešno dodata!',
+          message: data.data.message,
           type: 'success',
           duration: 2000,
           show: true,
@@ -76,8 +78,7 @@ function AddTransaction() {
 
       dispatch(resetForm());
     } catch (error) {
-      console.log(error);
-      showNotification(error.message, false);
+      showErrorMessage(error.message, false);
     }
   };
 
