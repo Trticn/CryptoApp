@@ -40,11 +40,12 @@ const AuthPage = () => {
     try {
       if (mode === 'login') {
         const res = await login({ email: form.email, password: form.password });
-        if (res.error) throw new Error(res?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.');
+        if (res.error) throw res.error;
         dispatch(setCredentials({ user: res.data.data.user }));
+
         dispatch(
           showNottification({
-            message: 'Uspešna prijava!',
+            message: res.data.message,
             type: "success",
             duration: 3000,
             show: true,
@@ -52,10 +53,10 @@ const AuthPage = () => {
         );
       } else if (mode === 'register') {
         const res = await register(form);
-        if (res.error) throw new Error(res?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.');
+        if (res.error) throw res.error;
         dispatch(
           showNottification({
-            message: 'Registracija uspešna! Proverite email.',
+            message: res.data.message,
             type: "success",
             duration: 3000,
             show: true,
@@ -64,20 +65,19 @@ const AuthPage = () => {
         setMode('login');
       } else if (mode === 'forgot') {
         const res = await forgotPassword({ email: form.email });
-        if (res.error) throw new Error(res?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.');
+        if (res.error) throw res.error;
         dispatch(
           showNottification({
-            message: 'Poslat je email za reset lozinke.',
-            type: "success",
+            message: res.data.message,
+            type: "info",
             duration: 2000,
             show: true,
           })
         );
       }
     } catch (err) {
-      console.log(err.message);
       showErrorMessage(
-        err?.message,
+        err?.data?.message || 'Došlo je do greške, proverite internet konekciju.',
         false
       );
     }
@@ -101,6 +101,14 @@ const AuthPage = () => {
           onSubmit={handleSubmit}
           loading={loginLoading || registerLoading || forgotPasswordLoading}
         />
+            {errorMessage && (
+          <div
+            className='mt-4 text-center font-medium transition-all duration-200
+                text-red-600 dark:text-red-400'
+          >
+            {errorMessage}
+          </div>
+        )}
 
         <div className="my-4 flex items-center">
           <div className="flex-grow border-t border-gray-300 dark:border-gray-700" />
@@ -115,6 +123,8 @@ const AuthPage = () => {
           <FcGoogle className="w-6 h-6" />
           <span>Nastavi preko Google</span>
         </button>
+
+
 
         <div className="mt-6 flex flex-col items-center gap-2 text-sm">
           {mode === 'login' && (
@@ -139,14 +149,7 @@ const AuthPage = () => {
           )}
         </div>
 
-        {errorMessage && (
-          <div
-            className='mt-4 text-center font-medium transition-all duration-200
-                text-red-600 dark:text-red-400'
-          >
-            {errorMessage}
-          </div>
-        )}
+ 
       </div>
     </div>
   );

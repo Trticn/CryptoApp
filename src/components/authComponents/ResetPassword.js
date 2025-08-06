@@ -32,7 +32,7 @@ const ResetPassword = () => {
         });
 
         // Provera da li postoji greška
-        if(data.error) throw new Error(data?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.')
+        if(data.error) throw data.error;
     
         navigate('/auth'); 
             dispatch(
@@ -47,7 +47,7 @@ const ResetPassword = () => {
             
         } catch(err){
             showErrorMessage(
-                err.message,
+                err?.data?.message || 'Došlo je do greške, proverite internet konekciju.',
                 false
               );
         }

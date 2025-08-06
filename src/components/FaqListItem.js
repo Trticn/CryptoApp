@@ -19,7 +19,7 @@ function FaqListItem({ question, answer,isOpen,onClick }){
 
   return (
     <div className="overflow-hidden">
-      <div className="w-full hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors flex">
+      <div className="w-full hover:opacity-90 rounded-lg transition-colors flex">
         <button
           onClick={onClick}
           className="flex py-5 justify-between border-b border-gray-100 dark:border-gray-700 px-4 items-center w-full text-left"

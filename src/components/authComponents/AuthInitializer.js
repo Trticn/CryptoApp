@@ -6,6 +6,7 @@ import {
   setInitialized,
   useGetCurrentUserQuery,
 } from '../../store';
+import { showNottification } from '../../store';
 import { useSavePortfolioSnapshot } from '../../hooks/useSavePortfolioSnapshot';
 
 function AuthInitializer({ children }) {
@@ -36,6 +37,14 @@ function AuthInitializer({ children }) {
     // Handle specific error case
     if (isError && error?.status === 401) {
       dispatch(setUserLogout());
+      dispatch(
+        showNottification({
+          message: "Niste prijavljeni. Prijava je potrebna za pristup svim funkcijama.",
+          type: "info",
+          duration: 3000,
+          show: true,
+        })
+      );
     }
   }, [initialized, isLoading, isUninitialized, isSuccess, data, isError, error, dispatch]);
 

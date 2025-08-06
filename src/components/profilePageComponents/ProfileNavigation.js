@@ -21,7 +21,7 @@ function ProfileNavigation({isOpen,onClose}) {
             dispatch(
                 showNottification({
                     message: res.data?.message || "Uspešno ste se odjavili.",
-                    type: "success",
+                    type: "info",
                     duration: 2000,
                     show: true,
                 })

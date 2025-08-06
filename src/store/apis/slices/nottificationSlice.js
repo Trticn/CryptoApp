@@ -14,7 +14,7 @@ const nottificationSlice = createSlice({
     showNottification: (state, action) => {
       const validTypes = ['success', 'error', 'info', 'warning'];
       const type = action.payload.type?.toLowerCase();
-      console.log(type)
+  
       
       state.show = true;
       state.message = action.payload.message;

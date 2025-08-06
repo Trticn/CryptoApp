@@ -6,28 +6,21 @@ import {
 
 } from "../../store";
 import {
-  XCircleIcon,
   PlusCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 function AddBlogPost({ open, onClose }) {
   const [content, setContent] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+
 
   const dispatch = useDispatch();
   const [addUserBlog, results] = useAddUserBlogMutation();
 
-  const showErrorMessage = (message, isSuccess) => {
-    if (!isSuccess) {
-      setErrorMessage({ message, isSuccess });
-      setTimeout(() => setErrorMessage(null), 2000);
-    }
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(null);
 
     try {
       if (!content) throw new Error("Molimo popunite sva obavezna polja!");
@@ -36,7 +29,7 @@ function AddBlogPost({ open, onClose }) {
         description: content,
       });
 
-      if(data.error) throw new Error(data?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.')
+      if(data.error) throw data.error;
 
       onClose()
       dispatch(
@@ -52,10 +45,13 @@ function AddBlogPost({ open, onClose }) {
  
   
     } catch (err) {
-      console.log(err)
-      showErrorMessage(
-        err.message,
-        false
+      dispatch(
+        showNottification({
+          message: err?.data?.message || 'Došlo je do greške, proverite internet konekciju.',
+          type: "error",
+          duration: 3000,
+          show: true,
+        })
       );
     }
   };
@@ -80,13 +76,7 @@ function AddBlogPost({ open, onClose }) {
 
      
 
-        {/* ERROR NOTIFIKACIJA */}
-        {errorMessage && (
-          <div className="p-3 rounded-lg flex items-center text-sm font-medium shadow border bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-red-200 dark:border-red-700 mb-4">
-            <XCircleIcon className="w-5 h-5 mr-2" />
-            {errorMessage.message}
-          </div>
-        )}
+ 
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>

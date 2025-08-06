@@ -65,7 +65,7 @@ function AddTransaction() {
         totalValue,
       });
 
-      if(data.error) throw new Error(data?.error?.data?.message || 'Došlo je do greške, proverite internet konekciju.')
+      if(data.error) throw data.error;
 
       dispatch(
         showNottification({
@@ -78,7 +78,7 @@ function AddTransaction() {
 
       dispatch(resetForm());
     } catch (error) {
-      showErrorMessage(error.message, false);
+      showErrorMessage(error?.data?.message || 'Došlo je do greške, proverite internet konekciju.', false);
     }
   };
 

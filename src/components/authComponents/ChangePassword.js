@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import {useDispatch } from "react-redux";
+import { showNottification } from "../../store";
+import { XCircleIcon } from "@heroicons/react/24/outline";
 import { useChangePasswordMutation } from "../../store";
 import { useLogoutMutation } from "../../store";
 import { setUserLogout } from "../../store";
@@ -7,15 +9,20 @@ import { setUserLogout } from "../../store";
 function ChangePassword(){
 
     const dispatch = useDispatch()
-    const user = useSelector(state => state.auth.user);
     const [changePassword,results] = useChangePasswordMutation()
     const [logout] = useLogoutMutation();
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState(null);
 
 
+    const showErrorMessage = (message, isSuccess) => {
+      if (!isSuccess) {
+        setErrorMessage({ message, isSuccess });
+        setTimeout(() => setErrorMessage(null), 2000);
+      }
+    };
 
     const handleLogout = async () => {
         await logout();
@@ -25,18 +32,21 @@ function ChangePassword(){
 
 
 
-    const handlePasswordChange = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setMessage("");
-        if (newPassword !== confirmNewPassword) {
-            setMessage("Nove lozinke se ne poklapaju.");
-            setTimeout(() => setMessage(""), 2000);
-            return;
-        }
+
         try {
             const data = await changePassword({ currentPassword, newPassword });
             if (data.error) throw data.error;
-            setMessage(data?.data?.message);
+
+            dispatch(
+              showNottification({
+                message: data.data.message,
+                type: "success",
+                duration: 2000,
+                show: true,
+              }))
+
             setCurrentPassword("");
             setNewPassword("");
             setConfirmNewPassword("");
@@ -44,8 +54,11 @@ function ChangePassword(){
                 handleLogout();
             }, 2000);
         } catch (err) {
-            setMessage(err?.data?.message || "Greška pri promeni lozinke.");
-            setTimeout(() => setMessage(""), 2000);
+            showErrorMessage(
+              err?.data?.message || 'Došlo je do greške, proverite internet konekciju.',
+              false
+            );
+    
         }
     };
 
@@ -53,8 +66,14 @@ function ChangePassword(){
       
 return   (
 
-<form onSubmit={handlePasswordChange} className="animate-fade-in">
+<form onSubmit={handleSubmit} className="animate-fade-in">
 <div className="flex flex-col gap-3">
+    {errorMessage && (
+          <div className="p-3 rounded-lg flex items-center text-sm font-medium shadow border bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-red-200 dark:border-red-700 mb-4">
+            <XCircleIcon className="w-5 h-5 mr-2" />
+            {errorMessage.message}
+          </div>
+        )}
   <label className="text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="currentPassword">
     Trenutna lozinka
   </label>
@@ -104,9 +123,7 @@ return   (
   >
     {results.isLoading ? "Menjam..." : "Promeni lozinku"}
   </button>
-  {message && (
-    <div className={`mt-2 text-center text-sm font-medium ${message.includes('uspešno') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>{message}</div>
-  )}
+
 </div>
 </form>
 )

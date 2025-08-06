@@ -6,29 +6,21 @@ import {
 
 } from "../../store";
 import {
-  XCircleIcon,
   PlusCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 function EditBlogPost({ blog,open, onClose }) {
   const [content, setContent] = useState(blog.description);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const dispatch = useDispatch();
-  // RTK Query funkcija je hook koji vraća mutaciju i rezultate mutacije
   const [updateUserBlog, results] = useUpdateUserBlogMutation();
 
-  const showNotification = (message, isSuccess) => {
-    if (!isSuccess) {
-      setErrorMessage({ message, isSuccess });
-      setTimeout(() => setErrorMessage(null), 2000);
-    }
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(null);
+ 
 
     try {
       if (!content) throw new Error("Molimo popunite sva obavezna polja!");
@@ -39,11 +31,11 @@ function EditBlogPost({ blog,open, onClose }) {
         description: content,
       });
 
-      if (result.error) throw new Error('Došlo je do greške prilikom ažuriranja blog posta');
+      if (result.error) throw result.error;
       onClose();
       dispatch(
         showNottification({
-          message: "Uspešno ste ažurirali blog post!",
+          message: result.data.message,
           type: "success",
           duration: 2000,
           show: true,
@@ -52,11 +44,14 @@ function EditBlogPost({ blog,open, onClose }) {
 
       setContent("");
     } catch (err) {
-      showNotification(
-        err?.data?.message ||
-          err?.message ||
-          "Došlo je do greške prilikom ažuriranja blog posta.",
-        false
+      console.log(err)
+      dispatch(
+        showNottification({
+          message: err?.data?.message || 'Došlo je do greške, proverite internet konekciju.',
+          type: "error",
+          duration: 3000,
+          show: true,
+        })
       );
     }
   };
@@ -81,13 +76,7 @@ function EditBlogPost({ blog,open, onClose }) {
 
      
 
-        {/* ERROR NOTIFIKACIJA */}
-        {errorMessage && (
-          <div className="p-3 rounded-lg flex items-center text-sm font-medium shadow border bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-red-200 dark:border-red-700 mb-4">
-            <XCircleIcon className="w-5 h-5 mr-2" />
-            {errorMessage.message}
-          </div>
-        )}
+
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
