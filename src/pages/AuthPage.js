@@ -21,7 +21,7 @@ const AuthPage = () => {
     }
   };
 
-  const [form, setForm] = useState({ email: '', password: '', username: '', newPassword: '' });
+  const [form, setForm] = useState({ email: '', password: '', username: '', newPassword: '',confirmPassword:'' });
 
   const [login, { isLoading: loginLoading }] = useLoginMutation();
   const [register, { isLoading: registerLoading }] = useRegisterMutation();

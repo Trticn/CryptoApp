@@ -36,7 +36,7 @@ function ChangePassword(){
         e.preventDefault();
 
         try {
-            const data = await changePassword({ currentPassword, newPassword });
+            const data = await changePassword({ currentPassword, newPassword,confirmNewPassword });
             if (data.error) throw data.error;
 
             dispatch(

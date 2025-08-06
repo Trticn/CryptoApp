@@ -17,6 +17,7 @@ import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
 import HelpPage from './pages/HelpPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import UserVerifyPage from './pages/UserVerifyPage';
 
 
 
@@ -61,6 +62,7 @@ const router = createBrowserRouter([
       { path: '*', element: <NotFoundPage /> },
       { path: '/search/:id', element: <CryptoDetailsPage /> },
       {path: '/help', element: <HelpPage /> },
+      {path:'/verify-email', element:<UserVerifyPage/>},
 
 
       {

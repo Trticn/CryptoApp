@@ -37,17 +37,20 @@ const AuthFormContent = ({ mode, form, onChange, onSubmit, loading }) => {
             required={mode !== 'login'}
           />
         )}
-        {mode === 'reset' && (
+
+{(mode === 'register') && (
           <input
             type="password"
-            name="newPassword"
-            placeholder="Nova lozinka"
-            value={form.newPassword}
+            name="confirmPassword"
+            placeholder="Potvrdi lozinku"
+            value={form.confirmPassword}
             onChange={onChange}
             className="input"
             required
           />
         )}
+
+
         <Button
           type="submit"
           className="w-full py-5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition"

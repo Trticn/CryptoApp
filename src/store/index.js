@@ -7,6 +7,7 @@ import { watchlistApi } from './apis/watchlistApi';
 import { authApi } from './apis/authApi';
 import { secureApi } from './apis/secureApi';
 import { userBlogApi } from './apis/userBlogApi';
+import { contactApi } from './apis/contactApi';
 import { transactionFormReducer } from './apis/slices/transactionFormSlice';
 import { searchSliceReducer } from './apis/slices/searchSlice';
 import { authReducer } from './apis/slices/authSlice';
@@ -38,6 +39,7 @@ export const store = configureStore({
     [authApi.reducerPath]:authApi.reducer,
     [secureApi.reducerPath]:secureApi.reducer,
     [userBlogApi.reducerPath]:userBlogApi.reducer,
+    [contactApi.reducerPath]:contactApi.reducer,
     transactionForm: transactionFormReducer,
     search: searchSliceReducer,
     auth:authReducer,
@@ -53,6 +55,7 @@ export const store = configureStore({
       .concat(authApi.middleware)
       .concat(secureApi.middleware)
       .concat(userBlogApi.middleware)
+      .concat(contactApi.middleware)
 
   },
 });
@@ -135,3 +138,7 @@ export {
   useRemoveUserBlogMutation,
 } from './apis/userBlogApi'
 
+
+export {
+  useSendMessageMutation,
+} from './apis/contactApi'
