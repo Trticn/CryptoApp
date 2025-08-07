@@ -9,7 +9,7 @@ import AuthFormContent from '../components/authComponents/AuthFormContent';
 const AuthPage = () => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState('login');
-
+  console.log(process.env.DB_LINK)
   // errorMessage is now a string (or null)
   const [errorMessage, setErrorMessage] = useState(null);
 

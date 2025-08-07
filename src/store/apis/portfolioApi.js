@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const portfolioApi = createApi({
   reducerPath: 'portfolioApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.DB_LINK+ '/api', credentials:'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_DB_LINK+ '/api', credentials:'include' }),
   tagTypes: ['PortfolioSnapshot'],
   endpoints: (builder) => ({
     getPortfolioSnapshots: builder.query({

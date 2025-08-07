@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const secureApi = createApi({
   reducerPath: 'secureApi',
   baseQuery: fetchBaseQuery({
-    baseUrl:  process.env.DB_LINK + '/api/auth',
+    baseUrl:  process.env.REACT_APP_DB_LINK + '/api/auth',
     credentials: 'include',
   }),
   endpoints: (builder) => ({

@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.DB_LINK + '/api/auth',
+  baseUrl: process.env.REACT_APP_DB_LINK+ '/api/auth',
   credentials: 'include',
 });
 
@@ -85,6 +85,7 @@ export const authApi = createApi({
       }),
     }),
     login: builder.mutation({
+    
       query: (data) => ({
         url: '/login',
         method: 'POST',

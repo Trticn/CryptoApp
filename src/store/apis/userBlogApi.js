@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const userBlogApi = createApi({
   reducerPath: 'userBlog',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.DB_LINK + '/api',
+    baseUrl: process.env.REACT_APP_DB_LINK + '/api',
     credentials: 'include',
   }),
 
