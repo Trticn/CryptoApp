@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { DB_LINK } from '../../config';
+
 
 export const secureApi = createApi({
   reducerPath: 'secureApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: DB_LINK + '/api/auth',
+    baseUrl: process.env.CLIENT_URL + '/api/auth',
     credentials: 'include',
   }),
   endpoints: (builder) => ({
@@ -37,6 +37,13 @@ export const secureApi = createApi({
         body: data,
       }),
     }),
+    // Endpoint za verifikaciju mejla, odgovara funkciji verifyEmail u backendu
+    verifyEmail: builder.mutation({
+      query: (token) => ({
+        url: `/verify-email?token=${encodeURIComponent(token)}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -44,5 +51,6 @@ export const {
   useChangePasswordMutation,
   useChangeEmailMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useVerifyEmailMutation
 } = secureApi; 

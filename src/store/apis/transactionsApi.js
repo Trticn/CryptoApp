@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { DB_LINK } from '../../config';
+
 const transactionsApi = createApi({
   reducerPath: 'transactions',
   baseQuery: fetchBaseQuery({
-    baseUrl: DB_LINK + '/api',
+    baseUrl:process.env.CLIENT_URL+ '/api',
     credentials:'include'
   }),
 

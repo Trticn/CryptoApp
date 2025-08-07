@@ -1,9 +1,9 @@
 // api/portfolioApi.js
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { DB_LINK } from '../../config';
+
 const watchlistApi = createApi({
   reducerPath: 'watchlist',
-  baseQuery: fetchBaseQuery({ baseUrl: DB_LINK + '/api', credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl:process.env.CLIENT_URL+ '/api', credentials: 'include' }),
   tagTypes: ['Watchlist'],
   endpoints: (builder) => ({
     fetchWatchlist: builder.query({

@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { DB_LINK } from '../../config';
+
 
 export const contactApi = createApi({
   reducerPath: 'contactApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: DB_LINK + '/api/contact',
+    baseUrl: process.env.CLIENT_URL + '/api/contact',
     credentials: 'include',
   }),
   endpoints: (builder) => ({

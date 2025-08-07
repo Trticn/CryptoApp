@@ -129,6 +129,7 @@ export {
   useChangeEmailMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useVerifyEmailMutation
 } from './apis/secureApi'
 
 export {

@@ -1,11 +1,11 @@
 // Frontend/src/store/apis/authApi.js
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { DB_LINK } from '../../config';
+
 
 
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: DB_LINK + '/api/auth',
+  baseUrl: process.env.CLIENT_URL + '/api/auth',
   credentials: 'include',
 });
 
