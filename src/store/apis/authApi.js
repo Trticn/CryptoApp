@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.CLIENT_URL + '/api/auth',
+  baseUrl: process.env.DB_LINK + '/api/auth',
   credentials: 'include',
 });
 

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const transactionsApi = createApi({
   reducerPath: 'transactions',
   baseQuery: fetchBaseQuery({
-    baseUrl:process.env.CLIENT_URL+ '/api',
+    baseUrl: process.env.DB_LINK+ '/api',
     credentials:'include'
   }),
 
