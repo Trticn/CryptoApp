@@ -1,19 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
-import { setCredentials } from '../store';
+import { setCredentials, showNottification } from '../store';
 import { useLoginMutation, useRegisterMutation, useForgotPasswordMutation } from '../store';
-import { showNottification } from '../store';
 import AuthFormContent from '../components/authComponents/AuthFormContent';
 
 const AuthPage = () => {
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [mode, setMode] = useState('login');
-  console.log(process.env.DB_LINK)
-  // errorMessage is now a string (or null)
   const [errorMessage, setErrorMessage] = useState(null);
 
-  // Only set errorMessage as a string
+  // Kada se URL promeni → ažuriraj state
+  useEffect(() => {
+    const m = searchParams.get('mode');
+    if (m === 'register' || m === 'forgot' || m === 'login') {
+      setMode(m);
+    } else {
+      setMode('login');
+    }
+  }, [searchParams]);
+
+  // Menjanje moda → menja URL
+  const goMode = (newMode) => {
+    setSearchParams({ mode: newMode });
+  };
+
   const showErrorMessage = (message, isSuccess) => {
     if (!isSuccess) {
       setErrorMessage(message);
@@ -21,7 +34,13 @@ const AuthPage = () => {
     }
   };
 
-  const [form, setForm] = useState({ email: '', password: '', username: '', newPassword: '',confirmPassword:'' });
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+    username: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
   const [login, { isLoading: loginLoading }] = useLoginMutation();
   const [register, { isLoading: registerLoading }] = useRegisterMutation();
@@ -33,7 +52,6 @@ const AuthPage = () => {
     showErrorMessage('Google login nije implementiran u ovom demo-u.', false);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,38 +60,31 @@ const AuthPage = () => {
         const res = await login({ email: form.email, password: form.password });
         if (res.error) throw res.error;
         dispatch(setCredentials({ user: res.data.data.user }));
-
-        dispatch(
-          showNottification({
-            message: res.data.message,
-            type: "success",
-            duration: 3000,
-            show: true,
-          })
-        );
+        dispatch(showNottification({
+          message: res.data.message,
+          type: "success",
+          duration: 3000,
+          show: true
+        }));
       } else if (mode === 'register') {
         const res = await register(form);
         if (res.error) throw res.error;
-        dispatch(
-          showNottification({
-            message: res.data.message,
-            type: "success",
-            duration: 3000,
-            show: true,
-          })
-        );
-        setMode('login');
+        dispatch(showNottification({
+          message: res.data.message,
+          type: "success",
+          duration: 3000,
+          show: true
+        }));
+        goMode('login'); // posle registracije vraćamo na login
       } else if (mode === 'forgot') {
         const res = await forgotPassword({ email: form.email });
         if (res.error) throw res.error;
-        dispatch(
-          showNottification({
-            message: res.data.message,
-            type: "info",
-            duration: 2000,
-            show: true,
-          })
-        );
+        dispatch(showNottification({
+          message: res.data.message,
+          type: "info",
+          duration: 2000,
+          show: true
+        }));
       }
     } catch (err) {
       showErrorMessage(
@@ -101,11 +112,9 @@ const AuthPage = () => {
           onSubmit={handleSubmit}
           loading={loginLoading || registerLoading || forgotPasswordLoading}
         />
-            {errorMessage && (
-          <div
-            className='mt-4 text-center font-medium transition-all duration-200
-                text-red-600 dark:text-red-400'
-          >
+
+        {errorMessage && (
+          <div className='mt-4 text-center font-medium transition-all duration-200 text-red-600 dark:text-red-400'>
             {errorMessage}
           </div>
         )}
@@ -124,32 +133,28 @@ const AuthPage = () => {
           <span>Nastavi preko Google</span>
         </button>
 
-
-
         <div className="mt-6 flex flex-col items-center gap-2 text-sm">
           {mode === 'login' && (
             <>
-              <button className="text-blue-600 hover:underline" onClick={() => setMode('register')}>
+              <button className="text-blue-600 hover:underline" onClick={() => goMode('register')}>
                 Nemate nalog? Registrujte se
               </button>
-              <button className="text-gray-500 hover:underline" onClick={() => setMode('forgot')}>
+              <button className="text-gray-500 hover:underline" onClick={() => goMode('forgot')}>
                 Zaboravili ste lozinku?
               </button>
             </>
           )}
           {mode === 'register' && (
-            <button className="text-blue-600 hover:underline" onClick={() => setMode('login')}>
+            <button className="text-blue-600 hover:underline" onClick={() => goMode('login')}>
               Imate nalog? Prijavite se
             </button>
           )}
           {(mode === 'forgot' || mode === 'reset') && (
-            <button className="text-blue-600 hover:underline" onClick={() => setMode('login')}>
+            <button className="text-blue-600 hover:underline" onClick={() => goMode('login')}>
               Nazad na prijavu
             </button>
           )}
         </div>
-
- 
       </div>
     </div>
   );

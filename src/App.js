@@ -19,40 +19,6 @@ import HelpPage from './pages/HelpPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import UserVerifyPage from './pages/UserVerifyPage';
 
-
-
-// Da bi handleBack bio dostupan na svakom Page-u, najbolje je da ga implementiraš kao custom React hook.
-// Kreiraj fajl npr. src/hooks/useHandleBack.js sa sledećim kodom:
-
-/*
-// src/hooks/useHandleBack.js
-import { useNavigate } from 'react-router-dom';
-
-export default function useHandleBack() {
-  const navigate = useNavigate();
-  return () => {
-    if (window.history.length > 2) {
-      navigate(-1);
-    } else {
-      navigate('/');
-    }
-  };
-}
-*/
-
-// Onda u svakom Page-u gde ti treba handleBack, samo importuješ i koristiš ovaj hook:
-
-/*
-import useHandleBack from '../hooks/useHandleBack';
-
-function SomePage() {
-  const handleBack = useHandleBack();
-  // ...
-}
-*/
-
-// Ostatak App.js ostaje isti, handleBack se ne definiše ovde već koristi kao hook u svakom Page-u po potrebi.
-
 const router = createBrowserRouter([
   {
     path: '/',

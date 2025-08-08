@@ -28,7 +28,7 @@ function ProfileNavigation({isOpen,onClose}) {
             );
 
             setTimeout(() => {
-                window.location.href = '/auth';
+                window.location.href = '/auth?mode=login';
             }, 1000);
 
         } catch (err) {
@@ -48,17 +48,17 @@ function ProfileNavigation({isOpen,onClose}) {
 
     if(!user){
         content = <>
-            <Link onClick={onClose} className="text-md font-semibold hover:opacity-90 rounded-xl px-3 py-2 bg-indigo-500 dark:bg-indigo-400 text-white " to='/auth'>Prijavi se</Link>
-            <Link onClick={onClose} className="text-md hover:opacity-90 rounded-xl px-3 py-2 bg-transparent border border-indigo-500 dark:border-indigo-400 font-semibold text-gray-700 dark:text-gray-300 " to='/auth'>Registruj se</Link>
+            <Link onClick={onClose} className="text-md font-semibold hover:opacity-90 rounded-xl px-3 py-2 bg-indigo-500 dark:bg-indigo-400 text-white " to='/auth?mode=login'>Prijavi se</Link>
+            <Link onClick={onClose} className="text-md hover:opacity-90 rounded-xl px-3 py-2 bg-transparent border border-indigo-500 dark:border-indigo-400 font-semibold text-gray-700 dark:text-gray-300 " to='/auth?mode=register'>Registruj se</Link>
         </>
     } else{
         content =<>
         <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow">
-            <span>{user.username?.[0]}</span>
+            <span>{user?.username?.[0]}</span>
         </div>
         <div>
-            <div className="text-md font-semibold text-gray-800 dark:text-white">{user.username}</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">{user.email}</div>
+            <div className="text-md font-semibold text-gray-800 dark:text-white">{user?.username}</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">{user?.email}</div>
         </div>
         </>
    

@@ -27,7 +27,7 @@ function ChangePassword(){
     const handleLogout = async () => {
         await logout();
         dispatch(setUserLogout())
-        window.location.href = '/auth'
+        window.location.href = '/auth?mode=login'
     };
 
 
