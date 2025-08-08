@@ -56,7 +56,7 @@ function UserVerifyPage () {
               Vaša email adresa je uspešno verifikovana.
         </p>
 
-        <Link className="font-semibold hover:opacity-90 rounded-xl px-5 py-3 bg-indigo-500 dark:bg-indigo-400 text-white " to='/auth'>Prijavi se</Link>
+        <Link className="font-semibold hover:opacity-90 rounded-xl px-5 py-3 bg-indigo-500 dark:bg-indigo-400 text-white " to='/auth?mode=login'>Prijavi se</Link>
     </>
   }
 
